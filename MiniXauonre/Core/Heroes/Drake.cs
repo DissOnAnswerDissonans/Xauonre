@@ -29,13 +29,10 @@ namespace MiniXauonre.Core.Heroes
                 {
                     var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
                     v(d);
-                    var enemiesInRange = d.MapValue.UnitPositions
-                        .Where(u => !d.PlayerValue.Heroes.Contains(u.Key) 
-                        && u.Value.GetStepsTo(d.MapValue.UnitPositions[this]) <= AoeRange)
-                        .ToList();
+                    var enemiesInRange = GetEnemiesInRange(d.PlayerValue, d.MapValue, AoeRange);
                     var attack = new Damage(magic: dmg);
                     foreach (var enemy in enemiesInRange)
-                        enemy.Key.GetDamage(attack);
+                        enemy.GetDamage(attack);
                     return d;
                 } 
             };

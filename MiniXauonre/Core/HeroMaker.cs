@@ -14,10 +14,10 @@ namespace MiniXauonre.Core
             return new List<Hero>
             {
                 new Fe11(),
-                new HeroWithBaseSkills(),
                 new Thief(),
                 new Drake(),
-                new Sniper()
+                new Sniper(),
+                new Anthrax()
             };
         }
     }

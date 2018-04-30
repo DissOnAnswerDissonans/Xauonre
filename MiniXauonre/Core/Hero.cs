@@ -226,6 +226,11 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempFunc = perk.GetEnergy(tempFunc);
                     return tempFunc();
+                case Chars.MaxEnergy:
+                    tempFunc = () => maxEnergy;
+                    foreach (var perk in Perks)
+                        tempFunc = perk.GetMaxEnergy(tempFunc);
+                    return tempFunc();
                 case Chars.EnergyRegen:
                     tempFunc = () => energyRegen;
                     foreach (var perk in Perks)
@@ -295,6 +300,11 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempAction = perk.SetEnergy(tempAction);
                     break;
+                case Chars.MaxEnergy:
+                    tempAction = (s) => maxEnergy = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetMaxEnergy(tempAction);
+                    break;
                 case Chars.EnergyRegen:
                     tempAction = (s) => energyRegen = s;
                     foreach (var perk in Perks)
@@ -323,6 +333,7 @@ namespace MiniXauonre.Core.Heroes
         private FuncData FInit(FuncData data)
         {
             SetHp(GetMaxHp());
+            SetEnergy(GetMaxEnergy());
             return data;
         }
 
@@ -401,7 +412,8 @@ namespace MiniXauonre.Core.Heroes
 
 
         public void FastPrintStats() => Console.WriteLine(
-            Name + " : MaxHp-" + GetMaxHp()
+            Name
+            + " : MaxHp-" + GetMaxHp()
             + ", Hp-" + GetHp()
             + (GetMaxEnergy() > 1 ? ", MaxEnergy-"+GetMaxEnergy() + ", Energy-"+GetEnergy() : "") 
             + ", AttackPower-" + GetAttackPower()

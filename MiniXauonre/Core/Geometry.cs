@@ -148,11 +148,6 @@ namespace Xauonre.Core
             LeftDown,
         }
 
-
-
-
-
-
         public override bool Equals(object obj) => obj.GetType() == typeof(Point) && X == (obj as Point).X && Y == (obj as Point).Y;
     }
 }
