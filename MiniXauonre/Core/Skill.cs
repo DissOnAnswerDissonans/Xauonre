@@ -11,7 +11,7 @@ namespace MiniXauonre.Core
     class Skill
     {
         public List<SkillType> SkillTypes { get; protected set; }
-        public string Explanation { get; set; }
+        public Func<string> Explanation { get; set; }
         public string Name { get; set; }
         public double CoolDown { get; set; }
         public double EnergyCost { get; set; }
@@ -24,7 +24,7 @@ namespace MiniXauonre.Core
             CoolDown = 0;
             SkillTypes = new List<SkillType>();
             Name = "Base";
-            Explanation = "Nothing";
+            Explanation = () => "Nothing";
             Job = (m, p, h) => true;
         }
 

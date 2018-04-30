@@ -8,24 +8,29 @@ namespace MiniXauonre.Core.Heroes
 {
     class Drake : HeroWithBaseSkills
     {
-        private Perk Burn { get; set; }
-        public const double HpScale = 0.01;
+        public Perk Burn { get; set; }
+        public Skill Martyr { get; set; }
+
+        public const double HpScale = 0.02;
         public const double AoeRange = 5;
         public const double APScale = 0.1;
 
+        private bool Burning { get; set; }
         public Drake()
         {
             Name = "Drake";
-            SetMaxHp(1500);
+            SetMaxHp(1600);
             SetAttackPower(30);
             SetArmor(10);
             SetResist(15);
             SetMovementSpeed(10);
             SetRegen(7);
 
+            Burning = false;
+
             Burn = new Perk
             {
-                StartTurn = (v) => (d) =>
+                EndTurn = (v) => (d) =>
                 {
                     var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
                     v(d);
@@ -33,10 +38,30 @@ namespace MiniXauonre.Core.Heroes
                     var attack = new Damage(magic: dmg);
                     foreach (var enemy in enemiesInRange)
                         enemy.GetDamage(attack);
+                    GetDamage(attack);
                     return d;
                 } 
             };
             Perks.Add(Burn);
+
+            Martyr = new Skill
+            {
+                Name = "Martyr",
+                Explanation = () => Burning ? "Turn off martyr." : 
+                    "Turnes on dealing " + HpScale * 100 + "% you current Hp + " + APScale + "%("+
+                    + (GetHp() * HpScale + GetAbilityPower() * APScale)
+                    + ") AP magic damage to you and your enemies within " + AoeRange
+                    + " units around you at the end of every your turn. (You can die)",
+
+                Job = (m, p , h) =>
+                {
+                    Burning = !Burning;
+                    return true;
+                }
+            };
+            Martyr.SkillTypes.Add(SkillType.Special);
+            Skills.Add(Martyr);
+
         }
     }
 }

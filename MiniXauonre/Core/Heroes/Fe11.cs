@@ -25,6 +25,7 @@ namespace MiniXauonre.Core.Heroes
         private int Calm { get; set; }
         private bool WallOn { get; set; }
         private List<Point> PlacedWalls { get; set; }
+        public Skill BuffedAttack { get; private set; }
 
         public Fe11()
         {
@@ -91,12 +92,23 @@ namespace MiniXauonre.Core.Heroes
             };
             Perks.Add(Rage);
 
+            Skills.Remove(Attack);
+            BuffedAttack = new Skill
+            {
+                Name = Attack.Name,
+                Explanation = () => Attack.Explanation() + "On attack increases you AD by " + RageADBuff + " and armor by " + RageArmorBuff + " for " + RageDuration
+                + " turns. Attacking refreshes times.",
+                Job = Attack.Job
+            };
+            BuffedAttack.SkillTypes.Add(SkillType.Attack);
+            Skills.Add(BuffedAttack);
+
 
             Wall = new Skill
             {
                 Name = "YouShallNotPass",
-                Explanation = "Builds a wall in " + WallMinDist + "-" + WallMaxDist +
-                    " range around you. On next use destroyes it. Eats " + WallManaPerTurnCost + " energy at the end of turn (if not enought - turnes off)",
+                Explanation = () => WallOn ? "Destroyes the wall builded by this skill." : "Builds a wall in " + WallMinDist + "-" + WallMaxDist +
+                    " range around you. On next use destroyes it. Eats " + WallManaPerTurnCost + " energy at the end of turn (if not enough - turnes off).",
 
                 Job = (m, p, h) =>
                 {

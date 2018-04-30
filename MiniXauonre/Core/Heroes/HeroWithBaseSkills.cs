@@ -24,7 +24,7 @@ namespace MiniXauonre.Core.Heroes
             Attack = new Skill
             {
                 Name = "Attack",
-                Explanation = "Does Attack",
+                Explanation = () => "Deales " + GetAttackPower() + " damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
                 Job = (m, p, h) =>
                 {
                     if (AttacksLeft != 0)
@@ -50,7 +50,8 @@ namespace MiniXauonre.Core.Heroes
             Move = new Skill
             {
                 Name = "Move",
-                Explanation = "Change your location",
+                Explanation = () => "Moves you into nearby empty cell on the map (linearry costs " + GeometryRules.NormalFactor + " movement, dioganally "
+                    + GeometryRules.DiagonalFactor + " movement).",
                 Job = MoveJob,
             };
             Attack.SkillTypes.Add(SkillType.Attack);

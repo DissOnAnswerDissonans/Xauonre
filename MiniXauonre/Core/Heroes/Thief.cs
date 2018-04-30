@@ -22,7 +22,10 @@ namespace MiniXauonre.Core.Heroes
             BuffedAttack = new Skill
             {
                 Name = Attack.Name,
-                Explanation = Attack.Explanation + ", steal " + Steal + " Hp forever",
+                Explanation = () => Attack.Explanation() + " Also steals " + Steal + " + "
+                    + ADScale * 100 + "% AD + " + APScale * 100 + "% AP ("
+                    + (Steal + APScale * GetAbilityPower() + ADScale * GetAttackPower())
+                    + ") MaxHp from target forever.",
                 Job = (m, p, h) =>
                 {
                     var st = Steal + GetAbilityPower() * APScale + GetAttackPower() * ADScale;
@@ -36,7 +39,9 @@ namespace MiniXauonre.Core.Heroes
                     }
                     return false;
                 }
+                
             };
+            BuffedAttack.SkillTypes.Add(SkillType.Attack);
             Skills.Add(BuffedAttack);
         }
     }

@@ -29,7 +29,11 @@ namespace MiniXauonre.Core.Heroes
             Snipe = new Skill
             {
                 Name = "Snipe",
-                Explanation = "Deals damage to enemy and root him",
+                Explanation = () => "Deals to enemy " + SnipeDamage 
+                    + " + " + SnipeApScale * 100 + "% AP (" 
+                    + (SnipeDamage + SnipeApScale * GetAbilityPower()) 
+                    + ") physycal damage. Range " + SnipeRange + 
+                    ". Energy cost " + SnipeEnergyCost + ". Cooldown " + SnipeCooldown + ".",
                 Job = (m, p, h) =>
                 {
                     var enemiesInRange = GetEnemiesInRange(p, m, SnipeRange);

@@ -105,7 +105,7 @@ namespace MiniXauonre.Controller
             {
                 CheckWorld();   
                 PrintWorld();
-                var skills = hero.Skills.Select(s => s.Name).ToList();
+                var skills = hero.Skills.Select(s => s.Name + " (" + s.Explanation() + ")").ToList();
                 var possibleCommands = new List<Command>
                         {
                             new Command(CommandType.UseAbility, new List<List<string>> { skills }),
