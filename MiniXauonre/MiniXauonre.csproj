@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A0DCB05E-64F5-4696-A930-3FF78807E56F}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>Xauonre</RootNamespace>
-    <AssemblyName>Xauonre</AssemblyName>
+    <ProjectGuid>{B92B173B-5D0E-4A2F-90FC-73E2E0058006}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MiniXauonre</RootNamespace>
+    <AssemblyName>MiniXauonre</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -38,45 +38,37 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controller\Command.cs" />
+    <Compile Include="Controller\Game.cs" />
+    <Compile Include="Controller\Player.cs" />
+    <Compile Include="Core\Damage.cs" />
+    <Compile Include="Core\Effect.cs" />
+    <Compile Include="Core\FuncData.cs" />
+    <Compile Include="Core\Geometry.cs" />
+    <Compile Include="Core\Hero.cs" />
+    <Compile Include="Core\Heroes\Fe11.cs" />
+    <Compile Include="Core\Heroes\HeroWithBaseSkills.cs" />
+    <Compile Include="Core\HeroMaker.cs" />
+    <Compile Include="Core\Map.cs" />
+    <Compile Include="Core\MapCommand.cs" />
+    <Compile Include="Core\Perk.cs" />
+    <Compile Include="Core\Perks\TestPerk.cs" />
+    <Compile Include="Core\Perks\TestPerk2.cs" />
+    <Compile Include="Core\Skill.cs" />
+    <Compile Include="Core\Tile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Skills\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

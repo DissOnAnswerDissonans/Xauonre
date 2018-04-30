@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Xauonre")]
+[assembly: AssemblyTitle("MiniXauonre")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Xauonre")]
+[assembly: AssemblyProduct("MiniXauonre")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("a0dcb05e-64f5-4696-a930-3ff78807e56f")]
+[assembly: Guid("b92b173b-5d0e-4a2f-90fc-73e2e0058006")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

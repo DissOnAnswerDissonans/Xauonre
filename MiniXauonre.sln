@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xauonre", "Xauonre\Xauonre.csproj", "{A0DCB05E-64F5-4696-A930-3FF78807E56F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniXauonre", "MiniXauonre\MiniXauonre.csproj", "{B92B173B-5D0E-4A2F-90FC-73E2E0058006}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A0DCB05E-64F5-4696-A930-3FF78807E56F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0DCB05E-64F5-4696-A930-3FF78807E56F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0DCB05E-64F5-4696-A930-3FF78807E56F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0DCB05E-64F5-4696-A930-3FF78807E56F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B92B173B-5D0E-4A2F-90FC-73E2E0058006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B92B173B-5D0E-4A2F-90FC-73E2E0058006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B92B173B-5D0E-4A2F-90FC-73E2E0058006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B92B173B-5D0E-4A2F-90FC-73E2E0058006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BCB5E904-DCB8-4803-A9E0-2DDCE2294DB0}
+		SolutionGuid = {8FB69B30-6EF7-4EDA-B6AD-F9CB43801997}
 	EndGlobalSection
 EndGlobal

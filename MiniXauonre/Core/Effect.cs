@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xauonre.Core
+namespace MiniXauonre.Core
 {
-    interface IEntity
+    class Effect
     {
     }
 }
