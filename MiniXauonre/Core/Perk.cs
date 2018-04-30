@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core
 {
-    public delegate Func<double> Getter(Func<double> g);
-    public delegate Action<double> Setter(Action<double> s);
+    delegate Func<double> Getter(Func<double> g);
+    delegate Action<double> Setter(Action<double> s);
 
-    public delegate Func<FuncData, FuncData> Act(Func<FuncData,FuncData> a);
+    delegate Func<FuncData, FuncData> Act(Func<FuncData,FuncData> a);
 
     delegate Skill UseSkill(Skill skill);
 
@@ -24,45 +24,52 @@ namespace MiniXauonre.Core
 
 
         //Stats
-        public Getter GetMaxHp { get; protected set; }
-        public Setter SetMaxHp { get; protected set; }
+        public Getter GetMaxHp { get; set; }
+        public Setter SetMaxHp { get; set; }
 
-        public Getter GetHp { get; protected set; }
-        public Setter SetHp { get; protected set; }
+        public Getter GetHp { get; set; }
+        public Setter SetHp { get; set; }
 
-        public Getter GetArmor { get; protected set; }
-        public Setter SetArmor { get; protected set; }
+        public Getter GetArmor { get; set; }
+        public Setter SetArmor { get; set; }
 
-        public Getter GetResist { get; protected set; }
-        public Setter SetResist { get; protected set; }
+        public Getter GetResist { get; set; }
+        public Setter SetResist { get; set; }
 
-        public Getter GetRegen { get; protected set; }
-        public Setter SetRegen { get; protected set; }
+        public Getter GetRegen { get; set; }
+        public Setter SetRegen { get; set; }
 
-        public Getter GetMoney { get; protected set; }
-        public Setter SetMoney { get; protected set; }
+        public Getter GetMoney { get; set; }
+        public Setter SetMoney { get; set; }
 
-        public Getter GetAbilityPower { get; protected set; }
-        public Setter SetAbilityPower { get; protected set; }
+        public Getter GetAbilityPower { get; set; }
+        public Setter SetAbilityPower { get; set; }
 
-        public Getter GetAttackPower { get; protected set; }
-        public Setter SetAttackPower { get; protected set; }
+        public Getter GetAttackPower { get; set; }
+        public Setter SetAttackPower { get; set; }
 
-        public Getter GetAttackSpeed { get; protected set; }
-        public Setter SetAttackSpeed { get; protected set; }
+        public Getter GetAttackSpeed { get; set; }
+        public Setter SetAttackSpeed { get;  set; }
 
-        public Getter GetAttackRange { get; protected set; }
-        public Setter SetAttackRange { get; protected set; }
+        public Getter GetAttackRange { get;  set; }
+        public Setter SetAttackRange { get;  set; }
 
-        public Getter GetMovementSpeed { get; protected set; }
-        public Setter SetMovementSpeed { get; protected set; }
+        public Getter GetMovementSpeed { get;  set; }
+        public Setter SetMovementSpeed { get;  set; }
+        public Getter GetEnergy { get; set; }
+        public Setter SetEnergy { get; set; }
+        public Getter GetEnergyRegen { get; set; }
+        public Setter SetEnergyRegen { get; set; }
+        public Getter GetMaxEnergy { get; set; }
+        public Setter SetMaxEnergy { get; set; }
 
         //Fns
-        public Act GetDamage { get; protected set; }
-        public Act GetHeal { get; protected set; }
-        public Act NextTurn { get; protected set; }
+        public Act GetDamage { get;  set; }
+        public Act GetHeal { get;  set; }
+        public Act NextTurn { get;  set; }
+        public Act Init { get; set; }
 
-        public UseSkill SkillFix { get; protected set; }
+        public UseSkill SkillFix { get;  set; }
 
         public Perk() {
             baseGetter = (g) => g;
@@ -88,11 +95,17 @@ namespace MiniXauonre.Core
             SetAttackRange = baseSetter;
             GetMovementSpeed = baseGetter;
             SetMovementSpeed = baseSetter;
+            GetEnergy = baseGetter;
+            SetEnergy = baseSetter;
+            GetEnergyRegen = baseGetter;
+            SetEnergyRegen = baseSetter;
+            GetMaxEnergy = baseGetter;
+            SetMaxEnergy = baseSetter;
             //Fns
             GetDamage = (a) => a;
             GetHeal = (a) => a;
             NextTurn = (a) => a;
-
+            Init = (a) => a;
             //Skills
             SkillFix = (s) => s;
         }

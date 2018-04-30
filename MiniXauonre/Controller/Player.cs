@@ -61,7 +61,7 @@ namespace MiniXauonre.Controller
             var number = Heroes.Count;
             if (number < 1)
                 return null;
-            if (number == heroIterator + 1)
+            if (number <= heroIterator + 1)
             {
                 heroIterator = 0;
                 return Heroes.Last();

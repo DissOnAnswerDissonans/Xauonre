@@ -13,35 +13,37 @@ namespace MiniXauonre.Core.Heroes
     {
         protected Skill Attack { get; set; }
         protected Skill Move { get; set; }
+
+        protected Hero Target { get; set; }
         public HeroWithBaseSkills()
         {
+            Target = null;
+
+
             Name = "Hero with Attack";
             Attack = new Skill
             {
                 Name = "Attack",
                 Explanation = "Does Attack",
-                Work = (m, p, h) =>
+                Job = (m, p, h) =>
                 {
                     if (AttacksLeft != 0)
                     {
                         var hA = h as HeroWithBaseSkills;
-                        var enemiesInRange = m.UnitPositions
-                            .Where(u => !p.Heroes.Contains(u.Key))
-                            .Where(u => m.UnitPositions[h].GetStepsTo(u.Value) <= GetAttackRange())
-                            .Select(u => u.Key)
-                            .ToList();
+                        var enemiesInRange = GetEnemiesInRange(p, m, GetAttackRange());
                         if (enemiesInRange.Count != 0)
                         {
-                            var target = ChooseTarget(enemiesInRange, p);
+                            Target = ChooseTarget(enemiesInRange, p);
                             var at = new Damage(GetAttackPower());
-                            target.GetDamage(at);
+                            Target.GetDamage(at);
                             AttacksLeft--;
-                            Console.WriteLine(Attack.ToString());
+                            //Console.WriteLine(Attack.ToString());
+                            return true;
                         }
-
-                        foreach (var hero in m.UnitPositions.Keys)
-                            Console.WriteLine(hero + "   Hp-" + hero.GetHp());
+                        /*foreach (var hero in m.UnitPositions.Keys)
+                            Console.WriteLine(hero + "   Hp-" + hero.GetHp());*/
                     }
+                    return false;
                 }
             };
 
@@ -49,7 +51,7 @@ namespace MiniXauonre.Core.Heroes
             {
                 Name = "Move",
                 Explanation = "Change your location",
-                Work = MoveWork,
+                Job = MoveJob,
             };
             Attack.SkillTypes.Add(SkillType.Attack);
             Move.SkillTypes.Add(SkillType.Move);
@@ -57,8 +59,13 @@ namespace MiniXauonre.Core.Heroes
             Skills.Add(Move);
         }
 
+        protected List<Hero> GetEnemiesInRange(Player p, Map m, double r) => m.UnitPositions
+                            .Where(u => !p.Heroes.Contains(u.Key))
+                            .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
+                            .Select(u => u.Key)
+                            .ToList();
 
-        private Hero ChooseTarget(List<Hero> targets, Player player)
+        protected Hero ChooseTarget(List<Hero> targets, Player player)
         {
             var possibleCommands = new List<Command>
                     {
@@ -68,7 +75,7 @@ namespace MiniXauonre.Core.Heroes
             return targets[answer.Data[0]];
         }
 
-        private StepTypes ChooseDirection(List<StepTypes> steps, Player player)
+        protected StepTypes ChooseDirection(List<StepTypes> steps, Player player)
         {
             var possibleCommands = new List<Command>
                     {
@@ -81,7 +88,7 @@ namespace MiniXauonre.Core.Heroes
 
 
 
-        private void MoveWork(Map m, Player p, Hero h)
+        private bool MoveJob(Map m, Player p, Hero h)
         {
             var hA = h as HeroWithBaseSkills;
             var possibleSteps = PossibleSteps
@@ -95,9 +102,10 @@ namespace MiniXauonre.Core.Heroes
                 var dist = new Point(0, 0).GetStepsTo(pStep);
                 MovementLeft -= dist;
                 m.UnitPositions[h].Add(pStep);
+                return true;
             }
 
-            Console.WriteLine();
+            /*Console.WriteLine();
             Console.WriteLine((int)MovementLeft);
             Console.WriteLine();
 
@@ -113,7 +121,8 @@ namespace MiniXauonre.Core.Heroes
                         
                 }
                 Console.WriteLine();
-            }
+            }*/
+            return false;
         }
 
 

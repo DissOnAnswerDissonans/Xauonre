@@ -15,6 +15,9 @@ namespace MiniXauonre.Core
             {
                 new Fe11(),
                 new HeroWithBaseSkills(),
+                new Thief(),
+                new Drake(),
+                new Sniper()
             };
         }
     }

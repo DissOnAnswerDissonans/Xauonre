@@ -26,7 +26,9 @@ namespace MiniXauonre.Core.Heroes
         private double attackRange;
         private double movementSpeed;
 
-
+        private double maxEnergy;
+        private double energy;
+        private double energyRegen;
 
         public int AttacksLeft { get; set; }
         public double MovementLeft { get; set; }
@@ -42,15 +44,17 @@ namespace MiniXauonre.Core.Heroes
             hp = maxHp;
             armor = 0;
             resist = 0;
-            regen = 1;
+            regen = 3;
 
             money = 0;
             abilityPower = 0;
             attackPower = 50;
             attackSpeed = 1;
-            attackRange = 5;
+            attackRange = 3;
             movementSpeed = 9;
-
+            maxEnergy = 0;
+            energy = maxEnergy;
+            energyRegen = 0;
 
 
         }
@@ -70,6 +74,10 @@ namespace MiniXauonre.Core.Heroes
             AttackSpeed,
             AttackRange,
             MovementSpeed,
+            Energy,
+            MaxEnergy,
+            EnergyRegen,
+            //TODO: Add CDR and put into Refresh
         }
 
         public void UseSkill(int id, Map map, Player player)
@@ -136,8 +144,20 @@ namespace MiniXauonre.Core.Heroes
         public void AddAttackRange(double v) => SetAttackRange(GetAttackRange() + v);
 
         public double GetMovementSpeed() => GetWithPerks(Chars.MovementSpeed);
-        public void SetMovementSpeed(double v) => SetWithPerks(Chars.AttackRange, v);
+        public void SetMovementSpeed(double v) => SetWithPerks(Chars.MovementSpeed, v);
         public void AddMovementSpeed(double v) => SetMovementSpeed(GetMovementSpeed() + v);
+
+        public double GetEnergy() => GetWithPerks(Chars.Energy);
+        public void SetEnergy(double v) => SetWithPerks(Chars.Energy, v);
+        public void AddEnergy(double v) => SetEnergy(GetEnergy() + v);
+
+        public double GetMaxEnergy() => GetWithPerks(Chars.MaxEnergy);
+        public void SetMaxEnergy(double v) => SetWithPerks(Chars.MaxEnergy, v);
+        public void AddMaxEnergy(double v) => SetMaxEnergy(GetMaxEnergy() + v);
+
+        public double GetEnergyRegen() => GetWithPerks(Chars.EnergyRegen);
+        public void SetEnergyRegen(double v) => SetWithPerks(Chars.EnergyRegen, v);
+        public void AddEnergyRegen(double v) => SetEnergyRegen(GetEnergyRegen() + v);
 
 
         //TODO: add money, abilityPower, attackPower
@@ -201,6 +221,16 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempFunc = perk.GetMovementSpeed(tempFunc);
                     return tempFunc();
+                case Chars.Energy:
+                    tempFunc = () => energy;
+                    foreach (var perk in Perks)
+                        tempFunc = perk.GetEnergy(tempFunc);
+                    return tempFunc();
+                case Chars.EnergyRegen:
+                    tempFunc = () => energyRegen;
+                    foreach (var perk in Perks)
+                        tempFunc = perk.GetEnergyRegen(tempFunc);
+                    return tempFunc();
             }
             return 0;
         }
@@ -235,6 +265,41 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempAction = perk.SetRegen(tempAction);
                     break;
+                case Chars.AbilityPower:
+                    tempAction = (s) => abilityPower = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetAbilityPower(tempAction);
+                    break;
+                case Chars.AttackPower:
+                    tempAction = (s) => attackPower = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetAttackPower(tempAction);
+                    break;
+                case Chars.AttackSpeed:
+                    tempAction = (s) => attackSpeed = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetAttackSpeed(tempAction);
+                    break;
+                case Chars.MovementSpeed:
+                    tempAction = (s) => movementSpeed = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetMovementSpeed(tempAction);
+                    break;
+                case Chars.AttackRange:
+                    tempAction = (s) => attackRange = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetAttackRange(tempAction);
+                    break;
+                case Chars.Energy:
+                    tempAction = (s) => energy = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetEnergy(tempAction);
+                    break;
+                case Chars.EnergyRegen:
+                    tempAction = (s) => energyRegen = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetEnergyRegen(tempAction);
+                    break;
                 default:
                     tempAction = (s) => { };
                     break;
@@ -250,15 +315,26 @@ namespace MiniXauonre.Core.Heroes
             GetDamage,
             GetHeal,
             NextTurn,
+            Init,
         }
 
-        public void NextTurn() => DoWithPerks(Actions.NextTurn, new FuncData());
+        public void Init() => DoWithPerks(Actions.Init, new FuncData());
+
+        private FuncData FInit(FuncData data)
+        {
+            SetHp(GetMaxHp());
+            return data;
+        }
+
+        public void NextTurn(Map m, Player p) => DoWithPerks(Actions.NextTurn, new FuncData(mapvalue: m, playerValue: p));
 
         private FuncData FNextTurn(FuncData data)
         {
             Regenerate();
             RefreshAttacks();
             RefreshMovement();
+            foreach (var skill in Skills)
+                skill.Tick(1);
             return data;
         }
 
@@ -312,11 +388,26 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         nextTurn = perk.NextTurn(nextTurn);
                     return nextTurn(data);
+                case Actions.Init:
+                    Func<FuncData, FuncData> init = FInit;
+                    foreach (var perk in Perks)
+                        init = perk.Init(init);
+                    return init(data);
                 default:
                     return new FuncData();
             }
         }
 
+
+
+        public void FastPrintStats() => Console.WriteLine(
+            Name + " : MaxHp-" + GetMaxHp()
+            + ", Hp-" + GetHp()
+            + (GetMaxEnergy() > 1 ? ", MaxEnergy-"+GetMaxEnergy() + ", Energy-"+GetEnergy() : "") 
+            + ", AttackPower-" + GetAttackPower()
+            + ", AbilityPower-" + GetAbilityPower()
+            + ", MoveLeft-" + MovementLeft
+            + ", AttacksLeft-" + AttacksLeft);
 
     }
 

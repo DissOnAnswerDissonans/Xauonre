@@ -12,8 +12,6 @@ namespace MiniXauonre.Core.Heroes
         public Fe11()
         {
             Name = "Fe11";
-            Perks.Add(new TestPerk());
-            Perks.Add(new TestPerk2());
         }
     }
 }
