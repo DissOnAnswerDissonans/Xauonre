@@ -17,7 +17,7 @@ namespace MiniXauonre.Core
         public int Width { get; protected set; }
         public int Length { get; protected set; }
 
-        public Map(int length = 40, int width = 150)
+        public Map(int length = 20, int width = 50)
         {
             UnitPositions = new Dictionary<Hero, Point>();
             MapTiles = new Tile[length, width];

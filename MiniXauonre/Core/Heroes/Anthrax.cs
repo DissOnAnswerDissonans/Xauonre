@@ -47,6 +47,7 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = BoomCooldown,
                 EnergyCost = BoomEnergyCost,
             };
+            Boom.SkillTypes.Add(SkillType.Special);
             Skills.Add(Boom);
         }
     }

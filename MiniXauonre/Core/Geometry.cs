@@ -33,6 +33,35 @@ namespace Xauonre.Core
         
         public double GetDistanceTo(Point p) => Math.Sqrt((p.X - this.X) * (p.X - this.X) + (p.Y - this.Y) * (p.Y - this.Y));
 
+        public List<Point> GetPointsInDistance(double min, double max)
+        {
+            var points = new List<Point>();
+            var queue = new Queue<Point>();
+            queue.Enqueue(this);
+            var distance = new Dictionary<Point, double>
+            {
+                [this] = 0
+            };
+            while (queue.Count != 0)
+            {
+                var point = queue.Dequeue();
+                foreach(var step in PossibleSteps)
+                {
+                    var p = step.Key + point;
+                    var v = step.Value + distance[point];
+                    if (v > max)
+                        continue;
+                    if (!(distance.ContainsKey(p) && v >= distance[p]))
+                    {
+                        queue.Enqueue(p);
+                        distance[p] = v;
+                    }
+                }
+            }
+            return distance.Where(p => p.Value <= max && p.Value >= min).Select(p => p.Key).ToList();
+        }
+
+
         public Tuple<int, int> GetCoords() => Tuple.Create(X, Y);
 
         public int GetStepsTo(Point p)
@@ -149,5 +178,7 @@ namespace Xauonre.Core
         }
 
         public override bool Equals(object obj) => obj.GetType() == typeof(Point) && X == (obj as Point).X && Y == (obj as Point).Y;
+
+        public override int GetHashCode() => X * 1234 + Y * Y * 12;
     }
 }

@@ -16,10 +16,10 @@ namespace MiniXauonre.Controller
 
         public bool GameLegality { get; set; }
         public Dictionary<Player, Point> SpawnPoints { get; set; }
-        public Game(List<Tuple<string, Point>> playerNames)
+        public Game(List<Tuple<string, Point>> playerNames, int length = 20, int width = 50)
         {
             GameLegality = true;
-            Maze = new Map();
+            Maze = new Map(length, width);
             Players = new List<Player>();
             SpawnPoints = new Dictionary<Player, Point>();
             foreach (var name in playerNames)
@@ -55,9 +55,12 @@ namespace MiniXauonre.Controller
                 {
                     var units = Maze.GetIn(new Point(j, i));
                     if (units.Count == 0)
-                        Console.Write(".");
+                        if (Maze.MapTiles[i, j].Type == TileType.Empty)
+                            Console.Write(". ");
+                        else
+                            Console.Write("0 ");
                     else
-                        Console.Write(units.First().Name[0]);
+                        Console.Write(units.First().Name[0] + " ");
                 }
                 Console.WriteLine();
             }
@@ -111,7 +114,7 @@ namespace MiniXauonre.Controller
                 var answer = player.GetCommand(possibleCommands);
                 if (answer.Type == CommandType.UseAbility)
                 {
-                    hero.Skills[answer.Data[0]].Work(Maze, player, hero);
+                    hero.UseSkill(answer.Data[0], Maze, player);
                 }
                 else
                     break;
@@ -125,8 +128,9 @@ namespace MiniXauonre.Controller
                 foreach (var p in Players)
                 {
                     var hero = p.GetNextHero();
-                    hero.NextTurn(Maze, p);
+                    hero.StartTurn(Maze, p);
                     HeroTurn(hero, p);
+                    hero.EndTurn(Maze, p);
                 }
             }
         }

@@ -82,10 +82,11 @@ namespace MiniXauonre.Core.Heroes
 
         public void UseSkill(int id, Map map, Player player)
         {
-            if(id > 0 && id < Skills.Count)
+            if(id >= 0 && id < Skills.Count)
             {
                 var skill = Skills[id];
-
+                foreach (var perk in Perks)
+                    skill = perk.SkillFix(skill);
                 skill.Work(map, player, this);
             }
         }
@@ -324,7 +325,8 @@ namespace MiniXauonre.Core.Heroes
         {
             GetDamage,
             GetHeal,
-            NextTurn,
+            StartTurn,
+            EndTurn,
             Init,
         }
 
@@ -337,11 +339,10 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void NextTurn(Map m, Player p) => DoWithPerks(Actions.NextTurn, new FuncData(mapvalue: m, playerValue: p));
+        public void StartTurn(Map m, Player p) => DoWithPerks(Actions.StartTurn, new FuncData(mapvalue: m, playerValue: p));
 
-        private FuncData FNextTurn(FuncData data)
+        private FuncData FStartTurn(FuncData data)
         {
-            Regenerate();
             RefreshAttacks();
             RefreshMovement();
             foreach (var skill in Skills)
@@ -349,9 +350,29 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
+        public void EndTurn(Map m, Player p) => DoWithPerks(Actions.EndTurn, new FuncData(mapvalue: m, playerValue: p));
+
+        private FuncData FEndTurn(FuncData data)
+        {
+            Regenerate();
+            return data;
+        }
+
         public void RefreshMovement() => MovementLeft = GetMovementSpeed();
 
-        public void Regenerate() => GetHeal(GetRegen());
+        public void GetEnergized(double v)
+        {
+            AddEnergy(GetEnergyRegen());
+            var max = GetMaxEnergy();
+            if (GetEnergy() > max)
+                SetEnergy(max);
+        }
+
+        public void Regenerate()
+        {
+            GetHeal(GetRegen());
+            GetEnergized(GetEnergyRegen());
+        }
 
         public void RefreshAttacks() => AttacksLeft = (int)GetAttackSpeed();
 
@@ -394,11 +415,16 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         getHeal = perk.GetHeal(getHeal);
                     return getHeal(data);
-                case Actions.NextTurn:
-                    Func<FuncData, FuncData> nextTurn = FNextTurn;
+                case Actions.StartTurn:
+                    Func<FuncData, FuncData> startTurn = FStartTurn;
                     foreach (var perk in Perks)
-                        nextTurn = perk.NextTurn(nextTurn);
-                    return nextTurn(data);
+                        startTurn = perk.StartTurn(startTurn);
+                    return startTurn(data);
+                case Actions.EndTurn:
+                    Func<FuncData, FuncData> endTurn = FEndTurn;
+                    foreach (var perk in Perks)
+                        endTurn = perk.EndTurn(endTurn);
+                    return endTurn(data);
                 case Actions.Init:
                     Func<FuncData, FuncData> init = FInit;
                     foreach (var perk in Perks)

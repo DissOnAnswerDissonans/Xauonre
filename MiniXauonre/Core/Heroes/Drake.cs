@@ -25,7 +25,7 @@ namespace MiniXauonre.Core.Heroes
 
             Burn = new Perk
             {
-                NextTurn = (v) => (d) =>
+                StartTurn = (v) => (d) =>
                 {
                     var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
                     v(d);

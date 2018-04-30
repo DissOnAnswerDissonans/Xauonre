@@ -66,7 +66,8 @@ namespace MiniXauonre.Core
         //Fns
         public Act GetDamage { get;  set; }
         public Act GetHeal { get;  set; }
-        public Act NextTurn { get;  set; }
+        public Act StartTurn { get;  set; }
+        public Act EndTurn { get; set; }
         public Act Init { get; set; }
 
         public UseSkill SkillFix { get;  set; }
@@ -104,7 +105,8 @@ namespace MiniXauonre.Core
             //Fns
             GetDamage = (a) => a;
             GetHeal = (a) => a;
-            NextTurn = (a) => a;
+            StartTurn = (a) => a;
+            EndTurn = (a) => a;
             Init = (a) => a;
             //Skills
             SkillFix = (s) => s;

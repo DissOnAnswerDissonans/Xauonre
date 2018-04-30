@@ -45,6 +45,7 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = SnipeCooldown,
                 EnergyCost = SnipeEnergyCost,
             };
+            Snipe.SkillTypes.Add(SkillType.Special);
             Skills.Add(Snipe);
         }
     }

@@ -49,5 +49,6 @@ namespace MiniXauonre.Core
     {
         Attack,
         Move,
+        Special
     }
 }
