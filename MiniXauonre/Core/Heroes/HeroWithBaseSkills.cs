@@ -34,7 +34,7 @@ namespace MiniXauonre.Core.Heroes
                         if (enemiesInRange.Count != 0)
                         {
                             Target = ChooseTarget(enemiesInRange, p);
-                            var at = new Damage(GetAttackPower());
+                            var at = new Damage(p, GetAttackPower());
                             Target.GetDamage(at);
                             AttacksLeft--;
                             //Console.WriteLine(Attack.ToString());

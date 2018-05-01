@@ -69,6 +69,7 @@ namespace MiniXauonre.Core
         public Act StartTurn { get;  set; }
         public Act EndTurn { get; set; }
         public Act Init { get; set; }
+        public Act LevelUp { get; set; }
 
         public UseSkill SkillFix { get;  set; }
 
@@ -102,12 +103,15 @@ namespace MiniXauonre.Core
             SetEnergyRegen = baseSetter;
             GetMaxEnergy = baseGetter;
             SetMaxEnergy = baseSetter;
+            GetMoney = baseGetter;
+            SetMoney = baseSetter;
             //Fns
             GetDamage = (a) => a;
             GetHeal = (a) => a;
             StartTurn = (a) => a;
             EndTurn = (a) => a;
             Init = (a) => a;
+            LevelUp = (a) => a;
             //Skills
             SkillFix = (s) => s;
         }

@@ -14,11 +14,13 @@ namespace MiniXauonre.Controller
         public List<Player> Players { get; set; }
         public Map Maze { get; set; }
 
+        public int HeroesNumber { get; set; }
         public bool GameLegality { get; set; }
         public Dictionary<Player, Point> SpawnPoints { get; set; }
-        public Game(List<Tuple<string, Point>> playerNames, int length = 20, int width = 50)
+        public Game(List<Tuple<string, Point>> playerNames, int heroesNumber = 1, int length = 20, int width = 50)
         {
             GameLegality = true;
+            HeroesNumber = heroesNumber;
             Maze = new Map(length, width);
             Players = new List<Player>();
             SpawnPoints = new Dictionary<Player, Point>();
@@ -34,7 +36,7 @@ namespace MiniXauonre.Controller
         public void StartGame()
         {
             //Choose heroes
-            ChooseHeroes(2, HeroMaker.GetAllHeroes());
+            ChooseHeroes(HeroesNumber, HeroMaker.GetAllHeroes());
 
 
             //Choose Talents
@@ -64,7 +66,6 @@ namespace MiniXauonre.Controller
                 }
                 Console.WriteLine();
             }
-
 
             foreach (var hero in Maze.UnitPositions.Keys)
                 hero.FastPrintStats();
@@ -115,22 +116,30 @@ namespace MiniXauonre.Controller
                 if (answer.Type == CommandType.UseAbility)
                 {
                     hero.UseSkill(answer.Data[0], Maze, player);
+                    CheckWorld();
                 }
                 else
+                {
+                    CheckWorld();
                     break;
+                }
             }
         }
 
         public void GameProcess()
         {
-            while (true)
+            while (GameLegality)
             {
                 foreach (var p in Players)
                 {
                     var hero = p.GetNextHero();
+                    Console.WriteLine();
+                    Console.WriteLine(hero.Name);
                     hero.StartTurn(Maze, p);
                     HeroTurn(hero, p);
                     hero.EndTurn(Maze, p);
+                    if (!GameLegality)
+                        break;
                 }
             }
         }

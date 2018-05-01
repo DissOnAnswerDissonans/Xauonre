@@ -35,7 +35,7 @@ namespace MiniXauonre.Core.Heroes
                     var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
                     v(d);
                     var enemiesInRange = GetEnemiesInRange(d.PlayerValue, d.MapValue, AoeRange);
-                    var attack = new Damage(magic: dmg);
+                    var attack = new Damage(d.PlayerValue, magic: dmg);
                     foreach (var enemy in enemiesInRange)
                         enemy.GetDamage(attack);
                     GetDamage(attack);
@@ -48,9 +48,9 @@ namespace MiniXauonre.Core.Heroes
             {
                 Name = "Martyr",
                 Explanation = () => Burning ? "Turn off martyr." : 
-                    "Turnes on dealing " + HpScale * 100 + "% you current Hp + " + APScale + "%("+
+                    "Turnes on dealing " + HpScale * 100 + "% you current Hp + " + APScale + "%AP ("+
                     + (GetHp() * HpScale + GetAbilityPower() * APScale)
-                    + ") AP magic damage to you and your enemies within " + AoeRange
+                    + ") magic damage to you and your enemies within " + AoeRange
                     + " units around you at the end of every your turn. (You can die)",
 
                 Job = (m, p , h) =>

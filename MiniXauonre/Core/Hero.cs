@@ -30,6 +30,8 @@ namespace MiniXauonre.Core.Heroes
         private double energy;
         private double energyRegen;
 
+        public int Level { get; set; }
+
         public int AttacksLeft { get; set; }
         public double MovementLeft { get; set; }
 
@@ -56,7 +58,7 @@ namespace MiniXauonre.Core.Heroes
             energy = maxEnergy;
             energyRegen = 0;
 
-
+            Level = 0;
         }
 
 
@@ -328,6 +330,14 @@ namespace MiniXauonre.Core.Heroes
             StartTurn,
             EndTurn,
             Init,
+            LevelUp,
+        }
+
+        public void LevelUp() => DoWithPerks(Actions.LevelUp, new FuncData());
+
+        private FuncData FLevelUp(FuncData data) {
+            Level++;
+            return data;
         }
 
         public void Init() => DoWithPerks(Actions.Init, new FuncData());
@@ -376,16 +386,17 @@ namespace MiniXauonre.Core.Heroes
 
         public void RefreshAttacks() => AttacksLeft = (int)GetAttackSpeed();
 
-        public void GetDamage(Damage damage) => DoWithPerks(Actions.GetDamage, new FuncData(dmgV: damage));
+        public void GetDamage(Damage damage) => DoWithPerks(Actions.GetDamage, new FuncData(playerValue: damage.Pl, dmgV: damage));
 
         private FuncData FGetDamage(FuncData damage)
         {
             var arm = GetArmor();
             var res = GetResist();
-            var resDamage = new Damage(damage.DamageValue.Phys > arm ? damage.DamageValue.Phys - arm : 0,
+            var resDamage = new Damage(damage.PlayerValue, damage.DamageValue.Phys > arm ? damage.DamageValue.Phys - arm : 0,
                 damage.DamageValue.Magic > res ? damage.DamageValue.Magic - res : 0,
                 damage.DamageValue.Pure);
             AddHp(-resDamage.Sum());
+            resDamage.NotifyPlayer();
             return new FuncData(dmgV: resDamage);
         }
 
@@ -430,6 +441,11 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         init = perk.Init(init);
                     return init(data);
+                case Actions.LevelUp:
+                    Func<FuncData, FuncData> levelUp = FLevelUp;
+                    foreach (var perk in Perks)
+                        levelUp = perk.LevelUp(levelUp);
+                    return levelUp(data);
                 default:
                     return new FuncData();
             }

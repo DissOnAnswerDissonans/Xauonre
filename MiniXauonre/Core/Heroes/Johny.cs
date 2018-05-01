@@ -7,7 +7,7 @@ using Xauonre.Core;
 
 namespace MiniXauonre.Core.Heroes
 {
-    class Anthrax : HeroWithBaseSkills
+    class Johny : HeroWithBaseSkills
     {
         public Skill Boom { get; set; }
         public const double BoomJumpRange = 9;
@@ -17,9 +17,9 @@ namespace MiniXauonre.Core.Heroes
         public const double BoomDamage = 100;
         public const double BoomDamageAPScale = 1.5;
 
-        public Anthrax()
+        public Johny()
         {
-            Name = "Anthrax";
+            Name = "Johny";
             SetMaxHp(1200);
             SetMaxEnergy(150);
             SetRegen(5);
@@ -27,7 +27,7 @@ namespace MiniXauonre.Core.Heroes
 
             Boom = new Skill
             {
-                Name = "Boom",
+                Name = "Here comes Johny",
                 Explanation = () => "Jumps on enemy in " + BoomJumpRange + " units from you and deales " +
                     + BoomDamage + " + " + BoomDamageAPScale * 100 + "% AP (" 
                     + (BoomDamage + BoomDamageAPScale * GetAbilityPower()) + ") Pure damage to all enemies in "
@@ -38,7 +38,7 @@ namespace MiniXauonre.Core.Heroes
                     if (enemiesInRange.Count != 0)
                     {
                         Target = ChooseTarget(enemiesInRange, p);
-                        var damage = new Damage(pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
+                        var damage = new Damage(p, pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
                         m.UnitPositions[this] = m.UnitPositions[Target] + new Point();
                         var enemiesInBombRange = GetEnemiesInRange(p, m, BoomBombRange);
                         foreach (var enemy in enemiesInBombRange)

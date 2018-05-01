@@ -40,7 +40,7 @@ namespace MiniXauonre.Core.Heroes
                     if (enemiesInRange.Count != 0)
                     {
                         Target = ChooseTarget(enemiesInRange, p);
-                        var damage = new Damage(phys: SnipeDamage + SnipeApScale * GetAbilityPower());
+                        var damage = new Damage(p, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
                         Target.GetDamage(damage);
                         return true;
                     }

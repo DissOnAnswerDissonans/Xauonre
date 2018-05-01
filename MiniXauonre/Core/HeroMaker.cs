@@ -17,7 +17,8 @@ namespace MiniXauonre.Core
                 new Thief(),
                 new Drake(),
                 new Sniper(),
-                new Anthrax()
+                new Johny(),
+                new Tupotrof(),
             };
         }
     }

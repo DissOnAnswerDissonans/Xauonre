@@ -15,7 +15,7 @@ namespace MiniXauonre.Core.Heroes
         public const double WallMaxDist = 13;
         public const double WallManaPerTurnCost = 30;
         public const double RageArmorBuff = 2;
-        public const double RageADBuff = 1;
+        public const double RageADBuff = 3;
         public const double RageDuration = 2;
 
         public Skill Wall { get; set; }
@@ -43,10 +43,10 @@ namespace MiniXauonre.Core.Heroes
 
             Rage = new Perk
             {
-                GetArmor = (g) => () => g() + Stacks,
-                SetArmor = (s) => (v) => s(v - Stacks),
-                GetAttackPower = (g) => () => g() + Stacks,
-                SetAttackPower = (s) => (v) => s(v - Stacks),
+                GetArmor = (g) => () => g() + Stacks * RageArmorBuff,
+                SetArmor = (s) => (v) => s(v - Stacks * RageArmorBuff),
+                GetAttackPower = (g) => () => g() + Stacks * RageADBuff,
+                SetAttackPower = (s) => (v) => s(v - Stacks * RageADBuff),
 
                 StartTurn = (i) => (d) =>
                 {

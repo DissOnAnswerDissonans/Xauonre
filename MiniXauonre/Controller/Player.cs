@@ -15,17 +15,63 @@ namespace MiniXauonre.Controller
 
         private int heroIterator;
 
+        public double AllDamage { get; set; }
+
+        public static double[] Levels =
+        {
+            0,
+            300,
+            1000,
+            2000,
+            3500,
+            6000,
+            10000,
+            16000,
+            30000,
+            50000,
+            100000
+        };
+
+        public int Level { get; set; }
+
+        public int LevelUpMoney { get; set; }
+
         public Player(string name)
         {
+            Level = 0;
+            AllDamage = 0;
             Name = name;
             Heroes = new List<Hero>();
             heroIterator = 0;
+
+            LevelUpMoney = 100;
+        }
+
+
+
+        public void LevelUp()
+        {
+            Level++;
+            foreach(var hero in Heroes)
+            {
+                hero.AddMoney(Level * LevelUpMoney);
+                hero.LevelUp();
+            }
+        }
+
+
+        public void NotifyAboutDamage(Damage damage)
+        {
+            AllDamage += damage.Sum();
+            while (Level < Levels.Length - 1 && Levels[Level + 1] <= AllDamage)
+                LevelUp();
         }
 
         public Command GetCommand(List<Command> possiblComands)
         {
             Console.WriteLine();
             Console.WriteLine(Name);
+            Console.WriteLine(AllDamage);
             var chosenCommand = possiblComands[GetAnswer(possiblComands.Select(c => c.Type.ToString()).ToList())];
 
             if (chosenCommand.MetaData == null)
@@ -69,5 +115,10 @@ namespace MiniXauonre.Controller
             heroIterator++;
             return Heroes[heroIterator - 1];
         }
+
+
+
+
+
     }
 }
