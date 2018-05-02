@@ -122,12 +122,5 @@ namespace MiniXauonre.Core.Heroes
             var answer = player.GetCommand(possibleCommands);
             return steps[answer.Data[0]];
         }
-
-
-
-
-      
-
-
     }
 }

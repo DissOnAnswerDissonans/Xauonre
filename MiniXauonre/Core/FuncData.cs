@@ -9,11 +9,11 @@ namespace MiniXauonre.Core
 {
     class FuncData
     {
-        public double DoubleValue { get; private set; }
-        public bool BoolValue { get; private set; }
-        public Damage DamageValue { get; private set; }
-        public Map MapValue { get; private set; }
-        public Player PlayerValue { get; private set; }
+        public double DoubleValue { get; set; }
+        public bool BoolValue { get; set; }
+        public Damage DamageValue { get; set; }
+        public Map MapValue { get; set; }
+        public Player PlayerValue { get; set; }
 
         public FuncData(double dV = 0, bool bV = false, Damage dmgV = null, Map mapvalue = null, Player playerValue = null) {
             DoubleValue = dV;
