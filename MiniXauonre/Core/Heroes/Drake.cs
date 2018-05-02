@@ -56,7 +56,7 @@ namespace MiniXauonre.Core.Heroes
                     + ") magic damage to you and your enemies within " + AoeRange
                     + " units around you at the end of every your turn. (You can die)",
 
-                Job = (m, p , h) =>
+                Job = (h) =>
                 {
                     Burning = !Burning;
                     return true;

@@ -41,7 +41,7 @@ namespace MiniXauonre.Core
         {
             foreach(var effect in Effects.Where(e => e.Creator == hero).ToList())
             {
-                effect.Tick(this, player, hero);
+                effect.Tick(hero);
                 if (effect.Timer < 0)
                     Effects.Remove(effect);
             }

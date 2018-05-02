@@ -54,6 +54,7 @@
     <Compile Include="Core\Heroes\Drake.cs" />
     <Compile Include="Core\Heroes\Fe11.cs" />
     <Compile Include="Core\Heroes\HeroWithBaseSkills.cs" />
+    <Compile Include="Core\Heroes\Micro.cs" />
     <Compile Include="Core\Heroes\Sniper.cs" />
     <Compile Include="Core\Heroes\Thief.cs" />
     <Compile Include="Core\Heroes\Tupotrof.cs" />
@@ -74,6 +75,9 @@
   <ItemGroup>
     <Folder Include="Core\Skills\" />
     <Folder Include="Tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Core\MiniXauonreHEROES.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

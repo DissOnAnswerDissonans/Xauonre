@@ -43,7 +43,7 @@ namespace MiniXauonre.Core.Heroes
                     + (CutterDamage + CutterADScale * GetAttackPower()) + ") phyc damage"
                     + " to all enemies within AA range (" + GetAttackRange() + ").",
                 CoolDown = CutterCooldown,
-                Job = (m, p, h) =>
+                Job = (h) =>
                 {
                     var damage = new Damage(p, phys: CutterDamage + CutterADScale * GetAttackPower());
                     var targets = GetEnemiesInRange(p, m, GetAttackRange());

@@ -151,7 +151,7 @@ namespace MiniXauonre.Controller
                 foreach (var h in p.Heroes)
                 {
                     Maze.UnitPositions.Add(h, SpawnPoints[p] + new Point());
-                    h.Init();
+                    h.Init(p, Maze);
                 }
         }
 

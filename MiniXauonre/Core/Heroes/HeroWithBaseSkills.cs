@@ -25,7 +25,7 @@ namespace MiniXauonre.Core.Heroes
             {
                 Name = "Attack",
                 Explanation = () => "Deales " + GetAttackPower() + " damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
-                Job = (m, p, h) =>
+                Job = (h) =>
                 {
                     if (AttacksLeft != 0)
                     {
@@ -52,7 +52,24 @@ namespace MiniXauonre.Core.Heroes
                 Name = "Move",
                 Explanation = () => "Moves you into nearby empty cell on the map (linearry costs " + GeometryRules.NormalFactor + " movement, dioganally "
                     + GeometryRules.DiagonalFactor + " movement).",
-                Job = MoveJob,
+                Job = (h) =>
+                {
+                    var hA = h as HeroWithBaseSkills;
+                    var possibleSteps = PossibleSteps
+                        .Where(s => s.Value <= MovementLeft && m.CellIsFree(s.Key + m.UnitPositions[h]))
+                        .Select(po => po.Key.ToStep())
+                        .ToList();
+                    if (possibleSteps.Count != 0)
+                    {
+                        var step = ChooseDirection(possibleSteps, p);
+                        var pStep = StepToPoint(step);
+                        var dist = new Point(0, 0).GetStepsTo(pStep);
+                        MovementLeft -= dist;
+                        m.UnitPositions[h].Add(pStep);
+                        return true;
+                    }
+                    return false;
+                },
             };
             Attack.SkillTypes.Add(SkillType.Attack);
             Move.SkillTypes.Add(SkillType.Move);
@@ -89,7 +106,7 @@ namespace MiniXauonre.Core.Heroes
 
 
 
-        private bool MoveJob(Map m, Player p, Hero h)
+        private bool MoveJob(Hero h)
         {
             var hA = h as HeroWithBaseSkills;
             var possibleSteps = PossibleSteps

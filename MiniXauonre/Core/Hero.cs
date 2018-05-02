@@ -30,6 +30,9 @@ namespace MiniXauonre.Core.Heroes
         private double energy;
         private double energyRegen;
 
+        public Map m { get; set; }
+        public Player p { get; set; }
+
         public int Level { get; set; }
 
         public int AttacksLeft { get; set; }
@@ -89,7 +92,7 @@ namespace MiniXauonre.Core.Heroes
                 var skill = Skills[id];
                 foreach (var perk in Perks)
                     skill = perk.SkillFix(skill);
-                skill.Work(map, player, this);
+                skill.Work(this);
             }
         }
 
@@ -340,12 +343,14 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void Init() => DoWithPerks(Actions.Init, new FuncData());
+        public void Init(Player pl, Map mp) => DoWithPerks(Actions.Init, new FuncData(playerValue: pl, mapvalue: mp));
 
         private FuncData FInit(FuncData data)
         {
             SetHp(GetMaxHp());
             SetEnergy(GetMaxEnergy());
+            p = data.PlayerValue;
+            m = data.MapValue;
             return data;
         }
 

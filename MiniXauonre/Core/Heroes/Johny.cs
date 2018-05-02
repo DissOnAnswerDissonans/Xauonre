@@ -32,7 +32,7 @@ namespace MiniXauonre.Core.Heroes
                     + BoomDamage + " + " + BoomDamageAPScale * 100 + "% AP (" 
                     + (BoomDamage + BoomDamageAPScale * GetAbilityPower()) + ") Pure damage to all enemies in "
                     + BoomBombRange + " units around you. Energy cost " + BoomEnergyCost + ". Cooldown " + BoomCooldown + ".",
-                Job = (m, p, h) =>
+                Job = (h) =>
                 {
                     var enemiesInRange = GetEnemiesInRange(p, m, BoomJumpRange);
                     if (enemiesInRange.Count != 0)

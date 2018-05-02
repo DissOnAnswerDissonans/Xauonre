@@ -36,7 +36,7 @@ namespace MiniXauonre.Core.Heroes
                     + (SnipeDamage + SnipeApScale * GetAbilityPower()) 
                     + ") physycal damage and root for " + SnipeRootTime + "turn. Range " + SnipeRange + 
                     ". Energy cost " + SnipeEnergyCost + ". Cooldown " + SnipeCooldown + ".",
-                Job = (m, p, h) =>
+                Job = (h) =>
                 {
                     var enemiesInRange = GetEnemiesInRange(p, m, SnipeRange);
                     if (enemiesInRange.Count != 0)
@@ -50,12 +50,12 @@ namespace MiniXauonre.Core.Heroes
                         var root = new Effect(this)
                         {
                             Timer = SnipeRootTime,
-                            Activate = (em, ep, eh) => 
+                            Activate = (eh) => 
                                 {
                                     foreach (var sk in enemyMoveSkills)
                                         eh.Skills.Remove(sk);
                                 },
-                            Disactivate = (em, ep, eh) =>
+                            Disactivate = (eh) =>
                                 {
                                     foreach(var sk in enemyMoveSkills)
                                         target.Skills.Add(sk);
@@ -63,7 +63,7 @@ namespace MiniXauonre.Core.Heroes
                         };
 
                         m.Effects.Add(root);
-                        root.Activate(m, p, target);
+                        root.Activate(target);
                         return true;
                     }
                     return false;

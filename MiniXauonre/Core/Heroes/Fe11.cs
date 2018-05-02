@@ -62,9 +62,9 @@ namespace MiniXauonre.Core.Heroes
                     if (sf.SkillTypes.Contains(SkillType.Attack))
                         return new Skill
                         {
-                            Job = (m, p, h) =>
+                            Job = (h) =>
                             {
-                                var prev = sf.Job(m, p, h);
+                                var prev = sf.Job(h);
                                 if (prev)
                                 {
                                     Calm = (int)RageDuration;
@@ -110,7 +110,7 @@ namespace MiniXauonre.Core.Heroes
                 Explanation = () => WallOn ? "Destroyes the wall builded by this skill." : "Builds a wall in " + WallMinDist + "-" + WallMaxDist +
                     " range around you. On next use destroyes it. Eats " + WallManaPerTurnCost + " energy at the end of turn (if not enough - turnes off).",
 
-                Job = (m, p, h) =>
+                Job = (h) =>
                 {
                     if (WallOn)
                         DestroyWall(m);
