@@ -397,7 +397,7 @@ namespace MiniXauonre.Core.Heroes
         {
             var arm = GetArmor();
             var res = GetResist();
-            var resDamage = new Damage(damage.PlayerValue, damage.DamageValue.Phys > arm ? damage.DamageValue.Phys - arm : 0,
+            var resDamage = new Damage(this, damage.PlayerValue, damage.DamageValue.Phys > arm ? damage.DamageValue.Phys - arm : 0,
                 damage.DamageValue.Magic > res ? damage.DamageValue.Magic - res : 0,
                 damage.DamageValue.Pure);
             AddHp(-resDamage.Sum());

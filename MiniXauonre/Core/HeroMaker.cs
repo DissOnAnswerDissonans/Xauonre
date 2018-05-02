@@ -21,6 +21,7 @@ namespace MiniXauonre.Core
                 new Tupotrof(),
                 new Micro(),
                 new Immortal(),
+                new Cyprys(),
             };
         }
     }

@@ -38,7 +38,7 @@ namespace MiniXauonre.Core.Heroes
                     if (enemiesInRange.Count != 0)
                     {
                         Target = ChooseTarget(enemiesInRange, P);
-                        var damage = new Damage(P, pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
+                        var damage = new Damage(this, P, pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
                         M.UnitPositions[this] = M.UnitPositions[Target] + new Point();
                         var enemiesInBombRange = GetEnemiesInRange(P, M, BoomBombRange);
                         foreach (var enemy in enemiesInBombRange)

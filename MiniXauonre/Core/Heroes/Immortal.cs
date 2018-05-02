@@ -26,7 +26,7 @@ namespace MiniXauonre.Core.Heroes
             Name = "Immortal";
             SetMaxHp(500);
             SetEnergyRegen(5);
-            SetEnergy(1000);
+            SetMaxEnergy(1000);
             SetArmor(10);
             SetResist(10);
             SetMovementSpeed(10);
@@ -41,8 +41,10 @@ namespace MiniXauonre.Core.Heroes
                     var damage = d.DamageValue;
                     var arm = GetArmor();
                     var res = GetResist();
-                    var resDamage = new Damage(this, d.PlayerValue, damage.Phys > arm ? damage.Phys - arm : 0,
-                        damage.Magic > res ? damage.Magic - res : 0,
+                    var armored = damage.Phys > arm ? arm : damage.Phys;
+                    var resisted = damage.Magic > arm ? arm : damage.Magic;
+                    var resDamage = new Damage(this, d.PlayerValue, damage.Phys - armored,
+                        damage.Magic - resisted,
                         damage.Pure);
                     var damageShould = resDamage.Sum();
                     if(damageShould > ShieldMaxDamage)
@@ -57,7 +59,10 @@ namespace MiniXauonre.Core.Heroes
                         resDamage.Pure *= coeff;
                         AddEnergy(-absorbed);
                     }
+                    resDamage.Phys += armored;
+                    resDamage.Magic += resisted;
                     d.DamageValue = resDamage;
+                    a(d);
                     return d;
                 },
 
@@ -67,7 +72,7 @@ namespace MiniXauonre.Core.Heroes
                     return d;
                 }
             };
-
+            Perks.Add(Shield);
 
             Reflection = new Perk
             {
@@ -79,6 +84,7 @@ namespace MiniXauonre.Core.Heroes
                         .GetDamage(new Damage(this, P,
                         magic: maxEnergy * StormMaxEnergyScale
                         + ap * StormAPScale));
+                    a(d);
                     return d;
                 },
 
@@ -90,11 +96,10 @@ namespace MiniXauonre.Core.Heroes
                     var damage = new Damage(this, P,
                         magic: maxEnergy * StormMaxEnergyScale
                         + ap * StormAPScale);
-                    d.DamageValue.Creator
-                        .GetDamage(damage);
                     var targets = GetEnemiesInRange(P, M, StormRange);
                     foreach (var target in targets)
                         target.GetDamage(damage);
+                    a(d);
                     return d;
                 },
             };
@@ -126,6 +131,7 @@ namespace MiniXauonre.Core.Heroes
             };
 
             Storm.SkillTypes.Add(SkillType.Special);
+            Skills.Add(Storm);
         }
     }
 }

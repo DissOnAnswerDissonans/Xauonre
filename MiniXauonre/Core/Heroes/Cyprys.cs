@@ -62,7 +62,7 @@ namespace MiniXauonre.Core.Heroes
                 "Cooldown: " + RockCooldown + ", Energy cost: " + RockEnergyCost,
                 Job = (h) =>
                 {
-
+                    return false;
                 },
                 CoolDown = RockCooldown,
                 EnergyCost = RockEnergyCost,
