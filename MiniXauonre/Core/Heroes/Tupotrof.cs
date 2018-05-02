@@ -19,7 +19,7 @@ namespace MiniXauonre.Core.Heroes
 
         public Tupotrof()
         {
-            Name = "Tupotrof";
+            Name = "tupotrof";
             SetMaxHp(900);
             SetAttackPower(40);
             SetAttackSpeed(2);

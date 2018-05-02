@@ -1,4 +1,5 @@
-﻿using MiniXauonre.Core.Heroes;
+﻿using MiniXauonre.Controller;
+using MiniXauonre.Core.Heroes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace MiniXauonre.Core
 {
     class Map
     {
+        public List<Effect> Effects { get; set; }
         public Tile[,] MapTiles { get; protected set; }
 
         public Dictionary<Hero, Point> UnitPositions { get; set; }
@@ -19,6 +21,7 @@ namespace MiniXauonre.Core
 
         public Map(int length = 20, int width = 50)
         {
+            Effects = new List<Effect>();
             UnitPositions = new Dictionary<Hero, Point>();
             MapTiles = new Tile[length, width];
             Width = width;
@@ -33,5 +36,15 @@ namespace MiniXauonre.Core
         public List<Hero> GetIn(Point p) => UnitPositions.Where(u => u.Value.X == p.X && u.Value.Y == p.Y).Select(u => u.Key).ToList();
 
         public bool CellIsFree(Point p) => IsInBounds(p) && MapTiles[p.X, p.Y].Type == TileType.Empty && GetIn(p).Count() == 0;
+
+        public void TickTalents(Player player, Hero hero)
+        {
+            foreach(var effect in Effects.Where(e => e.Creator == hero).ToList())
+            {
+                effect.Tick(this, player, hero);
+                if (effect.Timer < 0)
+                    Effects.Remove(effect);
+            }
+        }
     }
 }

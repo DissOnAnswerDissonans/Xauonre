@@ -32,13 +32,16 @@ namespace MiniXauonre.Core.Heroes
             {
                 EndTurn = (v) => (d) =>
                 {
-                    var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
-                    v(d);
-                    var enemiesInRange = GetEnemiesInRange(d.PlayerValue, d.MapValue, AoeRange);
-                    var attack = new Damage(d.PlayerValue, magic: dmg);
-                    foreach (var enemy in enemiesInRange)
-                        enemy.GetDamage(attack);
-                    GetDamage(attack);
+                    if (Burning)
+                    {
+                        var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
+                        v(d);
+                        var enemiesInRange = GetEnemiesInRange(d.PlayerValue, d.MapValue, AoeRange);
+                        var attack = new Damage(d.PlayerValue, magic: dmg);
+                        foreach (var enemy in enemiesInRange)
+                            enemy.GetDamage(attack);
+                        GetDamage(attack);
+                    }
                     return d;
                 } 
             };

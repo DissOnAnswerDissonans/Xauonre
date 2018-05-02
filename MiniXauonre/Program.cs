@@ -14,6 +14,7 @@ namespace MiniXauonre
     {
         static void Main(string[] args)
         {
+
             var w = 5;
             var l = 5;
             var heroesNumber = 1;
@@ -27,8 +28,7 @@ namespace MiniXauonre
                 heroesNumber,
                 l,
                 w);
-            foreach (var player in game.Players)
-                player.AllDamage = 1000000000;
+            //foreach (var player in game.Players)player.AllDamage = 1000000000;
             game.StartGame();
         }
     }

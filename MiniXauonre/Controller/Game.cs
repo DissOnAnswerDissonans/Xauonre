@@ -138,6 +138,7 @@ namespace MiniXauonre.Controller
                     hero.StartTurn(Maze, p);
                     HeroTurn(hero, p);
                     hero.EndTurn(Maze, p);
+                    Maze.TickTalents(p, hero);
                     if (!GameLegality)
                         break;
                 }

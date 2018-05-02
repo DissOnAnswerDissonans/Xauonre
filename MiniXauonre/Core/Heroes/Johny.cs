@@ -27,7 +27,7 @@ namespace MiniXauonre.Core.Heroes
 
             Boom = new Skill
             {
-                Name = "Here comes Johny",
+                Name = "Here's Johny",
                 Explanation = () => "Jumps on enemy in " + BoomJumpRange + " units from you and deales " +
                     + BoomDamage + " + " + BoomDamageAPScale * 100 + "% AP (" 
                     + (BoomDamage + BoomDamageAPScale * GetAbilityPower()) + ") Pure damage to all enemies in "
