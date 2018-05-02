@@ -43,6 +43,8 @@ namespace MiniXauonre.Core.Heroes
         public const double EarthEnergyCost = 150;
         public const double EarthCooldown = 10;
 
+        private List<Point> PlacedRocks { get; set; }
+
         public Cyprys()
         {
             Name = "Cyprys";
@@ -53,6 +55,8 @@ namespace MiniXauonre.Core.Heroes
             SetMovementSpeed(10);
             SetAttackRange(11);
 
+            PlacedRocks = new List<Point>();
+
             Rock = new Skill
             {
                 Name = "Rock",
@@ -62,12 +66,52 @@ namespace MiniXauonre.Core.Heroes
                 "Cooldown: " + RockCooldown + ", Energy cost: " + RockEnergyCost,
                 Job = (h) =>
                 {
+                    var damage = new Damage(h.P, 0, RockDamage + RockDamageAPscale * GetAbilityPower(), 0);
+                    var pos = h.M.UnitPositions[h].GetPointsInDistance(0, RockRange).Where(pp => h.M.IsInBounds(pp)).ToList();
+                    var point = ChoosePoint(pos, h.P);
 
+                    var RockEffect = new Effect(h, (int)RockSustain)
+                    {
+                        Activate = (eh) =>
+                        {
+                            if (eh.M.MapTiles[point.X, point.Y].Type != TileType.Solid)
+                            {
+                                PlacedRocks.Add(point);
+                                eh.M.MapTiles[point.X, point.Y].Type = TileType.Solid;
+                            }
+                        },
+                        Disactivate = (eh) =>
+                        {
+                            eh.M.MapTiles[point.X, point.Y].Type = TileType.Empty;
+                        }
+                    };
+
+                    RockEffect.Activate(h);
+                    var p = point.GetPointsInDistance(0, RockDamageRadius);
+                    foreach (var victim in h.M.UnitPositions.Where(t => p.Contains(t.Value)))
+                    {
+                        victim.Key.GetDamage(damage);
+                    }
+                    return true;
                 },
                 CoolDown = RockCooldown,
                 EnergyCost = RockEnergyCost,
             };
+            /*
+            EarthPower = new Skill
+            {
+                Name = "Earth Power",
+                Explanation = () => "...",
+                Job = (h) =>
+                {
 
+                },
+                CoolDown = EarthCooldown,
+                EnergyCost = EarthEnergyCost,
+            };*/
+
+            Skills.Add(Rock);
+            //Skills.Add(EarthPower);
         }
     }
 }
