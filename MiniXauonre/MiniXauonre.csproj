@@ -51,6 +51,7 @@
     <Compile Include="Core\Geometry.cs" />
     <Compile Include="Core\Hero.cs" />
     <Compile Include="Core\Heroes\Cyprys.cs" />
+    <Compile Include="Core\Heroes\Immortal.cs" />
     <Compile Include="Core\Heroes\Johny.cs" />
     <Compile Include="Core\Heroes\Drake.cs" />
     <Compile Include="Core\Heroes\Fe11.cs" />

@@ -20,6 +20,7 @@ namespace MiniXauonre.Core
                 new Johny(),
                 new Tupotrof(),
                 new Micro(),
+                new Immortal(),
             };
         }
     }
