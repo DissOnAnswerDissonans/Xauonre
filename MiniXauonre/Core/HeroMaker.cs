@@ -19,6 +19,7 @@ namespace MiniXauonre.Core
                 new Sniper(),
                 new Johny(),
                 new Tupotrof(),
+                new Micro(),
             };
         }
     }

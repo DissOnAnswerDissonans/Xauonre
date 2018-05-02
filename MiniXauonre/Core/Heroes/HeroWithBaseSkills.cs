@@ -29,12 +29,11 @@ namespace MiniXauonre.Core.Heroes
                 {
                     if (AttacksLeft != 0)
                     {
-                        var hA = h as HeroWithBaseSkills;
-                        var enemiesInRange = GetEnemiesInRange(p, m, GetAttackRange());
+                        var enemiesInRange = GetEnemiesInRange(h.P, h.M, GetAttackRange());
                         if (enemiesInRange.Count != 0)
                         {
-                            Target = ChooseTarget(enemiesInRange, p);
-                            var at = new Damage(p, GetAttackPower());
+                            Target = ChooseTarget(enemiesInRange, P);
+                            var at = new Damage(P, GetAttackPower());
                             Target.GetDamage(at);
                             AttacksLeft--;
                             //Console.WriteLine(Attack.ToString());
@@ -56,16 +55,16 @@ namespace MiniXauonre.Core.Heroes
                 {
                     var hA = h as HeroWithBaseSkills;
                     var possibleSteps = PossibleSteps
-                        .Where(s => s.Value <= MovementLeft && m.CellIsFree(s.Key + m.UnitPositions[h]))
+                        .Where(s => s.Value <= MovementLeft && M.CellIsFree(s.Key + M.UnitPositions[h]))
                         .Select(po => po.Key.ToStep())
                         .ToList();
                     if (possibleSteps.Count != 0)
                     {
-                        var step = ChooseDirection(possibleSteps, p);
+                        var step = ChooseDirection(possibleSteps, P);
                         var pStep = StepToPoint(step);
                         var dist = new Point(0, 0).GetStepsTo(pStep);
                         MovementLeft -= dist;
-                        m.UnitPositions[h].Add(pStep);
+                        M.UnitPositions[h].Add(pStep);
                         return true;
                     }
                     return false;
@@ -83,6 +82,11 @@ namespace MiniXauonre.Core.Heroes
                             .Select(u => u.Key)
                             .ToList();
 
+        protected List<Hero> GetHeroesInRange(Player p, Map m, double r) => m.UnitPositions
+                            .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
+                            .Select(u => u.Key)
+                            .ToList();
+
         protected Hero ChooseTarget(List<Hero> targets, Player player)
         {
             var possibleCommands = new List<Command>
@@ -91,6 +95,22 @@ namespace MiniXauonre.Core.Heroes
                     };
             var answer = player.GetCommand(possibleCommands);
             return targets[answer.Data[0]];
+        }
+
+
+        protected Point ChoosePoint(List<Point> points, Player player)
+        {
+            var possibleCommands = new List<Command>
+                {
+                    new Command(CommandType.Choose, new List<List<string>>{ points.Select(p => p.X + " " + p.Y).ToList()}),
+                };
+            var answer = player.GetCommand(possibleCommands);
+            return points[answer.Data[0]];
+        }
+
+        protected Point AskRelativePoint(Point zero, Player player)
+        {
+            return zero;
         }
 
         protected StepTypes ChooseDirection(List<StepTypes> steps, Player player)
@@ -106,42 +126,7 @@ namespace MiniXauonre.Core.Heroes
 
 
 
-        private bool MoveJob(Hero h)
-        {
-            var hA = h as HeroWithBaseSkills;
-            var possibleSteps = PossibleSteps
-                .Where(s => s.Value <= MovementLeft && m.CellIsFree(s.Key + m.UnitPositions[h]))
-                .Select(po => po.Key.ToStep())
-                .ToList();
-            if (possibleSteps.Count != 0)
-            {
-                var step = ChooseDirection(possibleSteps, p);
-                var pStep = StepToPoint(step);
-                var dist = new Point(0, 0).GetStepsTo(pStep);
-                MovementLeft -= dist;
-                m.UnitPositions[h].Add(pStep);
-                return true;
-            }
-
-            /*Console.WriteLine();
-            Console.WriteLine((int)MovementLeft);
-            Console.WriteLine();
-
-            for(var i = 0; i < 10; i++)
-            {
-                for(var j = 0; j < 10; j++)
-                {
-                    var units = m.GetIn(new Point(j, i));
-                    if (units.Count == 0)
-                        Console.Write(". ");
-                    else
-                        Console.Write(units.First().Name[0] + " ");
-                        
-                }
-                Console.WriteLine();
-            }*/
-            return false;
-        }
+      
 
 
     }

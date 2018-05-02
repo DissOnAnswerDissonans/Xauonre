@@ -113,9 +113,9 @@ namespace MiniXauonre.Core.Heroes
                 Job = (h) =>
                 {
                     if (WallOn)
-                        DestroyWall(m);
+                        DestroyWall(M);
                     else
-                        BuildWall(m);
+                        BuildWall(M);
                     return WallOn;
                 },
             };

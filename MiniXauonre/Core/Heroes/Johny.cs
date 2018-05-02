@@ -34,13 +34,13 @@ namespace MiniXauonre.Core.Heroes
                     + BoomBombRange + " units around you. Energy cost " + BoomEnergyCost + ". Cooldown " + BoomCooldown + ".",
                 Job = (h) =>
                 {
-                    var enemiesInRange = GetEnemiesInRange(p, m, BoomJumpRange);
+                    var enemiesInRange = GetEnemiesInRange(P, M, BoomJumpRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        Target = ChooseTarget(enemiesInRange, p);
-                        var damage = new Damage(p, pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
-                        m.UnitPositions[this] = m.UnitPositions[Target] + new Point();
-                        var enemiesInBombRange = GetEnemiesInRange(p, m, BoomBombRange);
+                        Target = ChooseTarget(enemiesInRange, P);
+                        var damage = new Damage(P, pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
+                        M.UnitPositions[this] = M.UnitPositions[Target] + new Point();
+                        var enemiesInBombRange = GetEnemiesInRange(P, M, BoomBombRange);
                         foreach (var enemy in enemiesInBombRange)
                             enemy.GetDamage(damage);
                         return true;

@@ -30,8 +30,8 @@ namespace MiniXauonre.Core.Heroes
         private double energy;
         private double energyRegen;
 
-        public Map m { get; set; }
-        public Player p { get; set; }
+        public Map M { get; set; }
+        public Player P { get; set; }
 
         public int Level { get; set; }
 
@@ -349,8 +349,8 @@ namespace MiniXauonre.Core.Heroes
         {
             SetHp(GetMaxHp());
             SetEnergy(GetMaxEnergy());
-            p = data.PlayerValue;
-            m = data.MapValue;
+            P = data.PlayerValue;
+            M = data.MapValue;
             return data;
         }
 

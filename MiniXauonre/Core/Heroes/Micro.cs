@@ -31,6 +31,7 @@ namespace MiniXauonre.Core.Heroes
 
         public Micro()
         {
+            Name = "Micro";
             SetAttackPower(70);
             SetMaxHp(1500);
             SetMaxEnergy(200);
@@ -38,18 +39,16 @@ namespace MiniXauonre.Core.Heroes
             SetMovementSpeed(13);
             SetRegen(5);
 
-            Map = null;
-            Player = null;
             Defence = new Perk
             {
                 GetArmor = (g) => () => 
-                    g() + DefenceADScale * GetEnemiesInRange(Player, Map, DefenceRadius).Count(),
+                    g() + DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count(),
                 SetArmor = (s) => (v) => 
-                    s(v - DefenceADScale * GetEnemiesInRange(Player, Map, DefenceRadius).Count),
+                    s(v - DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count),
                 GetResist = (g) => () =>
-                    g() + DefenceADScale * GetEnemiesInRange(Player, Map, DefenceRadius).Count(),
+                    g() + DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count(),
                 SetResist = (s) => (v) =>
-                    s(v - DefenceADScale * GetEnemiesInRange(Player, Map, DefenceRadius).Count),
+                    s(v - DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count),
             };
             Perks.Add(Defence);
 
@@ -63,6 +62,16 @@ namespace MiniXauonre.Core.Heroes
                 EnergyCost = DropCost,
                 Job = (h) =>
                 {
+                    var targets = GetHeroesInRange(h.P, h.M, DropCatchRadius).Where(t => t != this).ToList();
+                    if (targets.Count == 0)
+                        return false;
+                    Target = ChooseTarget(targets, h.P);
+                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis)
+                        .Where(p => h.M.CellIsFree(p)).ToList();
+                    if (points.Count == 0)
+                        return false;
+                    var point = ChoosePoint(points, h.P);
+                    h.M.UnitPositions[Target] = point;
                     return true;
                 }
             };
@@ -100,7 +109,7 @@ namespace MiniXauonre.Core.Heroes
                         }
                     };
                     effect.Activate(h);
-                    h.m.Effects.Add(effect);
+                    h.M.Effects.Add(effect);
                     h.GetHeal(RestoreHeal * GetMaxHp());
                     return true;
                 }

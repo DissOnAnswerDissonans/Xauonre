@@ -45,8 +45,8 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = CutterCooldown,
                 Job = (h) =>
                 {
-                    var damage = new Damage(p, phys: CutterDamage + CutterADScale * GetAttackPower());
-                    var targets = GetEnemiesInRange(p, m, GetAttackRange());
+                    var damage = new Damage(P, phys: CutterDamage + CutterADScale * GetAttackPower());
+                    var targets = GetEnemiesInRange(P, M, GetAttackRange());
                     foreach (var target in targets)
                         target.GetDamage(damage);
                     return true;

@@ -38,11 +38,11 @@ namespace MiniXauonre.Core.Heroes
                     ". Energy cost " + SnipeEnergyCost + ". Cooldown " + SnipeCooldown + ".",
                 Job = (h) =>
                 {
-                    var enemiesInRange = GetEnemiesInRange(p, m, SnipeRange);
+                    var enemiesInRange = GetEnemiesInRange(P, M, SnipeRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        Target = ChooseTarget(enemiesInRange, p);
-                        var damage = new Damage(p, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
+                        Target = ChooseTarget(enemiesInRange, P);
+                        var damage = new Damage(P, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
                         Target.GetDamage(damage);
 
                         var enemyMoveSkills = Target.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move)).ToList();
@@ -62,7 +62,7 @@ namespace MiniXauonre.Core.Heroes
                                 },
                         };
 
-                        m.Effects.Add(root);
+                        M.Effects.Add(root);
                         root.Activate(target);
                         return true;
                     }
