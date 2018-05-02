@@ -43,7 +43,7 @@ namespace MiniXauonre.Core.Heroes
         public const double EarthEnergyCost = 150;
         public const double EarthCooldown = 10;
 
-        private List<Point> PlacedRocks { get; set; }
+        private List<Tuple<Point, Effect>> PlacedRocks { get; set; }
 
         public Cyprys()
         {
@@ -55,7 +55,7 @@ namespace MiniXauonre.Core.Heroes
             SetMovementSpeed(10);
             SetAttackRange(11);
 
-            PlacedRocks = new List<Point>();
+            PlacedRocks = new List<Tuple<Point, Effect>>();
 
             Rock = new Skill
             {
@@ -66,27 +66,28 @@ namespace MiniXauonre.Core.Heroes
                 "Cooldown: " + RockCooldown + ", Energy cost: " + RockEnergyCost,
                 Job = (h) =>
                 {
-                    var damage = new Damage(h.P, 0, RockDamage + RockDamageAPscale * GetAbilityPower(), 0);
+                    var damage = new Damage(this, h.P, magic: RockDamage + RockDamageAPscale * GetAbilityPower());
                     var pos = h.M.UnitPositions[h].GetPointsInDistance(0, RockRange).Where(pp => h.M.IsInBounds(pp)).ToList();
                     var point = ChoosePoint(pos, h.P);
 
-                    var RockEffect = new Effect(h, (int)RockSustain)
+                    var RockEffect = new Effect(h, (int)RockSustain);
+                    RockEffect.Activate = (eh) =>
                     {
-                        Activate = (eh) =>
+                        if (eh.M.MapTiles[point.X, point.Y].Type != TileType.Solid)
                         {
-                            if (eh.M.MapTiles[point.X, point.Y].Type != TileType.Solid)
-                            {
-                                PlacedRocks.Add(point);
-                                eh.M.MapTiles[point.X, point.Y].Type = TileType.Solid;
-                            }
-                        },
-                        Disactivate = (eh) =>
-                        {
-                            eh.M.MapTiles[point.X, point.Y].Type = TileType.Empty;
+                            PlacedRocks.Add(Tuple.Create(point, RockEffect));
+                            eh.M.MapTiles[point.X, point.Y].Type = TileType.Solid;
                         }
                     };
 
+                    RockEffect.Disactivate = (eh) =>
+                    {
+                        PlacedRocks.Remove(Tuple.Create(point, RockEffect));
+                        eh.M.MapTiles[point.X, point.Y].Type = TileType.Empty;
+                    };
+
                     RockEffect.Activate(h);
+                    h.M.Effects.Add(RockEffect);
                     var p = point.GetPointsInDistance(0, RockDamageRadius);
                     foreach (var victim in h.M.UnitPositions.Where(t => p.Contains(t.Value)))
                     {
@@ -97,21 +98,56 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = RockCooldown,
                 EnergyCost = RockEnergyCost,
             };
-            /*
+
             EarthPower = new Skill
             {
                 Name = "Earth Power",
                 Explanation = () => "...",
                 Job = (h) =>
                 {
+                    var targets = GetEnemiesInRange(h.P, h.M, EarthRange);
+                    if (targets.Count == 0)
+                        return false;
+                    Target = ChooseTarget(targets, h.P); 
+                    var rocks = PlacedRocks.Where(p => p.Item1.GetStepsTo(h.M.UnitPositions[h]) <= EarthRangeReq);
+                    foreach (var r in rocks.ToList())
+                    {
+                        h.M.Effects.Remove(r.Item2);
+                        r.Item2.Disactivate(h);
+                    }
+                    var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * GetAbilityPower() +
+                        rocks.Count() * (EarthRockDamage + EarthRockDamageAPscale * GetAbilityPower()));
+                    if (rocks.Count() > 0)
+                    {
+                        var point = h.M.UnitPositions[Target];
+                        var RockEffect = new Effect(h, (int)RockSustain);
+                        RockEffect.Activate = (eh) =>
+                        {
+                            if (eh.M.MapTiles[point.X, point.Y].Type != TileType.Solid)
+                            {
+                                PlacedRocks.Add(Tuple.Create(point, RockEffect));
+                                eh.M.MapTiles[point.X, point.Y].Type = TileType.Solid;
+                            }
+                        };
 
+                        RockEffect.Disactivate = (eh) =>
+                        {
+                            PlacedRocks.Remove(Tuple.Create(point, RockEffect));
+                            eh.M.MapTiles[point.X, point.Y].Type = TileType.Empty;
+                        };
+
+                        RockEffect.Activate(h);
+                        h.M.Effects.Add(RockEffect);
+                    }
+                    return true;
                 },
                 CoolDown = EarthCooldown,
                 EnergyCost = EarthEnergyCost,
-            };*/
-
+            };
+            Rock.SkillTypes.Add(SkillType.Special);
+            EarthPower.SkillTypes.Add(SkillType.Special);
             Skills.Add(Rock);
-            //Skills.Add(EarthPower);
+            Skills.Add(EarthPower);
         }
     }
 }

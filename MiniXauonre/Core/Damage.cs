@@ -1,4 +1,5 @@
 ﻿using MiniXauonre.Controller;
+using MiniXauonre.Core.Heroes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace MiniXauonre.Core
     class Damage
     {
         public Player Pl { get; set; }
+        public Hero Creator { get; set; }
         public double Phys { get; set; }
         public double Magic { get; set; }
         public double Pure { get; set; }
-        public Damage(Player p, double phys = 0, double magic = 0, double pure = 0)
+        public Damage(Hero creator, Player p, double phys = 0, double magic = 0, double pure = 0)
         {
+            Creator = creator;
             Pl = p;
             Phys = phys;
             Magic = magic;

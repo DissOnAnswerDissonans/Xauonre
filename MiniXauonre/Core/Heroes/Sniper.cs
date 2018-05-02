@@ -42,7 +42,7 @@ namespace MiniXauonre.Core.Heroes
                     if (enemiesInRange.Count != 0)
                     {
                         Target = ChooseTarget(enemiesInRange, P);
-                        var damage = new Damage(P, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
+                        var damage = new Damage(this, P, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
                         Target.GetDamage(damage);
 
                         var enemyMoveSkills = Target.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move)).ToList();

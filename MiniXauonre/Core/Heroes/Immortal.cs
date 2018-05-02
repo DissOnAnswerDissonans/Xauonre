@@ -19,13 +19,14 @@ namespace MiniXauonre.Core.Heroes
         public const double StormCost = 0.2;
         public const double StormCD = 6;
         public Skill Storm { get; set; }
+        public Perk Reflection { get; set; }
 
         public Immortal()
         {
             Name = "Immortal";
             SetMaxHp(500);
             SetEnergyRegen(5);
-            SetEnergy(1000);
+            SetMaxEnergy(1000);
             SetArmor(10);
             SetResist(10);
             SetMovementSpeed(10);
@@ -40,8 +41,10 @@ namespace MiniXauonre.Core.Heroes
                     var damage = d.DamageValue;
                     var arm = GetArmor();
                     var res = GetResist();
-                    var resDamage = new Damage(d.PlayerValue, damage.Phys > arm ? damage.Phys - arm : 0,
-                        damage.Magic > res ? damage.Magic - res : 0,
+                    var armored = damage.Phys > arm ? arm : damage.Phys;
+                    var resisted = damage.Magic > arm ? arm : damage.Magic;
+                    var resDamage = new Damage(this, d.PlayerValue, damage.Phys - armored,
+                        damage.Magic - resisted,
                         damage.Pure);
                     var damageShould = resDamage.Sum();
                     if(damageShould > ShieldMaxDamage)
@@ -56,7 +59,10 @@ namespace MiniXauonre.Core.Heroes
                         resDamage.Pure *= coeff;
                         AddEnergy(-absorbed);
                     }
+                    resDamage.Phys += armored;
+                    resDamage.Magic += resisted;
                     d.DamageValue = resDamage;
+                    a(d);
                     return d;
                 },
 
@@ -66,13 +72,66 @@ namespace MiniXauonre.Core.Heroes
                     return d;
                 }
             };
+            Perks.Add(Shield);
+
+            Reflection = new Perk
+            {
+                GetDamage = (a) => (d) =>
+                {
+                    var maxEnergy = GetMaxEnergy();
+                    var ap = GetAbilityPower();
+                    d.DamageValue.Creator
+                        .GetDamage(new Damage(this, P,
+                        magic: maxEnergy * StormMaxEnergyScale
+                        + ap * StormAPScale));
+                    a(d);
+                    return d;
+                },
+
+
+                EndTurn = (a) => (d) =>
+                {
+                    var maxEnergy = GetMaxEnergy();
+                    var ap = GetAbilityPower();
+                    var damage = new Damage(this, P,
+                        magic: maxEnergy * StormMaxEnergyScale
+                        + ap * StormAPScale);
+                    var targets = GetEnemiesInRange(P, M, StormRange);
+                    foreach (var target in targets)
+                        target.GetDamage(damage);
+                    a(d);
+                    return d;
+                },
+            };
 
             Storm = new Skill
             {
                 Name = "Storm",
+                Explanation = () => "For next " + StormDuration
+                + " turns all enemies in " + StormRange
+                + " units from you and each time they do damage to" +
+                " this hero they take " + StormMaxEnergyScale * 100 +
+                "% MaxEnergy + " + StormAPScale * 100 + "%AP ("
+                + (StormMaxEnergyScale * GetMaxEnergy() + StormAPScale * GetAbilityPower()) +
+                ") magic damage. Cost " + StormCost + "%Energy. CD " +
+                StormCD,
+                CoolDown = 6,
+                Job = (h) =>
+                {
+                    var ef = new Effect(h, StormDuration)
+                    {
+                        Activate = (eh) => eh.Perks.Add(Reflection),
+                        Disactivate = (eh) => eh.Perks.Remove(Reflection),
+                    };
+                    h.M.Effects.Add(ef);
+                    ef.Activate(this);
+                    SetEnergy(GetEnergy() * (1 - StormCost));
+                    return true;
+                }
             };
 
             Storm.SkillTypes.Add(SkillType.Special);
+            Skills.Add(Storm);
         }
     }
 }
