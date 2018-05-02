@@ -19,6 +19,7 @@ namespace MiniXauonre.Core.Heroes
         public const double StormCost = 0.2;
         public const double StormCD = 6;
         public Skill Storm { get; set; }
+        public Perk Reflection { get; set; }
 
         public Immortal()
         {
@@ -40,7 +41,7 @@ namespace MiniXauonre.Core.Heroes
                     var damage = d.DamageValue;
                     var arm = GetArmor();
                     var res = GetResist();
-                    var resDamage = new Damage(d.PlayerValue, damage.Phys > arm ? damage.Phys - arm : 0,
+                    var resDamage = new Damage(this, d.PlayerValue, damage.Phys > arm ? damage.Phys - arm : 0,
                         damage.Magic > res ? damage.Magic - res : 0,
                         damage.Pure);
                     var damageShould = resDamage.Sum();
@@ -67,9 +68,61 @@ namespace MiniXauonre.Core.Heroes
                 }
             };
 
+
+            Reflection = new Perk
+            {
+                GetDamage = (a) => (d) =>
+                {
+                    var maxEnergy = GetMaxEnergy();
+                    var ap = GetAbilityPower();
+                    d.DamageValue.Creator
+                        .GetDamage(new Damage(this, P,
+                        magic: maxEnergy * StormMaxEnergyScale
+                        + ap * StormAPScale));
+                    return d;
+                },
+
+
+                EndTurn = (a) => (d) =>
+                {
+                    var maxEnergy = GetMaxEnergy();
+                    var ap = GetAbilityPower();
+                    var damage = new Damage(this, P,
+                        magic: maxEnergy * StormMaxEnergyScale
+                        + ap * StormAPScale);
+                    d.DamageValue.Creator
+                        .GetDamage(damage);
+                    var targets = GetEnemiesInRange(P, M, StormRange);
+                    foreach (var target in targets)
+                        target.GetDamage(damage);
+                    return d;
+                },
+            };
+
             Storm = new Skill
             {
                 Name = "Storm",
+                Explanation = () => "For next " + StormDuration
+                + " turns all enemies in " + StormRange
+                + " units from you and each time they do damage to" +
+                " this hero they take " + StormMaxEnergyScale * 100 +
+                "% MaxEnergy + " + StormAPScale * 100 + "%AP ("
+                + (StormMaxEnergyScale * GetMaxEnergy() + StormAPScale * GetAbilityPower()) +
+                ") magic damage. Cost " + StormCost + "%Energy. CD " +
+                StormCD,
+                CoolDown = 6,
+                Job = (h) =>
+                {
+                    var ef = new Effect(h, StormDuration)
+                    {
+                        Activate = (eh) => eh.Perks.Add(Reflection),
+                        Disactivate = (eh) => eh.Perks.Remove(Reflection),
+                    };
+                    h.M.Effects.Add(ef);
+                    ef.Activate(this);
+                    SetEnergy(GetEnergy() * (1 - StormCost));
+                    return true;
+                }
             };
 
             Storm.SkillTypes.Add(SkillType.Special);
