@@ -118,8 +118,11 @@ namespace MiniXauonre.Core.Heroes
                     Target = ChooseTarget(targets, h.P); 
                     var rocks = PlacedRocks.Where(p => p.Item1.GetStepsTo(h.M.UnitPositions[h]) <= EarthRangeReq);
                     var rocksNumber = rocks.Count();
+                    Effect maxLifeRock = null;
                     foreach (var r in rocks.ToList())
                     {
+                        if (maxLifeRock == null || maxLifeRock.Timer < r.Item2.Timer)
+                            maxLifeRock = r.Item2;
                         h.M.Effects.Remove(r.Item2);
                         r.Item2.Disactivate(h);
                     }
@@ -128,8 +131,8 @@ namespace MiniXauonre.Core.Heroes
                     Target.GetDamage(damage);
                     if (rocksNumber > 0)
                     {
-                        var point = h.M.UnitPositions[Target];
-                        var RockEffect = new Effect(h, (int)RockSustain);
+                        var point = h.M.UnitPositions[Target] + new Point(0,0);
+                        var RockEffect = new Effect(h, maxLifeRock.Timer);
                         RockEffect.Activate = (eh) =>
                         {
                             if (eh.M.MapTiles[point.X, point.Y].Type != TileType.Solid)
