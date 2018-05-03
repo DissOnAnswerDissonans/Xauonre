@@ -61,9 +61,9 @@ namespace MiniXauonre.Core.Heroes
             {
                 Name = "Rock",
                 Explanation = () => "Places a rock in range " + RockRange + " on " + RockSustain
-                + " turns, dealing " + RockDamage + " + " + RockDamageAPscale * 100 + "% AP (" +
-                (RockDamage + RockDamageAPscale * GetAbilityPower()) + " total) magical damage. " +
-                "Cooldown: " + RockCooldown + ", Energy cost: " + RockEnergyCost,
+                + " turns, dealing " + RockDamage + " + " + RockDamageAPscale * 100 + "%AP (" +
+                (RockDamage + RockDamageAPscale * GetAbilityPower()) + ") magical damage. " +
+                "Cooldown " + RockCooldown + ". Cost " + RockEnergyCost,
                 Job = (h) =>
                 {
                     var damage = new Damage(this, h.P, magic: RockDamage + RockDamageAPscale * GetAbilityPower());
@@ -102,7 +102,14 @@ namespace MiniXauonre.Core.Heroes
             EarthPower = new Skill
             {
                 Name = "Earth Power",
-                Explanation = () => "...",
+                Explanation = () => "Get all Rocks in " + EarthRangeReq + " units and throw in enemy in "
+                + EarthRange + " units dealing " + EarthDamage + " + " + EarthDamageAPscale * 100
+                + "%AP  +  for each Rock thrown " + EarthRockDamage + " + " + EarthRockDamageAPscale * 100
+                + "%AP (" + (EarthDamage + EarthDamageAPscale * GetAbilityPower() +
+                M.UnitPositions[this].GetPointsInDistance(0, EarthRangeReq)
+                .Where(a => PlacedRocks.Select(f=>f.Item1).Contains(a)).Count()
+                *(EarthRockDamage+EarthRockDamageAPscale*GetAbilityPower()))
+                + ")spell damage.\n CD " + EarthCooldown + ". Cost " + EarthEnergyCost,
                 Job = (h) =>
                 {
                     var targets = GetEnemiesInRange(h.P, h.M, EarthRange);
@@ -110,6 +117,7 @@ namespace MiniXauonre.Core.Heroes
                         return false;
                     Target = ChooseTarget(targets, h.P); 
                     var rocks = PlacedRocks.Where(p => p.Item1.GetStepsTo(h.M.UnitPositions[h]) <= EarthRangeReq);
+                    var rocksNumber = rocks.Count();
                     foreach (var r in rocks.ToList())
                     {
                         h.M.Effects.Remove(r.Item2);
@@ -117,7 +125,8 @@ namespace MiniXauonre.Core.Heroes
                     }
                     var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * GetAbilityPower() +
                         rocks.Count() * (EarthRockDamage + EarthRockDamageAPscale * GetAbilityPower()));
-                    if (rocks.Count() > 0)
+                    Target.GetDamage(damage);
+                    if (rocksNumber > 0)
                     {
                         var point = h.M.UnitPositions[Target];
                         var RockEffect = new Effect(h, (int)RockSustain);
@@ -144,10 +153,11 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = EarthCooldown,
                 EnergyCost = EarthEnergyCost,
             };
-            Rock.SkillTypes.Add(SkillType.Special);
             EarthPower.SkillTypes.Add(SkillType.Special);
-            Skills.Add(Rock);
             Skills.Add(EarthPower);
+            Skills.Add(Rock);
+            Rock.SkillTypes.Add(SkillType.Special);
+
         }
     }
 }

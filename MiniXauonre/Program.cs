@@ -30,6 +30,8 @@ namespace MiniXauonre
                 w);
             //foreach (var player in game.Players)player.AllDamage = 1000000000;
             game.StartGame();
+
+            while (true) { }
         }
     }
 }
