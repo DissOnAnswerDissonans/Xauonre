@@ -81,6 +81,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <Content Include="Graphics\resources\Drake.png" />
+    <Content Include="Graphics\resources\Johny.png" />
+    <Content Include="Graphics\resources\Kerri.png" />
+    <Content Include="Graphics\resources\noyhing.png" />
+    <Content Include="Graphics\resources\Sniper.png" />
+    <Content Include="Graphics\resources\Tile.png" />
+    <Content Include="Graphics\resources\TileSolid.png" />
+    <Content Include="Graphics\resources\Tupotrof.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
