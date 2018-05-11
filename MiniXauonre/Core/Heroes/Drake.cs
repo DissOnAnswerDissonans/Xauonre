@@ -35,7 +35,7 @@ namespace MiniXauonre.Core.Heroes
                     if (Burning)
                     {
                         var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
-                        v(d);
+                        d = v(d);
                         var enemiesInRange = GetEnemiesInRange(d.PlayerValue, d.MapValue, AoeRange);
                         var attack = new Damage(this, d.PlayerValue, magic: dmg);
                         foreach (var enemy in enemiesInRange)

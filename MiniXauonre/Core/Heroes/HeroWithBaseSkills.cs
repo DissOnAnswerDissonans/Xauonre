@@ -82,6 +82,12 @@ namespace MiniXauonre.Core.Heroes
                             .Select(u => u.Key)
                             .ToList();
 
+        protected List<Hero> GetAlliesInRange(Player p, Map m, double r) => m.UnitPositions
+                            .Where(u => p.Heroes.Contains(u.Key))
+                            .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
+                            .Select(u => u.Key)
+                            .ToList();
+
         protected List<Hero> GetHeroesInRange(Player p, Map m, double r) => m.UnitPositions
                             .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)

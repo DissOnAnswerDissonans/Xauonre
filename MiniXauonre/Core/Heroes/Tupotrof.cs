@@ -27,11 +27,11 @@ namespace MiniXauonre.Core.Heroes
 
             Growth = new Perk
             {
-                LevelUp = (d) =>
+                LevelUp = (a) => (d) =>
                 {
                     AddAttackPower(GetAttackPower() * GrowthADPercentBuff);
                     AddMovementSpeed(GrowthMSBuff);
-                    return d;
+                    return a(d);
                 },
             };
 

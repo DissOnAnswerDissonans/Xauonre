@@ -22,6 +22,7 @@ namespace MiniXauonre.Core
                 new Micro(),
                 new Immortal(),
                 new Cyprys(),
+                new Banker(),
             };
         }
     }

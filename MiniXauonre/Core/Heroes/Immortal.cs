@@ -69,7 +69,7 @@ namespace MiniXauonre.Core.Heroes
                 EndTurn = (a) => (d) =>
                 {
                     AddEnergy(ShieldEnergyRegen * (GetMaxEnergy() - GetEnergy()));
-                    return d;
+                    return a(d);
                 }
             };
             Perks.Add(Shield);
@@ -99,8 +99,7 @@ namespace MiniXauonre.Core.Heroes
                     var targets = GetEnemiesInRange(P, M, StormRange);
                     foreach (var target in targets)
                         target.GetDamage(damage);
-                    a(d);
-                    return d;
+                    return a(d);
                 },
             };
 

@@ -31,15 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,18 +69,6 @@
     <Compile Include="Core\Perks\TestPerk2.cs" />
     <Compile Include="Core\Skill.cs" />
     <Compile Include="Core\Tile.cs" />
-    <Compile Include="Graphics\GameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graphics\PlayerNameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graphics\TestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graphics\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -99,22 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
-    <Content Include="Graphics\resources\Drake.png" />
-    <Content Include="Graphics\resources\Johny.png" />
-    <Content Include="Graphics\resources\Kerri.png" />
-    <Content Include="Graphics\resources\noyhing.png" />
-    <Content Include="Graphics\resources\Sniper.png" />
-    <Content Include="Graphics\resources\Tile.png" />
-    <Content Include="Graphics\resources\TileSolid.png" />
-    <Content Include="Graphics\resources\Tupotrof.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Graphics\GameForm.resx">
-      <DependentUpon>GameForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Graphics\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
