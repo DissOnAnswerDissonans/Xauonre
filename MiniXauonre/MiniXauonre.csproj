@@ -34,6 +34,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,6 +71,10 @@
     <Compile Include="Core\Perks\TestPerk2.cs" />
     <Compile Include="Core\Skill.cs" />
     <Compile Include="Core\Tile.cs" />
+    <Compile Include="Graphics\ChooseForm.cs" />
+    <Compile Include="Graphics\PlayerNameForm.cs" />
+    <Compile Include="Graphics\TestForm.cs" />
+    <Compile Include="Graphics\TestForm.Designer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,10 +83,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Skills\" />
+    <Folder Include="Graphics\resources\GUI_elements" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <Content Include="Graphics\resources\Heroes\Drake.png" />
+    <Content Include="Graphics\resources\Heroes\Johny.png" />
+    <Content Include="Graphics\resources\Heroes\Kerri.png" />
+    <Content Include="Graphics\resources\Heroes\Sniper.png" />
+    <Content Include="Graphics\resources\Heroes\Tupotrof.png" />
+    <Content Include="Graphics\resources\Tiles\noyhing.png" />
+    <Content Include="Graphics\resources\Tiles\Tile.png" />
+    <Content Include="Graphics\resources\Tiles\TileSolid.png" />
+    <Content Include="Graphics\TestForm.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Controller
 {
-    class Command
+    public class Command
     {
         public CommandType Type { get; private set; }
         public List<int> Data { get; private set; }
@@ -20,7 +20,7 @@ namespace MiniXauonre.Controller
         public void FillWithData(List<int> data) => Data = data;
     }
 
-    enum CommandType
+    public enum CommandType
     {
         Choose,
         Cancel,
