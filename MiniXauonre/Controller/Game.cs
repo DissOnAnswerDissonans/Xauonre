@@ -32,7 +32,6 @@ namespace MiniXauonre.Controller
             };
         }
 
-
         public void StartGame()
         {
             //Choose heroes
@@ -46,6 +45,76 @@ namespace MiniXauonre.Controller
             GameProcess();
         }
 
+        public void ChooseHeroes(int numberHeroes, List<Hero> heroes)
+        {
+            for (var i = 0; i < numberHeroes; i++)
+            {
+                foreach (var player in Players)
+                {
+                    var possibleCommands = new List<Command>
+                        {
+                            new Command(CommandType.Choose, new List<List<string>>{ heroes.Select(h => h.Name).ToList() }),
+                        };
+                    var answer = player.GetCommand(possibleCommands);
+                    player.Heroes.Add(heroes[answer.Data[0]]);
+                    heroes.RemoveAt(answer.Data[0]);
+                }
+            }
+        }
+        public void AddAllHeroesOnMap()
+        {
+            foreach (var p in Players)
+                foreach (var h in p.Heroes)
+                {
+                    Maze.UnitPositions.Add(h, SpawnPoints[p] + new Point());
+                    h.Init(p, Maze);
+                }
+        }
+
+        public void GameProcess()
+        {
+            while (GameLegality)
+            {
+                foreach (var p in Players)
+                {
+                    var hero = p.GetNextHero();
+                    Console.WriteLine();
+                    Console.WriteLine(hero.Name);
+                    hero.StartTurn(Maze, p);
+                    HeroTurn(hero, p);
+                    hero.EndTurn(Maze, p);
+                    Maze.TickTalents(p, hero);
+                    if (!GameLegality)
+                        break;
+                }
+            }
+        }
+
+        public void HeroTurn(Hero hero, Player player)
+        {
+            while (GameLegality)
+            {
+                CheckWorld();
+                PrintWorld();
+                var skills = hero.Skills.Select(s => s.Name + " (" + s.Explanation() + ")").ToList();
+                var possibleCommands = new List<Command>
+                        {
+                            new Command(CommandType.UseAbility, new List<List<string>> { skills }),
+                            new Command(CommandType.Cancel, new List<List<string>>{ })
+                        };
+                var answer = player.GetCommand(possibleCommands);
+                if (answer.Type == CommandType.UseAbility)
+                {
+                    hero.UseSkill(answer.Data[0], Maze, player);
+                    CheckWorld();
+                }
+                else
+                {
+                    CheckWorld();
+                    break;
+                }
+            }
+        }
 
         public void PrintWorld()
         {
@@ -70,7 +139,6 @@ namespace MiniXauonre.Controller
             foreach (var hero in Maze.UnitPositions.Keys)
                 hero.FastPrintStats();
         }
-
 
         public void CheckWorld()
         {
@@ -99,85 +167,5 @@ namespace MiniXauonre.Controller
                     Console.WriteLine("You all suck");
             }
         }
-
-        public void HeroTurn(Hero hero, Player player)
-        {
-            while (GameLegality) 
-            {
-                CheckWorld();   
-                PrintWorld();
-                var skills = hero.Skills.Select(s => s.Name + " (" + s.Explanation() + ")").ToList();
-                var possibleCommands = new List<Command>
-                        {
-                            new Command(CommandType.UseAbility, new List<List<string>> { skills }),
-                            new Command(CommandType.Cancel, new List<List<string>>{ })
-                        };
-                var answer = player.GetCommand(possibleCommands);
-                if (answer.Type == CommandType.UseAbility)
-                {
-                    hero.UseSkill(answer.Data[0], Maze, player);
-                    CheckWorld();
-                }
-                else
-                {
-                    CheckWorld();
-                    break;
-                }
-            }
-        }
-
-        public void GameProcess()
-        {
-            while (GameLegality)
-            {
-                foreach (var p in Players)
-                {
-                    var hero = p.GetNextHero();
-                    Console.WriteLine();
-                    Console.WriteLine(hero.Name);
-                    hero.StartTurn(Maze, p);
-                    HeroTurn(hero, p);
-                    hero.EndTurn(Maze, p);
-                    Maze.TickTalents(p, hero);
-                    if (!GameLegality)
-                        break;
-                }
-            }
-        }
-
-        public void AddAllHeroesOnMap()
-        {
-            foreach (var p in Players)
-                foreach (var h in p.Heroes)
-                {
-                    Maze.UnitPositions.Add(h, SpawnPoints[p] + new Point());
-                    h.Init(p, Maze);
-                }
-        }
-
-        public void ChooseHeroes(int numberHeroes, List<Hero> heroes)
-        {
-            for (var i = 0; i < numberHeroes; i++)
-            {
-                foreach (var player in Players)
-                {
-                    var possibleCommands = new List<Command>
-                        {
-                            new Command(CommandType.Choose, new List<List<string>>{ heroes.Select(h => h.Name).ToList() }),
-                        };
-                    var answer = player.GetCommand(possibleCommands);
-                    player.Heroes.Add(heroes[answer.Data[0]]);
-                    heroes.RemoveAt(answer.Data[0]);
-                }
-            }  
-        }
-
-
-
-
-
-
-
-
     }
 }

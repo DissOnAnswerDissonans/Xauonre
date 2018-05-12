@@ -21,12 +21,5 @@ namespace MiniXauonre.Graphics
         {
 
         }
-
-#pragma warning disable IDE1006 // Стили именования
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-#pragma warning restore IDE1006 // Стили именования
-        {
-
-        }
     }
 }

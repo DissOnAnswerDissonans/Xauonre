@@ -13,9 +13,7 @@ using Xauonre.Core;
 namespace MiniXauonre.Graphics
 {
     public class ChooseForm : Form
-    {
-        public Command FormCommand { get; private set; }
-        
+    {     
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -23,50 +21,72 @@ namespace MiniXauonre.Graphics
             //WindowState = FormWindowState.Maximized;
         }
 
-        public ChooseForm(string text, List<Command> commands)
-        {
-            var s = new Size(ClientSize.Width, 64);
-            var font = new System.Drawing.Font("Microsoft Sans Serif", 36);
-            
-            var playerLabel = new Label()
-            {
-                Location = new System.Drawing.Point(0, 0),
-                Size = s,
-                Text = text
-            };
+        public int Answer { get; set; }
 
-            var commandButtons = new List<CommandButton>();
-            foreach (var cmd in commands)
+        public ChooseForm(List<string> head, List<string> variants)
+        {
+            var s = new Size(ClientSize.Width, ClientSize.Height / (head.Count + variants.Count));
+            var font = new System.Drawing.Font("Microsoft Sans Serif", ClientSize.Height / (head.Count + variants.Count) / 2);
+
+            var labels = new List<Label>();
+            foreach (var lb in head)
             {
-                commandButtons.Add(new CommandButton()
+                labels.Add(new Label()
                 {
-                    Location = new System.Drawing.Point(0, s.Height * commandButtons.Count + 1),
+                    Location = new System.Drawing.Point(0, s.Height * labels.Count),
                     Size = s,
-                    Text = cmd.ToString(),
-                    Command = cmd
+                    Text = head[labels.Count],
+                    Font = font,
+                });
+            }
+            foreach (var l in labels)
+                Controls.Add(l);
+
+            var buttons = new List<Button>();
+            foreach (var cmd in variants)
+            {
+                buttons.Add(new Button()
+                {
+                    Location = new System.Drawing.Point(0, s.Height * (buttons.Count + head.Count)),
+                    Size = s,
+                    Text = cmd,
+                    Font = font,
                 });
             }
 
-            foreach (var b in commandButtons)
+            for (int i = 0; i < buttons.Count; ++i)
             {
-                Controls.Add(b);
-                b.Click += (sender, args) =>
-                {
-                    FormCommand = b.Command;
+                var cyka = i;
+                Controls.Add(buttons[i]);
+                buttons[cyka].Click += (sender, args) => {
+                    Answer = cyka;
                     Close();
                 };
             }
+
+            SizeChanged += (sender, args) =>
+            {
+                s = new Size(ClientSize.Width, ClientSize.Height / (head.Count + variants.Count));
+                font = new System.Drawing.Font("Microsoft Sans Serif", ClientSize.Height / (head.Count + variants.Count) / 2);
+                for (var v = 0; v < labels.Count; ++v)
+                {
+                    labels[v].Size = s;
+                    labels[v].Font = font;
+                    labels[v].Location = new System.Drawing.Point(0, s.Height * v);
+                }
+                for (var v = 0; v < buttons.Count; ++v)
+                {
+                    buttons[v].Size = s;
+                    buttons[v].Font = font;
+                    buttons[v].Location = new System.Drawing.Point(0, s.Height * (v + labels.Count));
+                }
+            };
         }
-        
+ 
         private void PlayerNameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             Hide();
         }
-    }
-
-    public class CommandButton : Button
-    {
-        public Command Command { get; set; }
     }
 }

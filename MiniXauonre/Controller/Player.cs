@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MiniXauonre.Graphics;
+using System.Windows.Forms;
 
 namespace MiniXauonre.Controller
 {
@@ -69,37 +71,38 @@ namespace MiniXauonre.Controller
 
         public Command GetCommand(List<Command> possiblComands)
         {
-            Console.WriteLine();
-            Console.WriteLine(Name);
-            Console.WriteLine(AllDamage);
-            var chosenCommand = possiblComands[GetAnswer(possiblComands.Select(c => c.Type.ToString()).ToList())];
+            var head = new List<string> { Name, AllDamage.ToString() };
+            var chosenCommand = possiblComands[GetAnswer(head, possiblComands.Select(c => c.Type.ToString()).ToList())];
 
             if (chosenCommand.MetaData == null)
                 return chosenCommand;
 
-
             var data = new List<int>();
             foreach(var question in chosenCommand.MetaData)
-                data.Add(GetAnswer(question));
+                data.Add(GetAnswer(head, question));
 
             chosenCommand.FillWithData(data);
             return chosenCommand;
         }
 
-        private int GetAnswer(List<string> variants)
+        private int GetAnswer(List<string> head, List<string> variants)
         {
             var n = variants.Count;
             if (n == 0)
                 return -1;
             if (n == 1)
                 return 0;
+            /*
             var answer = -1;
             for (var i = 0; i < n; i++)
                 Console.WriteLine(i + " " + variants[i]);
 
             while (answer < 0 || answer >= n)
                 while (!int.TryParse(Console.ReadLine(), out answer)) { }
-            return answer;
+            */
+            var form = new ChooseForm(head, variants);
+            Application.Run(form);
+            return form.Answer;
         }
 
         public Hero GetNextHero()
