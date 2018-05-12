@@ -62,8 +62,7 @@ namespace MiniXauonre.Core.Heroes
                     resDamage.Phys += armored;
                     resDamage.Magic += resisted;
                     d.DamageValue = resDamage;
-                    a(d);
-                    return d;
+                    return a(d);
                 },
 
                 EndTurn = (a) => (d) =>
@@ -84,8 +83,7 @@ namespace MiniXauonre.Core.Heroes
                         .GetDamage(new Damage(this, P,
                         magic: maxEnergy * StormMaxEnergyScale
                         + ap * StormAPScale));
-                    a(d);
-                    return d;
+                    return a(d);
                 },
 
 
