@@ -1,4 +1,5 @@
 ﻿using MiniXauonre.Controller;
+using MiniXauonre.Core.Shops;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,11 @@ namespace MiniXauonre.Core.Heroes
     {
         public List<Skill> Skills { get; protected set; }
         public List<Perk> Perks { get; protected set; }
+        public List<Item> Items { get; protected set; }
         public string Name { get; protected set; }
+
+        public double MaxNumberOfItems { get; protected set; }
+
 
         private double maxHp;
         private double hp;
@@ -32,6 +37,7 @@ namespace MiniXauonre.Core.Heroes
 
         public Map M { get; set; }
         public Player P { get; set; }
+        public Shop S { get; set; }
 
         public int Level { get; set; }
 
@@ -43,7 +49,8 @@ namespace MiniXauonre.Core.Heroes
             Name = "Hero";
             Perks = new List<Perk>();
             Skills = new List<Skill>();
-
+            S = new BasicShop();
+            Items = new List<Item>();
             //Default Stats
             maxHp = 1000;
             hp = maxHp;
@@ -62,6 +69,7 @@ namespace MiniXauonre.Core.Heroes
             energyRegen = 0;
 
             Level = 0;
+            MaxNumberOfItems = 4;
         }
 
 
@@ -97,6 +105,14 @@ namespace MiniXauonre.Core.Heroes
         }
 
 
+        public bool BuyItem(Item item)
+        {
+            if(Items.Count >= MaxNumberOfItems)
+                return false;
+            return S.Buy(this, item);
+        }
+
+
 
 
 
@@ -104,7 +120,7 @@ namespace MiniXauonre.Core.Heroes
 
         public double GetMaxHp() => GetWithPerks(Chars.MaxHp);
         public void SetMaxHp(double v) => SetWithPerks(Chars.MaxHp, v);
-        public void AddMaxHp(double v) => SetMaxHp(GetMaxHp() + v);
+        public void AddMaxHp(double v) { AddHp(v); SetMaxHp(GetMaxHp() + v); }
 
         public double GetHp() => GetWithPerks(Chars.Hp);
         public void SetHp(double v) => SetWithPerks(Chars.Hp, v);

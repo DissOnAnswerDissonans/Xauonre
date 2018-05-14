@@ -64,11 +64,16 @@
     <Compile Include="Core\Heroes\Thief.cs" />
     <Compile Include="Core\Heroes\Tupotrof.cs" />
     <Compile Include="Core\HeroMaker.cs" />
+    <Compile Include="Core\Item.cs" />
+    <Compile Include="Core\Items\MagicRelic.cs" />
+    <Compile Include="Core\Items\MagicStone.cs" />
     <Compile Include="Core\Map.cs" />
     <Compile Include="Core\MapCommand.cs" />
     <Compile Include="Core\Perk.cs" />
     <Compile Include="Core\Perks\TestPerk.cs" />
     <Compile Include="Core\Perks\TestPerk2.cs" />
+    <Compile Include="Core\Shop.cs" />
+    <Compile Include="Core\Shops\BasicShop.cs" />
     <Compile Include="Core\Skill.cs" />
     <Compile Include="Core\Tile.cs" />
     <Compile Include="Graphics\ChooseForm.cs" />

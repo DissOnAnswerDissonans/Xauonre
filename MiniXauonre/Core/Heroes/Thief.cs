@@ -32,9 +32,7 @@ namespace MiniXauonre.Core.Heroes
                     if (Attack.Job(h))
                     {
                         Target.AddMaxHp(-st);
-                        Target.AddHp(-st);
                         AddMaxHp(st);
-                        AddHp(st);
                         return true;
                     }
                     return false;

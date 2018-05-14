@@ -97,15 +97,24 @@ namespace MiniXauonre.Controller
                 CheckWorld();
                 PrintWorld();
                 var skills = hero.Skills.Select(s => s.Name + " (" + s.Explanation() + ")").ToList();
+                var items = hero.S.Items;
                 var possibleCommands = new List<Command>
                         {
                             new Command(CommandType.UseAbility, new List<List<string>> { skills }),
-                            new Command(CommandType.Cancel, new List<List<string>>{ })
+                            new Command(CommandType.Cancel, new List<List<string>>{ }),
+                            new Command(CommandType.Buy, new List<List<string>>{ items.Select(i => i.Name + "\n" + i.Explanation()).ToList() })
                         };
                 var answer = player.GetCommand(possibleCommands);
                 if (answer.Type == CommandType.UseAbility)
                 {
                     hero.UseSkill(answer.Data[0], Maze, player);
+                    CheckWorld();
+                }
+                else if (answer.Type == CommandType.Buy)
+                {
+                    var num = answer.Data[0];
+                    if(num >= 0 && num < items.Count)
+                        hero.BuyItem(items[answer.Data[0]]);
                     CheckWorld();
                 }
                 else

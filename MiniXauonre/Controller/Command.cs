@@ -25,6 +25,6 @@ namespace MiniXauonre.Controller
         Choose,
         Cancel,
         UseAbility,
-        OpenShop,
+        Buy,
     }
 }
