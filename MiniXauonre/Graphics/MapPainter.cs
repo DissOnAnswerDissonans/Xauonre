@@ -95,13 +95,14 @@ namespace MiniXauonre.Graphics
             }
         }
 
-        readonly Font kok = new Font(FontFamily.GenericSansSerif, 10);
+        readonly Font kok = new Font(FontFamily.GenericSansSerif, 8);
 
         private void DrawUnitInfo(System.Drawing.Graphics g, Hero unit, RectangleF borders)
         {
             var b = new RectangleF(borders.Location, borders.Size);
             b.Y += TileSize.Height;
-            g.DrawString(((unit.GetHp()).ToString(CultureInfo.CurrentCulture) + " HP"),
+            g.DrawString((((int)unit.GetHp()).ToString(CultureInfo.CurrentCulture) + "/"
+                          + ((int)unit.GetMaxHp()).ToString(CultureInfo.CurrentCulture)),
                 kok, new SolidBrush(Color.Black), b);
         }
 

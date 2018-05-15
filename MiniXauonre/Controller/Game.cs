@@ -121,8 +121,6 @@ namespace MiniXauonre.Controller
         public void PrintWorld()
         {
             var form = new ScreenForm(Maze);
-            foreach (var hero in Maze.UnitPositions.Keys)
-                hero.FastPrintStats();
             Application.Run(form);
         }
 

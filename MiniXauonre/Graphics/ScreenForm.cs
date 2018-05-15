@@ -28,8 +28,30 @@ namespace MiniXauonre.Graphics
         public ScreenForm(Map map)
         {
             MPainter = new MapPainter(map, this.Size);
+            
+            var menuPanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.BottomUp,
+                Dock = DockStyle.Bottom,
+                Height = map.UnitPositions.Count * 32,
+                BackColor = Color.MidnightBlue,
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, 16)       
+            };
+            
             View = new MapView(MPainter) { Dock = DockStyle.Fill };
+            
             Controls.Add(View);
+            Controls.Add(menuPanel);
+
+            foreach (var unit in map.UnitPositions.Keys)
+            {
+                menuPanel.Controls.Add(new Label()
+                {
+                    Text = unit.FastStats(),
+                    ForeColor = Color.White,
+                    AutoSize = true,
+                });
+            }
 
             SizeChanged += (sender, args) =>
             {
