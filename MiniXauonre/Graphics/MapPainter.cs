@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MiniXauonre.Core;
+using MiniXauonre.Core.Heroes;
 using Point = Xauonre.Core.Point;
 
 namespace MiniXauonre.Graphics
@@ -27,7 +30,7 @@ namespace MiniXauonre.Graphics
         private Map Map { get; set; }
         private List<Tuple<Point, MapPointMode>> Av;
         private Bitmap mapImage;
-        private Size DrawSize { get; set; }
+        public Size DrawSize { get; set; }
         private Size MapSize { get; set; }
         private SizeF TileSize { get; set; }
 
@@ -36,8 +39,14 @@ namespace MiniXauonre.Graphics
             Map = map;
             DrawSize = size;
             Av = new List<Tuple<Point, MapPointMode>>();
-            SwitchMap(map);
-            DrawMap();
+            SwitchMap(map);      
+        }
+
+        public void Paint(System.Drawing.Graphics g)
+        {
+            DrawMap(g);
+            DrawUnits(g);
+            //DrawAvs(g);           
         }
 
         public void ResizeMap(Size s) => DrawSize = s;
@@ -48,10 +57,9 @@ namespace MiniXauonre.Graphics
             TileSize = new SizeF((float)DrawSize.Width / MapSize.Width, (float)DrawSize.Height / MapSize.Height);        
         }
 
-        private void DrawMap()
+        private void DrawMap(System.Drawing.Graphics g)
         {
-            mapImage = new Bitmap(DrawSize.Width, DrawSize.Height);
-            var g = System.Drawing.Graphics.FromImage(mapImage);
+
             for (int x = 0; x < MapSize.Width; x++)
             {
                 for (int y = 0; y < MapSize.Height; y++)
@@ -71,23 +79,61 @@ namespace MiniXauonre.Graphics
                 }
             }
         }
-
-        private void DrawAvs()
+        
+        private void DrawUnits(System.Drawing.Graphics g)
         {
-            var g = System.Drawing.Graphics.FromImage(mapImage);
+            const float unitShift = 0.3f;
+            foreach (var unit in Map.UnitPositions.Keys)
+            {
+                var coords = Map.UnitPositions[unit];
+                var heroImage = GetUnitImage(unit.Name);
+                var borders = new RectangleF(coords.X * TileSize.Width, 
+                    (coords.Y - unitShift) * TileSize.Height, TileSize.Width, TileSize.Height);
+                
+                g.DrawImage(heroImage, borders);
+                DrawUnitInfo(g, unit, borders);
+            }
+        }
+
+        readonly Font kok = new Font(FontFamily.GenericSansSerif, 10);
+
+        private void DrawUnitInfo(System.Drawing.Graphics g, Hero unit, RectangleF borders)
+        {
+            var b = new RectangleF(borders.Location, borders.Size);
+            b.Y += TileSize.Height;
+            g.DrawString(((unit.GetHp()).ToString(CultureInfo.CurrentCulture) + " HP"),
+                kok, new SolidBrush(Color.Black), b);
+        }
+
+        private Bitmap GetUnitImage(string unitName)
+        {
+            switch (unitName)
+            {
+                case "Drake": return resources.Res.Drake;
+                case "Johny": return resources.Res.Johny;
+                case "Kerri": return resources.Res.Kerri;
+                case "Sniper": return resources.Res.Sniper;
+                case "tupotrof": return resources.Res.Tupotrof;
+                
+                default: return resources.Res.DefaultHero;
+            }
+        }
+
+        private void DrawAvs(System.Drawing.Graphics g)
+        {
             foreach (var p in Av)
             {
                 Bitmap tileImage;
                 switch (p.Item2)
                 {
                     case MapPointMode.Chooseable:
-                        tileImage = Graphics.resources.Res.chooseable_tile; break;
+                        tileImage = resources.Res.chooseable_tile; break;
                     case MapPointMode.Availible:
-                        tileImage = Graphics.resources.Res.available_tile; break;
+                        tileImage = resources.Res.available_tile; break;
                     case MapPointMode.Unavailible:
-                        tileImage = Graphics.resources.Res.unavailable_tile; break;
+                        tileImage = resources.Res.unavailable_tile; break;
                     default:
-                        tileImage = Graphics.resources.Res.noyhing; break;
+                        tileImage = resources.Res.noyhing; break;
                 }
                 g.DrawImage(tileImage, new RectangleF
                     (p.Item1.X * TileSize.Width, p.Item1.Y * TileSize.Height, TileSize.Width, TileSize.Height));

@@ -15,18 +15,33 @@ namespace MiniXauonre.Graphics
 {
     class ScreenForm : Form
     {
+        private MapPainter MPainter;
+        private MapView View;
         
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             DoubleBuffered = true;
-            //WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Maximized;
         }
 
         public ScreenForm(Map map)
         {
-            var painter = new MapPainter(map, this.Size);
+            MPainter = new MapPainter(map, this.Size);
+            View = new MapView(MPainter) { Dock = DockStyle.Fill };
+            Controls.Add(View);
 
+            SizeChanged += (sender, args) =>
+            {
+                MPainter.ResizeMap(Size);
+            };
+        }
+        
+        
+
+        public void Update()
+        {
+            
         }
 
 

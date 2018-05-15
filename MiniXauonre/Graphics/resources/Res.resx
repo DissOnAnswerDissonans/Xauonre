@@ -124,6 +124,9 @@
   <data name="chooseable_tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GUI_elements\chooseable_tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DefaultHero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Heroes\DefaultHero.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Drake" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Heroes\Drake.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

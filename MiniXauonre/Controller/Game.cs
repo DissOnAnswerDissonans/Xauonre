@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using MiniXauonre.Graphics;
 using Xauonre.Core;
 
 namespace MiniXauonre.Controller
@@ -118,26 +120,10 @@ namespace MiniXauonre.Controller
 
         public void PrintWorld()
         {
-            Console.WriteLine();
-
-            for (var i = 0; i < Maze.Length; i++)
-            {
-                for (var j = 0; j < Maze.Width; j++)
-                {
-                    var units = Maze.GetIn(new Point(j, i));
-                    if (units.Count == 0)
-                        if (Maze.MapTiles[i, j].Type == TileType.Empty)
-                            Console.Write(". ");
-                        else
-                            Console.Write("0 ");
-                    else
-                        Console.Write(units.First().Name[0] + " ");
-                }
-                Console.WriteLine();
-            }
-
+            var form = new ScreenForm(Maze);
             foreach (var hero in Maze.UnitPositions.Keys)
                 hero.FastPrintStats();
+            Application.Run(form);
         }
 
         public void CheckWorld()

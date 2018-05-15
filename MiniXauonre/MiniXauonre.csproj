@@ -75,6 +75,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Graphics\MapPainter.cs" />
+    <Compile Include="Graphics\MapView.cs" />
     <Compile Include="Graphics\PlayerNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
