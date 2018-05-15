@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace MiniXauonre.Graphics
 {
-    public partial class TestForm : Form
+    public partial class MapForm : Form
     {
-        public TestForm()
+        public MapForm()
         {
             InitializeComponent();
-        }
-
-        private void TestForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
