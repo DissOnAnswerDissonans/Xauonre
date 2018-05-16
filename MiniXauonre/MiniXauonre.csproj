@@ -76,8 +76,12 @@
     <Compile Include="Core\Shops\BasicShop.cs" />
     <Compile Include="Core\Skill.cs" />
     <Compile Include="Core\Tile.cs" />
-    <Compile Include="Graphics\ChooseForm.cs" />
-    <Compile Include="Graphics\PlayerNameForm.cs" />
+    <Compile Include="Graphics\ChooseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphics\PlayerNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Graphics\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>

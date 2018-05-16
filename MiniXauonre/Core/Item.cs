@@ -75,7 +75,7 @@ namespace MiniXauonre.Core
         }
 
 
-        public override bool Equals(object obj) => obj.GetType() == typeof(Item) && Name == (obj as Item).Name;
+        public override bool Equals(object obj) => Name == (obj as Item).Name;
 
         public override int GetHashCode()
         {

@@ -32,10 +32,10 @@ namespace MiniXauonre.Core.Heroes
             {
                 EndTurn = (v) => (d) =>
                 {
+                    d = v(d);
                     if (Burning)
                     {
                         var dmg = GetHp() * HpScale + GetAbilityPower() * APScale;
-                        d = v(d);
                         var enemiesInRange = GetEnemiesInRange(d.PlayerValue, d.MapValue, AoeRange);
                         var attack = new Damage(this, d.PlayerValue, magic: dmg);
                         foreach (var enemy in enemiesInRange)

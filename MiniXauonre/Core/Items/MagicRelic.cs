@@ -18,8 +18,8 @@ namespace MiniXauonre.Core.Items
             Cost = 105;
             Parts = new List<Item>
             {
-                new MagicRelic(),
-                new MagicRelic(),
+                new MagicStone(),
+                new MagicStone(),
             };
             AddStats = (h) =>
             {

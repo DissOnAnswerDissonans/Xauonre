@@ -1,5 +1,6 @@
 ﻿using MiniXauonre.Core;
 using MiniXauonre.Core.Heroes;
+using MiniXauonre.Core.Shops;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace MiniXauonre.Controller
     {
         public List<Player> Players { get; set; }
         public Map Maze { get; set; }
+        public Shop Shop { get; set; }
 
         public int HeroesNumber { get; set; }
         public bool GameLegality { get; set; }
@@ -23,6 +25,7 @@ namespace MiniXauonre.Controller
             HeroesNumber = heroesNumber;
             Maze = new Map(length, width);
             Players = new List<Player>();
+            Shop = new BasicShop();
             SpawnPoints = new Dictionary<Player, Point>();
             foreach (var name in playerNames)
             {
@@ -67,7 +70,7 @@ namespace MiniXauonre.Controller
                 foreach (var h in p.Heroes)
                 {
                     Maze.UnitPositions.Add(h, SpawnPoints[p] + new Point());
-                    h.Init(p, Maze);
+                    h.Init(p, Maze, Shop);
                 }
         }
 

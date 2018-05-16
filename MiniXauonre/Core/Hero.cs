@@ -49,7 +49,7 @@ namespace MiniXauonre.Core.Heroes
             Name = "Hero";
             Perks = new List<Perk>();
             Skills = new List<Skill>();
-            S = new BasicShop();
+            S = null;
             Items = new List<Item>();
             //Default Stats
             maxHp = 1000;
@@ -58,7 +58,7 @@ namespace MiniXauonre.Core.Heroes
             resist = 0;
             regen = 3;
 
-            money = 0;
+            money = 105;
             abilityPower = 0;
             attackPower = 50;
             attackSpeed = 1;
@@ -115,12 +115,9 @@ namespace MiniXauonre.Core.Heroes
 
 
 
-
-
-
         public double GetMaxHp() => GetWithPerks(Chars.MaxHp);
         public void SetMaxHp(double v) => SetWithPerks(Chars.MaxHp, v);
-        public void AddMaxHp(double v) { AddHp(v); SetMaxHp(GetMaxHp() + v); }
+        public void AddMaxHp(double v) {  SetMaxHp(GetMaxHp() + v); AddHp(v); }
 
         public double GetHp() => GetWithPerks(Chars.Hp);
         public void SetHp(double v) => SetWithPerks(Chars.Hp, v);
@@ -332,6 +329,11 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempAction = perk.SetEnergyRegen(tempAction);
                     break;
+                case Chars.Money:
+                    tempAction = (s) => money = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetMoney(tempAction);
+                    break;
                 default:
                     tempAction = (s) => { };
                     break;
@@ -359,7 +361,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void Init(Player pl, Map mp) => DoWithPerks(Actions.Init, new FuncData(playerValue: pl, mapvalue: mp));
+        public void Init(Player pl, Map mp, Shop s) => DoWithPerks(Actions.Init, new FuncData(playerValue: pl, mapvalue: mp, sV: s));
 
         private FuncData FInit(FuncData data)
         {
@@ -367,6 +369,7 @@ namespace MiniXauonre.Core.Heroes
             SetEnergy(GetMaxEnergy());
             P = data.PlayerValue;
             M = data.MapValue;
+            S = data.ShopValue;
             return data;
         }
 
@@ -478,11 +481,14 @@ namespace MiniXauonre.Core.Heroes
             Name
             + " : MaxHp-" + GetMaxHp()
             + ", Hp-" + GetHp()
-            + (GetMaxEnergy() > 1 ? ", MaxEnergy-"+GetMaxEnergy() + ", Energy-"+GetEnergy() : "") 
+            + (GetMaxEnergy() > 1 ? ", MaxEnergy-" + GetMaxEnergy() + ", Energy-" + GetEnergy() : "")
             + ", AttackPower-" + GetAttackPower()
             + ", AbilityPower-" + GetAbilityPower()
             + ", MoveLeft-" + MovementLeft
-            + ", AttacksLeft-" + AttacksLeft);
+            + ", AttacksLeft-" + AttacksLeft
+            + ", Money-" + GetMoney()
+            );
+
 
     }
 
