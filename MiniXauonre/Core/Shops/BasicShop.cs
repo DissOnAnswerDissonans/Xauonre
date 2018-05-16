@@ -13,6 +13,9 @@ namespace MiniXauonre.Core.Shops
         {
             new MagicStone(),
             new MagicRelic(),
+            new Bablonomicon(),
+            new MagicArtifact(),
+            new SpellBook(),
         };
 
 

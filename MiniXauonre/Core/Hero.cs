@@ -58,7 +58,7 @@ namespace MiniXauonre.Core.Heroes
             resist = 0;
             regen = 3;
 
-            money = 105;
+            money = 1000;
             abilityPower = 0;
             attackPower = 50;
             attackSpeed = 1;
@@ -354,14 +354,14 @@ namespace MiniXauonre.Core.Heroes
             LevelUp,
         }
 
-        public void LevelUp() => DoWithPerks(Actions.LevelUp, new FuncData());
+        public void LevelUp() => DoWithPerks(Actions.LevelUp, new FuncData(this));
 
         private FuncData FLevelUp(FuncData data) {
             Level++;
             return data;
         }
 
-        public void Init(Player pl, Map mp, Shop s) => DoWithPerks(Actions.Init, new FuncData(playerValue: pl, mapvalue: mp, sV: s));
+        public void Init(Player pl, Map mp, Shop s) => DoWithPerks(Actions.Init, new FuncData(this,playerValue: pl, mapvalue: mp, sV: s));
 
         private FuncData FInit(FuncData data)
         {
@@ -373,7 +373,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void StartTurn(Map m, Player p) => DoWithPerks(Actions.StartTurn, new FuncData(mapvalue: m, playerValue: p));
+        public void StartTurn(Map m, Player p) => DoWithPerks(Actions.StartTurn, new FuncData(this,mapvalue: m, playerValue: p));
 
         private FuncData FStartTurn(FuncData data)
         {
@@ -384,7 +384,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void EndTurn(Map m, Player p) => DoWithPerks(Actions.EndTurn, new FuncData(mapvalue: m, playerValue: p));
+        public void EndTurn(Map m, Player p) => DoWithPerks(Actions.EndTurn, new FuncData(this,mapvalue: m, playerValue: p));
 
         private FuncData FEndTurn(FuncData data)
         {
@@ -410,7 +410,7 @@ namespace MiniXauonre.Core.Heroes
 
         public void RefreshAttacks() => AttacksLeft = (int)GetAttackSpeed();
 
-        public void GetDamage(Damage damage) => DoWithPerks(Actions.GetDamage, new FuncData(playerValue: damage.Pl, dmgV: damage));
+        public void GetDamage(Damage damage) => DoWithPerks(Actions.GetDamage, new FuncData(this,playerValue: damage.Pl, dmgV: damage));
 
         private FuncData FGetDamage(FuncData damage)
         {
@@ -421,11 +421,11 @@ namespace MiniXauonre.Core.Heroes
                 damage.DamageValue.Pure);
             AddHp(-resDamage.Sum());
             resDamage.NotifyPlayer();
-            return new FuncData(dmgV: resDamage);
+            return new FuncData(this,dmgV: resDamage);
         }
 
 
-        public void GetHeal(double heal) => DoWithPerks(Actions.GetHeal, new FuncData(dV: heal));
+        public void GetHeal(double heal) => DoWithPerks(Actions.GetHeal, new FuncData(this,dV: heal));
 
         private FuncData FGetHeal(FuncData heal)
         {
@@ -471,7 +471,7 @@ namespace MiniXauonre.Core.Heroes
                         levelUp = perk.LevelUp(levelUp);
                     return levelUp(data);
                 default:
-                    return new FuncData();
+                    return new FuncData(this);
             }
         }
 

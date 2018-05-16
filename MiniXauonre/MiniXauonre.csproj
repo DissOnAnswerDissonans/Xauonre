@@ -67,6 +67,9 @@
     <Compile Include="Core\Item.cs" />
     <Compile Include="Core\Items\MagicRelic.cs" />
     <Compile Include="Core\Items\MagicStone.cs" />
+    <Compile Include="Core\Items\Bablonomicon.cs" />
+    <Compile Include="Core\Items\SpellBook.cs" />
+    <Compile Include="Core\Items\MagicArtifact.cs" />
     <Compile Include="Core\Map.cs" />
     <Compile Include="Core\MapCommand.cs" />
     <Compile Include="Core\Perk.cs" />

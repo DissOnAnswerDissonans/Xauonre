@@ -8,28 +8,18 @@ namespace MiniXauonre.Core.Items
 {
     class MagicRelic : Item
     {
-        public const double AP = 50;
-        public const double HP = 100;
-
         public MagicRelic()
         {
             Name = "Magic Relic";
             Explanation = () => "+" + AP + " AP\n+" + HP + " HP";
-            Cost = 105;
+            Cost = 240;
+            AP = 50;
+            HP = 100;
             Parts = new List<Item>
             {
                 new MagicStone(),
                 new MagicStone(),
-            };
-            AddStats = (h) =>
-            {
-                h.AddMaxHp(HP);
-                h.AddAbilityPower(AP);
-            };
-            RemoveStats = (h) =>
-            {
-                h.AddMaxHp(-HP);
-                h.AddAbilityPower(-AP);
+                new MagicStone(),
             };
         }
     }
