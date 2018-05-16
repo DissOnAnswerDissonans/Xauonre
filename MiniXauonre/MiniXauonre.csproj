@@ -85,8 +85,20 @@
     <Compile Include="Graphics\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graphics\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
+    <Compile Include="Graphics\MapPainter.cs" />
+    <Compile Include="Graphics\MapView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Graphics\PlayerNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphics\resources\Res.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Res.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Graphics\ScreenForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,11 +108,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Skills\" />
-    <Folder Include="Graphics\resources\GUI_elements\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <None Include="Graphics\resources\GUI_elements\available_tile.png" />
+    <None Include="Graphics\resources\GUI_elements\chooseable_tile.png" />
+    <None Include="Graphics\resources\GUI_elements\unavailable_tile.png" />
     <Content Include="Graphics\resources\Heroes\Drake.png" />
     <Content Include="Graphics\resources\Heroes\Johny.png" />
     <Content Include="Graphics\resources\Heroes\Kerri.png" />
@@ -111,8 +125,10 @@
     <Content Include="Graphics\resources\Tiles\TileSolid.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Graphics\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
+    <EmbeddedResource Include="Graphics\resources\Res.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

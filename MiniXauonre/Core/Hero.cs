@@ -477,7 +477,7 @@ namespace MiniXauonre.Core.Heroes
 
 
 
-        public void FastPrintStats() => Console.WriteLine(
+        public string FastStats() => 
             Name
             + " : MaxHp-" + GetMaxHp()
             + ", Hp-" + GetHp()
