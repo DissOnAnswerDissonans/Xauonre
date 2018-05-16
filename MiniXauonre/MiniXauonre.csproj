@@ -79,12 +79,6 @@
     <Compile Include="Graphics\ChooseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graphics\PlayerNameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graphics\TestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Graphics\MapPainter.cs" />
     <Compile Include="Graphics\MapView.cs">
       <SubType>Component</SubType>

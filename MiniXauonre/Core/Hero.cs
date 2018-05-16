@@ -477,7 +477,7 @@ namespace MiniXauonre.Core.Heroes
 
 
 
-        public string FastStats() => 
+        public string FastStats() =>
             Name
             + " : MaxHp-" + GetMaxHp()
             + ", Hp-" + GetHp()
@@ -486,9 +486,7 @@ namespace MiniXauonre.Core.Heroes
             + ", AbilityPower-" + GetAbilityPower()
             + ", MoveLeft-" + MovementLeft
             + ", AttacksLeft-" + AttacksLeft
-            + ", Money-" + GetMoney()
-            );
-
+            + ", Money-" + GetMoney();
 
     }
 
