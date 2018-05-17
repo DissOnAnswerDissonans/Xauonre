@@ -53,8 +53,8 @@ namespace MiniXauonre.Graphics
 
         public void SwitchMap(Map map)
         {
-            MapSize = new Size(Map.Width, Map.Length);
-            TileSize = new SizeF((float)DrawSize.Width / MapSize.Width, (float)DrawSize.Height / MapSize.Height);        
+            MapSize = new Size(Map.Length, Map.Width);
+            TileSize = new SizeF(128, 128);        
         }
 
         private void DrawMap(System.Drawing.Graphics g)
@@ -86,7 +86,7 @@ namespace MiniXauonre.Graphics
             foreach (var unit in Map.UnitPositions.Keys)
             {
                 var coords = Map.UnitPositions[unit];
-                var heroImage = GetUnitImage(unit.Name);
+                var heroImage = unit.GetImage();
                 var borders = new RectangleF(coords.X * TileSize.Width, 
                     (coords.Y - unitShift) * TileSize.Height, TileSize.Width, TileSize.Height);
                 
@@ -95,7 +95,7 @@ namespace MiniXauonre.Graphics
             }
         }
 
-        readonly Font kok = new Font(FontFamily.GenericSansSerif, 8);
+        readonly Font kok = new Font(FontFamily.GenericSansSerif, 16);
 
         private void DrawUnitInfo(System.Drawing.Graphics g, Hero unit, RectangleF borders)
         {
@@ -104,20 +104,6 @@ namespace MiniXauonre.Graphics
             g.DrawString((((int)unit.GetHp()).ToString(CultureInfo.CurrentCulture) + "/"
                           + ((int)unit.GetMaxHp()).ToString(CultureInfo.CurrentCulture)),
                 kok, new SolidBrush(Color.Black), b);
-        }
-
-        private Bitmap GetUnitImage(string unitName)
-        {
-            switch (unitName)
-            {
-                case "Drake": return resources.Res.Drake;
-                case "Johny": return resources.Res.Johny;
-                case "Kerri": return resources.Res.Kerri;
-                case "Sniper": return resources.Res.Sniper;
-                case "tupotrof": return resources.Res.Tupotrof;
-                
-                default: return resources.Res.DefaultHero;
-            }
         }
 
         private void DrawAvs(System.Drawing.Graphics g)

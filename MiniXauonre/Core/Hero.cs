@@ -2,9 +2,12 @@
 using MiniXauonre.Core.Shops;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace MiniXauonre.Core.Heroes
 {
@@ -14,6 +17,7 @@ namespace MiniXauonre.Core.Heroes
         public List<Perk> Perks { get; protected set; }
         public List<Item> Items { get; protected set; }
         public string Name { get; protected set; }
+        protected Image Image { get; set; }
 
         public double MaxNumberOfItems { get; protected set; }
         
@@ -53,6 +57,7 @@ namespace MiniXauonre.Core.Heroes
             Skills = new List<Skill>();
             S = null;
             Items = new List<Item>();
+            Image = Graphics.resources.Res.DefaultHero;
             //Default Stats
             maxHp = 1000;
             hp = maxHp;
@@ -115,8 +120,7 @@ namespace MiniXauonre.Core.Heroes
             return S.Buy(this, item);
         }
 
-
-
+        public Image GetImage() => Image;
 
         public double GetMaxHp() => GetWithPerks(Chars.MaxHp);
         public void SetMaxHp(double v) => SetWithPerks(Chars.MaxHp, v);

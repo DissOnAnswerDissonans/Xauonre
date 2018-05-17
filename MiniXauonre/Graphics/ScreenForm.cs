@@ -31,15 +31,16 @@ namespace MiniXauonre.Graphics
             WindowState = FormWindowState.Maximized;
         }
 
-        public ScreenForm(Map map, List<Player> players)
+        public ScreenForm(Game game)
         {
-            MPainter = new MapPainter(map, this.Size);
+            MPainter = new MapPainter(game.Maze, this.Size);
 
-            var debugPanel = new FlowLayoutPanel
+            var statPanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.BottomUp,
                 Dock = DockStyle.Bottom,
-                Height = map.UnitPositions.Count * debugFontSize * 2,
+                //Height = map.UnitPositions.Count * debugFontSize * 2,
+                
                 BackColor = Color.MidnightBlue,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, debugFontSize)       
             };
@@ -51,29 +52,18 @@ namespace MiniXauonre.Graphics
                 BackColor = Color.Black,        
             };
 
-            var playerPanels = CreatePlayerPanels(topPanel, players);           
+            var playerPanels = CreatePlayerPanels(topPanel, game.Players);           
             
             View = new MapView(MPainter) { Dock = DockStyle.Fill };
             
             Controls.Add(View);
-            Controls.Add(debugPanel);
+            Controls.Add(statPanel);
             Controls.Add(topPanel);
-           
-            foreach (var unit in map.UnitPositions.Keys)
-            {
-                debugPanel.Controls.Add(new Label()
-                {
-                    Text = unit.FastStats(),
-                    ForeColor = Color.White,
-                    AutoSize = true,
-                });
-            }
 
             SizeChanged += (sender, args) =>
             {
                 MPainter.ResizeMap(Size);
                 ResizePlayerPanels(playerPanels);
-                debugPanel.Text = Size.Width.ToString() + " : " + Size.Height.ToString();
             };
         }
 

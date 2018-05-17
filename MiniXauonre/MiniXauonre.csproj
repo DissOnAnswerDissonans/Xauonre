@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Controller\Command.cs" />
     <Compile Include="Controller\Game.cs" />
+    <Compile Include="Controller\GameRules.cs" />
     <Compile Include="Controller\Player.cs" />
     <Compile Include="Core\Damage.cs" />
     <Compile Include="Core\Effect.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Graphics\ChooseForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\DraftForm.cs" />
     <Compile Include="Graphics\MapPainter.cs" />
     <Compile Include="Graphics\MapView.cs">
       <SubType>Component</SubType>
@@ -122,6 +124,18 @@
     <None Include="Graphics\resources\GUI_elements\available_tile.png" />
     <None Include="Graphics\resources\GUI_elements\chooseable_tile.png" />
     <None Include="Graphics\resources\GUI_elements\unavailable_tile.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\AbilityPower.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\Armor.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\AttackDamage.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\AttackRange.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\AttackSpeed.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\CDReduction.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\Energy.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\EnergyRegen.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\Health.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\HealthRegen.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\MovementSpeed.png" />
+    <None Include="Graphics\resources\GUI_elements\icons\Resist.png" />
     <Content Include="Graphics\resources\Heroes\DefaultHero.png" />
     <Content Include="Graphics\resources\Heroes\Drake.png" />
     <Content Include="Graphics\resources\Heroes\Johny.png" />

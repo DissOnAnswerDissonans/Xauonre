@@ -154,4 +154,40 @@
   <data name="unavailable_tile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GUI_elements\unavailable_tile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="AbilityPower" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\AbilityPower.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Armor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\Armor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AttackDamage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\AttackDamage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AttackRange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\AttackRange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AttackSpeed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\AttackSpeed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CDReduction" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\CDReduction.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Energy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\Energy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EnergyRegen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\EnergyRegen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Health" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\Health.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HealthRegen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\HealthRegen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MovementSpeed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\MovementSpeed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Resist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>GUI_elements\icons\Resist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
