@@ -10,8 +10,6 @@ namespace MiniXauonre.Core
     {
         public TileType Type { get; set; }
         public Tile() => Type = TileType.Empty;
-
-    
     }
     enum TileType
     {

@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core.Items
 {
-    class MagicStone : Item
+    class Steel : Item
     {
-        public MagicStone()
+        public Steel()
         {
-            Name = "Magic Stone";
-            Explanation = () => "+"+AP+" AP\n";
-            Cost = 80;
-            AP = 20;
+            Name = "Steel";
+            Cost = 70;
+            A = 5;
         }
     }
 }

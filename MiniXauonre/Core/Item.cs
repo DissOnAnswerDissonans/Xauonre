@@ -14,8 +14,18 @@ namespace MiniXauonre.Core
         public Func<string> Explanation { get; protected set; }
         public double Cost { get; protected set; }
         public List<Item> Parts { get; protected set; }
-        public Action<Hero> AddStats { get; protected set; }
-        public Action<Hero> RemoveStats { get; protected set; }
+
+
+        public double HP { get; protected set; }
+        public double E { get; protected set; }
+        public double AD { get; protected set; }
+        public double AP { get; protected set; }
+        public double R { get; protected set; }
+        public double A { get; protected set; }
+        public double HR { get; protected set; }
+        public double ER { get; protected set; }
+        public double MS { get; protected set; }
+
 
         public Item()
         {
@@ -24,9 +34,45 @@ namespace MiniXauonre.Core
             Effect = new Perk() { };
             Cost = 0;
             Parts = new List<Item>();
-            AddStats = (h) => { };
-            RemoveStats = (h) => { };
+
+            HP = 0;
+            E = 0;
+            AD = 0;
+            AP = 0;
+            R = 0;
+            A = 0;
+            HR = 0;
+            ER = 0;
+            MS = 0;
         }
+
+
+        private void AddStats(Hero h)
+        {
+            h.AddMaxHp(HP);
+            h.AddEnergy(E);
+            h.AddAttackPower(AD);
+            h.AddAbilityPower(AP);
+            h.AddArmor(A);
+            h.AddResist(R);
+            h.AddRegen(HR);
+            h.AddEnergyRegen(ER);
+            h.AddMovementSpeed(MS);
+        }
+
+        private void RemoveStats(Hero h)
+        {
+            h.AddMaxHp(-HP);
+            h.AddEnergy(-E);
+            h.AddAttackPower(-AD);
+            h.AddAbilityPower(-AP);
+            h.AddArmor(-A);
+            h.AddResist(-R);
+            h.AddRegen(-HR);
+            h.AddEnergyRegen(-ER);
+            h.AddMovementSpeed(-MS);
+        }
+
 
         public void Bought(Hero h)
         {

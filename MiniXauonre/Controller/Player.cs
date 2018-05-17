@@ -118,10 +118,5 @@ namespace MiniXauonre.Controller
             heroIterator++;
             return Heroes[heroIterator - 1];
         }
-
-
-
-
-
     }
 }
