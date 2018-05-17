@@ -27,7 +27,7 @@ namespace MiniXauonre.Core.Heroes
         private double money;
 
         private double abilityPower;
-        private double attackPower;
+        private double attackDamage;
         private double attackSpeed;
         private double attackRange;
         private double movementSpeed;
@@ -62,7 +62,7 @@ namespace MiniXauonre.Core.Heroes
 
             money = 1000;
             abilityPower = 0;
-            attackPower = 50;
+            attackDamage = 50;
             attackSpeed = 1;
             attackRange = 3;
             movementSpeed = 9;
@@ -85,7 +85,7 @@ namespace MiniXauonre.Core.Heroes
             Regen,
             Money,
             AbilityPower,
-            AttackPower,
+            AttackDamage,
             AttackSpeed,
             AttackRange,
             MovementSpeed,
@@ -153,9 +153,9 @@ namespace MiniXauonre.Core.Heroes
         public void SetAbilityPower(double v) => SetWithPerks(Chars.AbilityPower, v);
         public void AddAbilityPower(double v) => SetAbilityPower(GetAbilityPower() + v);
 
-        public double GetAttackPower() => GetWithPerks(Chars.AttackPower);
-        public void SetAttackPower(double v) => SetWithPerks(Chars.AttackPower, v);
-        public void AddAttackPower(double v) => SetAttackPower(GetAttackPower() + v);
+        public double GetAttackDamage() => GetWithPerks(Chars.AttackDamage);
+        public void SetAttackDamage(double v) => SetWithPerks(Chars.AttackDamage, v);
+        public void AddAttackDamage(double v) => SetAttackDamage(GetAttackDamage() + v);
 
         public double GetAttackSpeed() => GetWithPerks(Chars.AttackSpeed);
         public void SetAttackSpeed(double v) => SetWithPerks(Chars.AttackSpeed, v);
@@ -227,10 +227,10 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempFunc = perk.GetAbilityPower(tempFunc);
                     return tempFunc();
-                case Chars.AttackPower:
-                    tempFunc = () => attackPower;
+                case Chars.AttackDamage:
+                    tempFunc = () => attackDamage;
                     foreach (var perk in Perks)
-                        tempFunc = perk.GetAttackPower(tempFunc);
+                        tempFunc = perk.GetAttackDamage(tempFunc);
                     return tempFunc();
                 case Chars.AttackRange:
                     tempFunc = () => attackRange;
@@ -306,10 +306,10 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempAction = perk.SetAbilityPower(tempAction);
                     break;
-                case Chars.AttackPower:
-                    tempAction = (s) => attackPower = s;
+                case Chars.AttackDamage:
+                    tempAction = (s) => attackDamage = s;
                     foreach (var perk in Perks)
-                        tempAction = perk.SetAttackPower(tempAction);
+                        tempAction = perk.SetAttackDamage(tempAction);
                     break;
                 case Chars.AttackSpeed:
                     tempAction = (s) => attackSpeed = s;
@@ -501,7 +501,7 @@ namespace MiniXauonre.Core.Heroes
             + " : MaxHp-" + GetMaxHp()
             + ", Hp-" + GetHp()
             + (GetMaxEnergy() > 1 ? ", MaxEnergy-" + GetMaxEnergy() + ", Energy-" + GetEnergy() : "")
-            + ", AttackPower-" + GetAttackPower()
+            + ", AttackDamage-" + GetAttackDamage()
             + ", AbilityPower-" + GetAbilityPower()
             + ", MoveLeft-" + MovementLeft
             + ", AttacksLeft-" + AttacksLeft

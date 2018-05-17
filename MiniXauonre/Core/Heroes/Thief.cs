@@ -24,11 +24,11 @@ namespace MiniXauonre.Core.Heroes
                 Name = Attack.Name,
                 Explanation = () => Attack.Explanation() + " Also steals " + Steal + " + "
                     + ADScale * 100 + "% AD + " + APScale * 100 + "% AP ("
-                    + (Steal + APScale * GetAbilityPower() + ADScale * GetAttackPower())
+                    + (Steal + APScale * GetAbilityPower() + ADScale * GetAttackDamage())
                     + ") MaxHp from target forever.",
                 Job = (h) =>
                 {
-                    var st = Steal + GetAbilityPower() * APScale + GetAttackPower() * ADScale;
+                    var st = Steal + GetAbilityPower() * APScale + GetAttackDamage() * ADScale;
                     if (Attack.Job(h))
                     {
                         Target.AddMaxHp(-st);

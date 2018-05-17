@@ -24,7 +24,7 @@ namespace MiniXauonre.Core.Heroes
             Attack = new Skill
             {
                 Name = "Attack",
-                Explanation = () => "Deales " + GetAttackPower() + " damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
+                Explanation = () => "Deales " + GetAttackDamage() + " damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
                 Job = (h) =>
                 {
                     if (AttacksLeft != 0)
@@ -33,7 +33,7 @@ namespace MiniXauonre.Core.Heroes
                         if (enemiesInRange.Count != 0)
                         {
                             Target = ChooseTarget(enemiesInRange, P);
-                            var at = new Damage(h, P, GetAttackPower());
+                            var at = new Damage(h, P, GetAttackDamage());
                             Target.GetDamage(at);
                             AttacksLeft--;
                             //Console.WriteLine(Attack.ToString());

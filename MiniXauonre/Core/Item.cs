@@ -51,7 +51,7 @@ namespace MiniXauonre.Core
         {
             h.AddMaxHp(HP);
             h.AddEnergy(E);
-            h.AddAttackPower(AD);
+            h.AddAttackDamage(AD);
             h.AddAbilityPower(AP);
             h.AddArmor(A);
             h.AddResist(R);
@@ -64,7 +64,7 @@ namespace MiniXauonre.Core
         {
             h.AddMaxHp(-HP);
             h.AddEnergy(-E);
-            h.AddAttackPower(-AD);
+            h.AddAttackDamage(-AD);
             h.AddAbilityPower(-AP);
             h.AddArmor(-A);
             h.AddResist(-R);

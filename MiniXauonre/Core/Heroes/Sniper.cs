@@ -21,7 +21,7 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "Sniper";
             SetMaxHp(800);
-            SetAttackPower(60);
+            SetAttackDamage(60);
             SetAbilityPower(20);
             SetAttackRange(14);
             SetRegen(2);

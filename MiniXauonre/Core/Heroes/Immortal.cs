@@ -30,7 +30,7 @@ namespace MiniXauonre.Core.Heroes
             SetArmor(10);
             SetResist(10);
             SetMovementSpeed(10);
-            SetAttackPower(50);
+            SetAttackDamage(50);
             SetAttackRange(8);
 
 

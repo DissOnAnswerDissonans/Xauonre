@@ -12,7 +12,7 @@ namespace MiniXauonre.Core.Items
 
         public Bablonomicon()
         {
-            Name = "Bablomicon";
+            Name = "Bablonomicon";
             Explanation = () => "";
             Cost = 250;
             AP = 50;

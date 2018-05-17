@@ -11,7 +11,6 @@ namespace MiniXauonre.Core.Items
         public MagicStone()
         {
             Name = "Magic Stone";
-            Explanation = () => "+"+AP+" AP\n";
             Cost = 80;
             AP = 20;
         }

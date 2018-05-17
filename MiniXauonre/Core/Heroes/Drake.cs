@@ -20,7 +20,7 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "Drake";
             SetMaxHp(1600);
-            SetAttackPower(30);
+            SetAttackDamage(30);
             SetArmor(10);
             SetResist(15);
             SetMovementSpeed(10);

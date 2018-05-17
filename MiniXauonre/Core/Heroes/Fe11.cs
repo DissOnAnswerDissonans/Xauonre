@@ -31,7 +31,7 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "Fe11";
             SetMaxHp(1300);
-            SetAttackPower(30);
+            SetAttackDamage(30);
             SetResist(5);
             SetMovementSpeed(11);
             SetAttackRange(4);
@@ -45,8 +45,8 @@ namespace MiniXauonre.Core.Heroes
             {
                 GetArmor = (g) => () => g() + Stacks * RageArmorBuff,
                 SetArmor = (s) => (v) => s(v - Stacks * RageArmorBuff),
-                GetAttackPower = (g) => () => g() + Stacks * RageADBuff,
-                SetAttackPower = (s) => (v) => s(v - Stacks * RageADBuff),
+                GetAttackDamage = (g) => () => g() + Stacks * RageADBuff,
+                SetAttackDamage = (s) => (v) => s(v - Stacks * RageADBuff),
 
                 StartTurn = (i) => (d) =>
                 {

@@ -10,7 +10,7 @@ namespace MiniXauonre.Core.Items
     {
         public MagicBoots()
         {
-            Name = "Magic Artifact";
+            Name = "Magic Boots";
             Explanation = () => "";
             Cost = 700;
             AP = 100;

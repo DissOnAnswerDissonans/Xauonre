@@ -45,8 +45,8 @@ namespace MiniXauonre.Core
         public Getter GetAbilityPower { get; set; }
         public Setter SetAbilityPower { get; set; }
 
-        public Getter GetAttackPower { get; set; }
-        public Setter SetAttackPower { get; set; }
+        public Getter GetAttackDamage { get; set; }
+        public Setter SetAttackDamage { get; set; }
 
         public Getter GetAttackSpeed { get; set; }
         public Setter SetAttackSpeed { get;  set; }
@@ -95,8 +95,8 @@ namespace MiniXauonre.Core
             SetRegen = baseSetter;
             GetAbilityPower = baseGetter;
             SetAbilityPower = baseSetter;
-            GetAttackPower = baseGetter;
-            SetAttackPower = baseSetter;
+            GetAttackDamage = baseGetter;
+            SetAttackDamage = baseSetter;
             GetAttackSpeed = baseGetter;
             SetAttackSpeed = baseSetter;
             GetAttackRange = baseGetter;

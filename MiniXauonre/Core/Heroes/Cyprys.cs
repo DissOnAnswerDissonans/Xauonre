@@ -51,7 +51,7 @@ namespace MiniXauonre.Core.Heroes
             SetMaxHp(900);
             SetMaxEnergy(500);
             SetEnergyRegen(3);
-            SetAttackPower(40);
+            SetAttackDamage(40);
             SetMovementSpeed(10);
             SetAttackRange(11);
 

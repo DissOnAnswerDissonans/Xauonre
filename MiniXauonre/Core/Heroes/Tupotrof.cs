@@ -21,7 +21,7 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "tupotrof";
             SetMaxHp(900);
-            SetAttackPower(40);
+            SetAttackDamage(40);
             SetAttackSpeed(2);
             SetMovementSpeed(12);
 
@@ -29,7 +29,7 @@ namespace MiniXauonre.Core.Heroes
             {
                 LevelUp = (a) => (d) =>
                 {
-                    AddAttackPower(GetAttackPower() * GrowthADPercentBuff);
+                    AddAttackDamage(GetAttackDamage() * GrowthADPercentBuff);
                     AddMovementSpeed(GrowthMSBuff);
                     return a(d);
                 },
@@ -40,12 +40,12 @@ namespace MiniXauonre.Core.Heroes
                 Name = "Cutter",
                 Explanation = () => "Deales " + CutterDamage + " + "
                     + CutterADScale * 100 + "% AD ("
-                    + (CutterDamage + CutterADScale * GetAttackPower()) + ") phyc damage"
+                    + (CutterDamage + CutterADScale * GetAttackDamage()) + ") phyc damage"
                     + " to all enemies within AA range (" + GetAttackRange() + ").",
                 CoolDown = CutterCooldown,
                 Job = (h) =>
                 {
-                    var damage = new Damage(h, h.P, phys: CutterDamage + CutterADScale * GetAttackPower());
+                    var damage = new Damage(h, h.P, phys: CutterDamage + CutterADScale * GetAttackDamage());
                     var targets = GetEnemiesInRange(P, M, GetAttackRange());
                     foreach (var target in targets)
                         target.GetDamage(damage);
