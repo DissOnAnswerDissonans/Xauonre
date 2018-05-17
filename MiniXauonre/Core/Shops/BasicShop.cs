@@ -14,8 +14,15 @@ namespace MiniXauonre.Core.Shops
             new MagicStone(),
             new MagicRelic(),
             new Bablonomicon(),
-            new MagicArtifact(),
             new SpellBook(),
+            new Bulker(),
+            new FlameCoast(),
+            new Knife(),
+            new MagicBoots(),
+            new MagicWand(),
+            new Razor(),
+            new Steel(),
+            new XPeke(),
         };
 
 
