@@ -39,8 +39,8 @@ namespace MiniXauonre.Core
 
         public void Tick(double CDR)
         {
-            Timer -= CDR;
-            if (Timer < 0)
+            Timer -= 1;
+            if (Timer < CDR)
                 Timer = 0;
         }
     }
@@ -49,6 +49,10 @@ namespace MiniXauonre.Core
     {
         Attack,
         Move,
-        Special
+        Special,
+        Dot,
+        Mag,
+        Phys,
+        Pure
     }
 }

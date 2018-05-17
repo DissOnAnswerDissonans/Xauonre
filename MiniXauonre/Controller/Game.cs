@@ -47,6 +47,7 @@ namespace MiniXauonre.Controller
 
             //Main Game Process
             AddAllHeroesOnMap();
+            Players[0].AllDamage = 100000;
             GameProcess();
         }
 
@@ -132,7 +133,7 @@ namespace MiniXauonre.Controller
 
         public void PrintWorld()
         {
-            var form = new ScreenForm(Maze);
+            var form = new ScreenForm(Maze, Players);
             Application.Run(form);
         }
 

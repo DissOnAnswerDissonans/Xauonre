@@ -18,7 +18,7 @@ namespace MiniXauonre
         {
             var w = 5;
             var l = 5;
-            var heroesNumber = 1;
+            var heroesNumber = 2;
             var pl1Spawn = new Xauonre.Core.Point(0, 0);
             var pl2Spawn = new Xauonre.Core.Point(l - 1, w - 1);
 

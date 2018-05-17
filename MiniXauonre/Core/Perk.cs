@@ -56,12 +56,18 @@ namespace MiniXauonre.Core
 
         public Getter GetMovementSpeed { get;  set; }
         public Setter SetMovementSpeed { get;  set; }
+        
         public Getter GetEnergy { get; set; }
         public Setter SetEnergy { get; set; }
+        
         public Getter GetEnergyRegen { get; set; }
         public Setter SetEnergyRegen { get; set; }
+        
         public Getter GetMaxEnergy { get; set; }
         public Setter SetMaxEnergy { get; set; }
+        
+        public Getter GetCDReduction { get; set; }
+        public Setter SetCDReduction { get; set; }
 
         //Fns
         public Act GetDamage { get;  set; }
@@ -105,6 +111,8 @@ namespace MiniXauonre.Core
             SetMaxEnergy = baseSetter;
             GetMoney = baseGetter;
             SetMoney = baseSetter;
+            GetCDReduction = baseGetter;
+            SetCDReduction = baseSetter;
             //Fns
             GetDamage = (a) => a;
             GetHeal = (a) => a;

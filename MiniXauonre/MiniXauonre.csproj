@@ -86,6 +86,9 @@
     <Compile Include="Graphics\PlayerNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\PlayerPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Graphics\resources\Res.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,6 +112,7 @@
     <None Include="Graphics\resources\GUI_elements\available_tile.png" />
     <None Include="Graphics\resources\GUI_elements\chooseable_tile.png" />
     <None Include="Graphics\resources\GUI_elements\unavailable_tile.png" />
+    <Content Include="Graphics\resources\Heroes\DefaultHero.png" />
     <Content Include="Graphics\resources\Heroes\Drake.png" />
     <Content Include="Graphics\resources\Heroes\Johny.png" />
     <Content Include="Graphics\resources\Heroes\Kerri.png" />

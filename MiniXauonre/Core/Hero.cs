@@ -16,7 +16,8 @@ namespace MiniXauonre.Core.Heroes
         public string Name { get; protected set; }
 
         public double MaxNumberOfItems { get; protected set; }
-
+        
+        public bool Chosen { get; private set; }
 
         private double maxHp;
         private double hp;
@@ -34,6 +35,7 @@ namespace MiniXauonre.Core.Heroes
         private double maxEnergy;
         private double energy;
         private double energyRegen;
+        private double cdReduction;
 
         public Map M { get; set; }
         public Player P { get; set; }
@@ -90,6 +92,7 @@ namespace MiniXauonre.Core.Heroes
             Energy,
             MaxEnergy,
             EnergyRegen,
+            CDReduction
             //TODO: Add CDR and put into Refresh
         }
 
@@ -177,6 +180,10 @@ namespace MiniXauonre.Core.Heroes
         public double GetEnergyRegen() => GetWithPerks(Chars.EnergyRegen);
         public void SetEnergyRegen(double v) => SetWithPerks(Chars.EnergyRegen, v);
         public void AddEnergyRegen(double v) => SetEnergyRegen(GetEnergyRegen() + v);
+        
+        public double GetCDReduction() => GetWithPerks(Chars.CDReduction);
+        public void SetCDReduction(double v) => SetWithPerks(Chars.CDReduction, v);
+        public void AddCDReduction(double v) => SetCDReduction(GetCDReduction() + v);
 
 
         //TODO: add money, abilityPower, attackPower
@@ -254,6 +261,11 @@ namespace MiniXauonre.Core.Heroes
                     tempFunc = () => energyRegen;
                     foreach (var perk in Perks)
                         tempFunc = perk.GetEnergyRegen(tempFunc);
+                    return tempFunc();
+                case Chars.CDReduction:
+                    tempFunc = () => cdReduction;
+                    foreach (var perk in Perks)
+                        tempFunc = perk.GetCDReduction(tempFunc);
                     return tempFunc();
             }
             return 0;
@@ -334,6 +346,11 @@ namespace MiniXauonre.Core.Heroes
                     foreach (var perk in Perks)
                         tempAction = perk.SetMoney(tempAction);
                     break;
+                case Chars.CDReduction:
+                    tempAction = (s) => cdReduction = s;
+                    foreach (var perk in Perks)
+                        tempAction = perk.SetCDReduction(tempAction);
+                    break;
                 default:
                     tempAction = (s) => { };
                     break;
@@ -377,6 +394,7 @@ namespace MiniXauonre.Core.Heroes
 
         private FuncData FStartTurn(FuncData data)
         {
+            Chosen = true;
             RefreshAttacks();
             RefreshMovement();
             foreach (var skill in Skills)
@@ -389,6 +407,7 @@ namespace MiniXauonre.Core.Heroes
         private FuncData FEndTurn(FuncData data)
         {
             Regenerate();
+            Chosen = false;
             return data;
         }
 
