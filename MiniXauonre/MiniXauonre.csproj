@@ -66,18 +66,28 @@
     <Compile Include="Core\Heroes\Tupotrof.cs" />
     <Compile Include="Core\HeroMaker.cs" />
     <Compile Include="Core\Item.cs" />
-    <Compile Include="Core\Items\Bulker.cs" />
-    <Compile Include="Core\Items\FlameCoast.cs" />
-    <Compile Include="Core\Items\Knife.cs" />
-    <Compile Include="Core\Items\MagicBoots.cs" />
-    <Compile Include="Core\Items\MagicRelic.cs" />
-    <Compile Include="Core\Items\MagicStone.cs" />
-    <Compile Include="Core\Items\Bablonomicon.cs" />
-    <Compile Include="Core\Items\MagicWand.cs" />
-    <Compile Include="Core\Items\Razor.cs" />
-    <Compile Include="Core\Items\SpellBook.cs" />
-    <Compile Include="Core\Items\Steel.cs" />
-    <Compile Include="Core\Items\XPeke.cs" />
+    <Compile Include="Core\Items\T0\TimeMachine.cs" />
+    <Compile Include="Core\Items\T1\DeathScythe.cs" />
+    <Compile Include="Core\Items\T1\HyperShell.cs" />
+    <Compile Include="Core\Items\T1\KingSword.cs" />
+    <Compile Include="Core\Items\T2\Accelerator.cs" />
+    <Compile Include="Core\Items\T2\Blade.cs" />
+    <Compile Include="Core\Items\T2\Bulker.cs" />
+    <Compile Include="Core\Items\T2\Carapace.cs" />
+    <Compile Include="Core\Items\T2\Leaven.cs" />
+    <Compile Include="Core\Items\T3\Amulet.cs" />
+    <Compile Include="Core\Items\T3\FlameCoast.cs" />
+    <Compile Include="Core\Items\T2\Knife.cs" />
+    <Compile Include="Core\Items\T1\MagicBoots.cs" />
+    <Compile Include="Core\Items\T2\MagicRelic.cs" />
+    <Compile Include="Core\Items\T3\MagicStone.cs" />
+    <Compile Include="Core\Items\T2\Bablonomicon.cs" />
+    <Compile Include="Core\Items\T1\MagicWand.cs" />
+    <Compile Include="Core\Items\T3\Razor.cs" />
+    <Compile Include="Core\Items\T3\RestoreRing.cs" />
+    <Compile Include="Core\Items\T3\SpellBook.cs" />
+    <Compile Include="Core\Items\T3\Steel.cs" />
+    <Compile Include="Core\Items\T2\XPeke.cs" />
     <Compile Include="Core\Map.cs" />
     <Compile Include="Core\MapCommand.cs" />
     <Compile Include="Core\Perk.cs" />
@@ -90,7 +100,9 @@
     <Compile Include="Graphics\ChooseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Graphics\DraftForm.cs" />
+    <Compile Include="Graphics\DraftForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Graphics\MapPainter.cs" />
     <Compile Include="Graphics\MapView.cs">
       <SubType>Component</SubType>

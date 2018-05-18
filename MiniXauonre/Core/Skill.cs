@@ -32,6 +32,7 @@ namespace MiniXauonre.Core
         {
             if (Timer <= 0 && hero.GetEnergy() >= EnergyCost && Job(hero))
             {
+                hero.Targets = new List<Hero>();
                 Timer = CoolDown;
                 hero.AddEnergy(-EnergyCost);
             }

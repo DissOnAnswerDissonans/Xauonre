@@ -25,6 +25,7 @@ namespace MiniXauonre.Core
         public double HR { get; protected set; }
         public double ER { get; protected set; }
         public double MS { get; protected set; }
+        public double CDR { get; protected set; }
 
 
         public Item()
@@ -44,6 +45,7 @@ namespace MiniXauonre.Core
             HR = 0;
             ER = 0;
             MS = 0;
+            CDR = 0;
         }
 
 
@@ -58,6 +60,7 @@ namespace MiniXauonre.Core
             h.AddRegen(HR);
             h.AddEnergyRegen(ER);
             h.AddMovementSpeed(MS);
+            h.AddCDReduction(CDR);
         }
 
         private void RemoveStats(Hero h)
@@ -71,6 +74,7 @@ namespace MiniXauonre.Core
             h.AddRegen(-HR);
             h.AddEnergyRegen(-ER);
             h.AddMovementSpeed(-MS);
+            h.AddCDReduction(-CDR);
         }
 
 

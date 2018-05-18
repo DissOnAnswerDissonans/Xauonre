@@ -14,17 +14,13 @@ namespace MiniXauonre.Core.Heroes
         protected Skill Attack { get; set; }
         protected Skill Move { get; set; }
 
-        protected Hero Target { get; set; }
         public HeroWithBaseSkills()
         {
-            Target = null;
-
-
             Name = "Hero with Attack";
             Attack = new Skill
             {
                 Name = "Attack",
-                Explanation = () => "Deales " + GetAttackDamage() + " damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
+                Explanation = () => "Deales " + GetAttackDamage() + " phys damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
                 Job = (h) =>
                 {
                     if (AttacksLeft != 0)
@@ -32,9 +28,10 @@ namespace MiniXauonre.Core.Heroes
                         var enemiesInRange = GetEnemiesInRange(h.P, h.M, GetAttackRange());
                         if (enemiesInRange.Count != 0)
                         {
-                            Target = ChooseTarget(enemiesInRange, P);
-                            var at = new Damage(h, P, GetAttackDamage());
-                            Target.GetDamage(at);
+                            Targets.Add(ChooseTarget(enemiesInRange, P));
+                            var at = new Damage(h, P, phys: GetAttackDamage());
+                            foreach(var t in Targets)
+                                GetDamage(at);
                             AttacksLeft--;
                             //Console.WriteLine(Attack.ToString());
                             return true;

@@ -22,6 +22,7 @@ namespace MiniXauonre.Core.Heroes
         public double MaxNumberOfItems { get; protected set; }
         
         public bool Chosen { get; private set; }
+        public List<Hero> Targets { get; set; }
 
         private double maxHp;
         private double hp;
@@ -58,6 +59,7 @@ namespace MiniXauonre.Core.Heroes
             S = null;
             Items = new List<Item>();
             Image = Graphics.resources.Res.DefaultHero;
+            Targets = new List<Hero>();
             //Default Stats
             maxHp = 1000;
             hp = maxHp;
