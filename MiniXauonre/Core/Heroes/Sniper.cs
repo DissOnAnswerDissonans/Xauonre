@@ -43,12 +43,12 @@ namespace MiniXauonre.Core.Heroes
                     var enemiesInRange = GetEnemiesInRange(P, M, SnipeRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        Target = ChooseTarget(enemiesInRange, P);
+                        Targets.Add(ChooseTarget(enemiesInRange, P));
                         var damage = new Damage(this, P, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
-                        Target.GetDamage(damage);
+                        foreach(var t in Targets)t.GetDamage(damage);
 
-                        var enemyMoveSkills = Target.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move)).ToList();
-                        var target = Target;
+                        var enemyMoveSkills = Targets.SelectMany(t => t.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move))).ToList();
+                        var target = Targets;
                         var root = new Effect(this)
                         {
                             Timer = SnipeRootTime,
@@ -60,12 +60,12 @@ namespace MiniXauonre.Core.Heroes
                             Disactivate = (eh) =>
                                 {
                                     foreach(var sk in enemyMoveSkills)
-                                        target.Skills.Add(sk);
+                                        foreach(var t in target)t.Skills.Add(sk);
                                 },
                         };
 
                         M.Effects.Add(root);
-                        root.Activate(target);
+                        foreach(var t in target) root.Activate(t);
                         return true;
                     }
                     return false;

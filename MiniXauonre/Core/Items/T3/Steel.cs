@@ -11,8 +11,8 @@ namespace MiniXauonre.Core.Items
         public Steel()
         {
             Name = "Steel";
-            Cost = 70;
-            A = 5;
+            Cost = 75;
+            A = 6;
         }
     }
 }

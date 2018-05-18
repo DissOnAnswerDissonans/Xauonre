@@ -98,8 +98,8 @@ namespace MiniXauonre.Core.Heroes
                     var allies = P.Heroes.Where(h => h != this).ToList();
                     if (allies.Count == 0)
                         return false;
-                    Target = ChooseTarget(allies, P);
-                    Target.AddMoney(moneySent);
+                    Targets.Add(ChooseTarget(allies, P));
+                    foreach(var t in Targets)AddMoney(moneySent);
                     AddMoney(-moneySent);
                     return true;
                 },

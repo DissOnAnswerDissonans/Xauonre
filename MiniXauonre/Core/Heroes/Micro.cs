@@ -65,13 +65,13 @@ namespace MiniXauonre.Core.Heroes
                     var targets = GetHeroesInRange(h.P, h.M, DropCatchRadius).Where(t => t != this).ToList();
                     if (targets.Count == 0)
                         return false;
-                    Target = ChooseTarget(targets, h.P);
+                    Targets.Add(ChooseTarget(targets, h.P));
                     var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis)
                         .Where(p => h.M.CellIsFree(p)).ToList();
                     if (points.Count == 0)
                         return false;
                     var point = ChoosePoint(points, h.P);
-                    h.M.UnitPositions[Target] = point;
+                    h.M.UnitPositions[Targets[0]] = point;
                     return true;
                 }
             };

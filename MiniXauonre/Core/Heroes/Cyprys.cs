@@ -115,7 +115,7 @@ namespace MiniXauonre.Core.Heroes
                     var targets = GetEnemiesInRange(h.P, h.M, EarthRange);
                     if (targets.Count == 0)
                         return false;
-                    Target = ChooseTarget(targets, h.P); 
+                    Targets.Add(ChooseTarget(targets, h.P)); 
                     var rocks = PlacedRocks.Where(p => p.Item1.GetStepsTo(h.M.UnitPositions[h]) <= EarthRangeReq);
                     var rocksNumber = rocks.Count();
                     Effect maxLifeRock = null;
@@ -128,10 +128,10 @@ namespace MiniXauonre.Core.Heroes
                     }
                     var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * GetAbilityPower() +
                         rocks.Count() * (EarthRockDamage + EarthRockDamageAPscale * GetAbilityPower()));
-                    Target.GetDamage(damage);
+                    Targets[0].GetDamage(damage);
                     if (rocksNumber > 0)
                     {
-                        var point = h.M.UnitPositions[Target] + new Point(0,0);
+                        var point = h.M.UnitPositions[Targets[0]] + new Point(0,0);
                         var RockEffect = new Effect(h, maxLifeRock.Timer);
                         RockEffect.Activate = (eh) =>
                         {

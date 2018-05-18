@@ -31,7 +31,8 @@ namespace MiniXauonre.Core.Heroes
                     var st = Steal + GetAbilityPower() * APScale + GetAttackDamage() * ADScale;
                     if (Attack.Job(h))
                     {
-                        Target.AddMaxHp(-st);
+                        foreach(var t in Targets)
+                            t.AddMaxHp(-st);
                         AddMaxHp(st);
                         return true;
                     }
