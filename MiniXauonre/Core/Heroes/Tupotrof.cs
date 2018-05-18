@@ -20,6 +20,8 @@ namespace MiniXauonre.Core.Heroes
         public Tupotrof()
         {
             Name = "tupotrof";
+            Image = Graphics.resources.Res.Tupotrof;
+            
             SetMaxHp(900);
             SetAttackDamage(40);
             SetAttackSpeed(2);

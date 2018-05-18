@@ -14,11 +14,14 @@ namespace MiniXauonre.Controller
 {
     class Game
     {
-        public List<Player> Players { get; set; }
-        public Map Maze { get; set; }
-        public Shop Shop { get; set; }
-        public int HeroesPerPlayer { get; set; }    
-        public List<Hero> AvailibleHeroes { get; set; }
+        public List<Player> Players { get; private set; }
+        public Map Maze { get; private set; }
+        public Shop Shop { get; private set; }
+        public int HeroesPerPlayer { get; private set; }    
+        public List<Hero> AvailibleHeroes { get; private set; }
+
+        public int PickStep { get; private set; }
+        public List<Tuple<int, GameRules.PickType>> PickSeq { get; private set; }
         
         public Game(GameRules rules)
         {
@@ -35,6 +38,8 @@ namespace MiniXauonre.Controller
 
             Shop = rules.GameShop;
             AvailibleHeroes = rules.AllowedHeroes;
+            PickStep = 0;
+            PickSeq = rules.DraftSequence;
         }
 
         public void StartGame()
@@ -51,9 +56,13 @@ namespace MiniXauonre.Controller
             Application.Run(draftForm);
         }
         
-        public bool DraftHeroPick(Hero hero)
+        public GameRules.PickType DraftHeroPick(Hero hero)
         {
-            return true;
+            if (!AvailibleHeroes.Contains(hero)) return GameRules.PickType.None;
+            if (PickSeq[PickStep].Item2 == GameRules.PickType.Pick)
+                Players[PickSeq[PickStep].Item1].Heroes.Add(hero);
+            AvailibleHeroes.Remove(hero);
+            return PickSeq[PickStep++].Item2;
         }
         
         private void HeroPlacing()

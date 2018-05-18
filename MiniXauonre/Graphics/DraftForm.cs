@@ -38,6 +38,8 @@ namespace MiniXauonre.Graphics
         private FlowLayoutPanel heroesToPickPanel { get; set; }
         private Panel PickingPlayerNamePanel { get; set; }
         
+        private Label CurrentHeroLabel { get; set; }
+        
         private List<Button> heroPickButtons { get; set; }
         
         private Game Game { get; set; }
@@ -49,12 +51,18 @@ namespace MiniXauonre.Graphics
             PickingPlayerNamePanel = new Panel()
             {
                 Dock = DockStyle.Top,
-                Height = iconSize.Height / 2,
+                Height = iconSize.Height * 2 / 5 - 4,
                 BackColor = Color.White,
-                ForeColor = Color.Black,
-                Font = new Font(SystemFonts.DefaultFont.FontFamily, iconSize.Height / 5),
-                Text = "AaaAaAaaAaAAAAaAAaaAAaaaAAa"
             };
+
+            CurrentHeroLabel = new Label()
+            {
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, iconSize.Height / 4),
+                ForeColor = Color.Black,
+                AutoSize = true,
+            };
+            
+            PickingPlayerNamePanel.Controls.Add(CurrentHeroLabel);
             
             heroesToPickPanel = new FlowLayoutPanel()
             {
@@ -62,8 +70,6 @@ namespace MiniXauonre.Graphics
                 Dock = DockStyle.Fill,
                 BackColor = Color.Black,
             };
-
-            Controls.Add(PickingPlayerNamePanel);
 
             foreach (var h in Game.AvailibleHeroes)
             {
@@ -79,17 +85,23 @@ namespace MiniXauonre.Graphics
                     TextAlign = ContentAlignment.TopCenter,
                 };
                 zzz.Click += (sender, args) =>
-                {
-                    if (game.DraftHeroPick(hero))
+                {                   
+                    if (game.DraftHeroPick(hero) == GameRules.PickType.Pick)
                     {
-                        heroesToPickPanel.Controls.Remove(zzz);
+                        AddHeroToView(hero);   
+                    }   
+                    heroesToPickPanel.Controls.Remove(zzz);
+                    if (game.PickStep >= game.HeroesPerPlayer * game.Players.Count)
+                        Finish();
+                    else
                         UpdateView();
-                    }
                 };
                 heroesToPickPanel.Controls.Add(zzz);
             }
             
             Controls.Add(heroesToPickPanel);
+            
+            Controls.Add(PickingPlayerNamePanel);
             
             foreach (var player in Game.Players)
             {
@@ -100,18 +112,28 @@ namespace MiniXauonre.Graphics
                     BackColor = plColors[PlayersPickedHeroesPanel.Count % 4],
                     Width = iconSize.Width + iconBorders.Left + iconBorders.Right,
                 };
-                PlayersPickedHeroesPanel.Add(player, panel);
+                PlayersPickedHeroesPanel.Add(player, panel);              
+                Controls.Add(panel);
             }
-            
-            Controls.AddRange(PlayersPickedHeroesPanel.Values.ToArray()); // Здесь обитает гага        
+                 
             UpdateView();
+        }
+
+        private void Finish()
+        {
+            Close();
         }
 
         private void UpdateView()
         {
+            /*
             foreach (var player in Game.Players)
             {
                 var panel = PlayersPickedHeroesPanel[player];
+                
+                
+                
+                
                 panel.Controls.Clear();
                 foreach (var hero in player.Heroes)
                 {
@@ -126,14 +148,27 @@ namespace MiniXauonre.Graphics
                         TextAlign = ContentAlignment.TopCenter,
                     });
                 }
+                
+                panel.Invalidate();
             }
-
-            PickingPlayerNamePanel.Text = "AAA"; // curr. pick. player
+*/
+            var stage = Game.PickSeq[Game.PickStep];
+            CurrentHeroLabel.Text = stage.Item2 + ": " + Game.Players[stage.Item1].Name;
         }
 
-        private void AddHeroToView()
+        private void AddHeroToView(Hero hero)
         {
-            
+            var pl = Game.Players[Game.PickSeq[Game.PickStep - 1].Item1];  
+            PlayersPickedHeroesPanel[pl].Controls.Add(new Button // вместо кнопки надо чтото ещё
+            {
+                Dock = DockStyle.Left,
+                Size = iconSize,
+                Margin = iconBorders,
+                Image = hero.GetImage(),
+                Text = hero.Name,
+                BackColor = Color.White,
+                TextAlign = ContentAlignment.TopCenter,
+            });
         }
 
         private void PlayerNameForm_FormClosing(object sender, FormClosingEventArgs e)

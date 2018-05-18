@@ -20,6 +20,8 @@ namespace MiniXauonre.Core.Heroes
         public Sniper()
         {
             Name = "Sniper";
+            Image = Graphics.resources.Res.Sniper;
+            
             SetMaxHp(800);
             SetAttackDamage(60);
             SetAbilityPower(20);

@@ -19,6 +19,8 @@ namespace MiniXauonre.Core.Heroes
         public Drake()
         {
             Name = "Drake";
+            Image = Graphics.resources.Res.Drake;
+            
             SetMaxHp(1600);
             SetAttackDamage(30);
             SetArmor(10);

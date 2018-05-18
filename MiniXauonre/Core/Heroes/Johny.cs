@@ -20,6 +20,8 @@ namespace MiniXauonre.Core.Heroes
         public Johny()
         {
             Name = "Johny";
+            Image = Graphics.resources.Res.Johny;
+            
             SetMaxHp(1200);
             SetMaxEnergy(150);
             SetRegen(5);
