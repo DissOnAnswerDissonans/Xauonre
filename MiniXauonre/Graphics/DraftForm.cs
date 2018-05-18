@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,7 +36,7 @@ namespace MiniXauonre.Graphics
         
         private Dictionary<Player, FlowLayoutPanel> PlayersPickedHeroesPanel { get; set; }   
         private Dictionary<Player, List<Panel>> PlayersPickedHeroesElements { get; set; }
-        private FlowLayoutPanel heroesToPickPanel { get; set; }
+        private FlowLayoutPanel HeroesToPickPanel { get; set; }
         private Panel PickingPlayerNamePanel { get; set; }
         
         private Label CurrentHeroLabel { get; set; }
@@ -64,7 +65,7 @@ namespace MiniXauonre.Graphics
             
             PickingPlayerNamePanel.Controls.Add(CurrentHeroLabel);
             
-            heroesToPickPanel = new FlowLayoutPanel()
+            HeroesToPickPanel = new FlowLayoutPanel()
             {
                 FlowDirection = FlowDirection.TopDown,
                 Dock = DockStyle.Fill,
@@ -85,21 +86,33 @@ namespace MiniXauonre.Graphics
                     TextAlign = ContentAlignment.TopCenter,
                 };
                 zzz.Click += (sender, args) =>
-                {                   
-                    if (game.DraftHeroPick(hero) == GameRules.PickType.Pick)
+                { 
+                    if (!game.AvailibleHeroes.Contains(hero)) return;
+                    switch (game.PickSeq[game.PickStep].Item2)
                     {
-                        AddHeroToView(hero);   
-                    }   
-                    heroesToPickPanel.Controls.Remove(zzz);
+                        case GameRules.PickType.Pick:
+                            AddHeroToView(hero);
+                            RemoveHeroFromView(hero, zzz);
+                            break;
+                
+                        case GameRules.PickType.Ban:
+                            RemoveHeroFromView(hero, zzz);
+                            break;
+                
+                        case GameRules.PickType.Choose:
+                            AddHeroToView(hero);
+                            break;
+                    }
+                    game.NextPick();
                     if (game.PickStep >= game.HeroesPerPlayer * game.Players.Count)
                         Finish();
                     else
                         UpdateView();
                 };
-                heroesToPickPanel.Controls.Add(zzz);
+                HeroesToPickPanel.Controls.Add(zzz);
             }
             
-            Controls.Add(heroesToPickPanel);
+            Controls.Add(HeroesToPickPanel);
             
             Controls.Add(PickingPlayerNamePanel);
             
@@ -120,45 +133,22 @@ namespace MiniXauonre.Graphics
         }
 
         private void Finish()
-        {
-            Close();
+        { 
+            HeroesToPickPanel.Controls.Clear();
+            HeroesToPickPanel.Click += (sender, args) => { Close();};
+            CurrentHeroLabel.Text = @"Ready to play";
         }
 
         private void UpdateView()
         {
-            /*
-            foreach (var player in Game.Players)
-            {
-                var panel = PlayersPickedHeroesPanel[player];
-                
-                
-                
-                
-                panel.Controls.Clear();
-                foreach (var hero in player.Heroes)
-                {
-                    panel.Controls.Add(new Button() // TODO: Find good class
-                    {
-                        Dock = DockStyle.Top,
-                        Size = iconSize,
-                        Margin = iconBorders,
-                        Image = hero.GetImage(),
-                        Text = hero.Name,
-                        BackColor = Color.White,
-                        TextAlign = ContentAlignment.TopCenter,
-                    });
-                }
-                
-                panel.Invalidate();
-            }
-*/
             var stage = Game.PickSeq[Game.PickStep];
-            CurrentHeroLabel.Text = stage.Item2 + ": " + Game.Players[stage.Item1].Name;
+            CurrentHeroLabel.Text = stage.Item2 + @": " + Game.Players[stage.Item1].Name;
         }
 
         private void AddHeroToView(Hero hero)
         {
-            var pl = Game.Players[Game.PickSeq[Game.PickStep - 1].Item1];  
+            var pl = Game.Players[Game.PickSeq[Game.PickStep].Item1];  
+            pl.Heroes.Add(HeroMaker.GetCopy(hero));
             PlayersPickedHeroesPanel[pl].Controls.Add(new Button // вместо кнопки надо чтото ещё
             {
                 Dock = DockStyle.Left,
@@ -171,10 +161,10 @@ namespace MiniXauonre.Graphics
             });
         }
 
-        private void PlayerNameForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void RemoveHeroFromView(Hero hero, Button b)
         {
-            e.Cancel = true;
-            Hide();
+            Game.AvailibleHeroes.Remove(hero);
+            b.BackColor = Color.SlateGray;
         }
     }
 }

@@ -81,6 +81,36 @@ namespace MiniXauonre.Core.Heroes
             MaxNumberOfItems = 4;
         }
 
+        public Hero(Hero hero) //  ГООООООВВНННООООООО!!!!!!!!
+        {
+            Name = hero.Name;
+            Perks = hero.Perks;
+            Skills = hero.Skills;
+            S = hero.S;
+            Items = hero.Items;
+            Image = hero.Image;
+            Targets = hero.Targets;
+
+            maxHp = hero.maxHp;
+            hp = hero.hp;
+            armor = hero.armor;
+            resist = hero.resist;
+            regen = hero.regen;
+
+            money = hero.money;
+            abilityPower = hero.abilityPower;
+            attackDamage = hero.attackDamage;
+            attackSpeed = hero.attackSpeed;
+            attackRange = hero.attackRange;
+            movementSpeed = hero.movementSpeed;
+            maxEnergy = hero.maxEnergy;
+            energy = hero.energy;
+            energyRegen = hero.energyRegen;
+
+            Level = hero.Level;
+            MaxNumberOfItems = hero.MaxNumberOfItems;
+        }
+
 
         ///Gets Sets
         enum Chars
@@ -99,8 +129,7 @@ namespace MiniXauonre.Core.Heroes
             Energy,
             MaxEnergy,
             EnergyRegen,
-            CDReduction
-            //TODO: Add CDR and put into Refresh
+            CDReduction,
         }
 
         public void UseSkill(int id, Map map, Player player)
@@ -499,8 +528,6 @@ namespace MiniXauonre.Core.Heroes
                     return new FuncData(this);
             }
         }
-
-
 
         public string FastStats() =>
             Name

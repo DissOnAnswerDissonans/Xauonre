@@ -25,5 +25,10 @@ namespace MiniXauonre.Core
                 new Banker(),
             };
         }
+
+        public static Hero GetCopy(Hero hero)
+        {
+            return new Hero(hero);
+        }
     }
 }

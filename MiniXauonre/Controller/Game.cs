@@ -55,15 +55,8 @@ namespace MiniXauonre.Controller
             var draftForm = new DraftForm(this);
             Application.Run(draftForm);
         }
-        
-        public GameRules.PickType DraftHeroPick(Hero hero)
-        {
-            if (!AvailibleHeroes.Contains(hero)) return GameRules.PickType.None;
-            if (PickSeq[PickStep].Item2 == GameRules.PickType.Pick)
-                Players[PickSeq[PickStep].Item1].Heroes.Add(hero);
-            AvailibleHeroes.Remove(hero);
-            return PickSeq[PickStep++].Item2;
-        }
+
+        public void NextPick() => ++PickStep;
         
         private void HeroPlacing()
         {

@@ -38,6 +38,12 @@ namespace MiniXauonre.Controller
                     for (int j = 0; j < pl; j++)
                         seq.Add(Tuple.Create(j, PickType.Pick));
             }
+            else if (type == DraftType.Choosing)
+            {
+                for (int i = 0; i < h; i++)
+                    for (int j = 0; j < pl; j++)
+                        seq.Add(Tuple.Create(j, PickType.Choose));
+            }
             return seq;
         }
         
@@ -46,12 +52,14 @@ namespace MiniXauonre.Controller
             None,
             Pick,
             Ban,
-            Give
+            Give,
+            Choose
         }
 
         public enum DraftType
         {
             Normal,
+            Choosing,
             OneTwo,
         }
     }
