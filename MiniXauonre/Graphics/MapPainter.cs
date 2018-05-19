@@ -85,38 +85,35 @@ namespace MiniXauonre.Graphics
 
             var test = Graphics.resources.Res.TileR3;
 
-            for (int x = 0; x < MapSize.Width; x++)
-            {
-                for (int y = 0; y < MapSize.Height; y++)
-                {
-                    if (TileInBounds(g, x, y, modifiedTS))
-                    {
-                        Bitmap tileImage;
-                        switch (Map.MapTiles[x, y].Type)
-                        {
-                            case TileType.Empty:
-                                tileImage = Loader.BasicTile[Scaler]; break;
-                            case TileType.Solid:
-                                tileImage = Loader.SolidTile[Scaler]; break;
-                            default:
-                                tileImage = Loader.NullTile[0]; break;
-                        }
-                        g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * modifiedTS.Width, y * modifiedTS.Height));
+            var bounds = g.VisibleClipBounds;
+            var tileBounds = new Rectangle(
+                (int)bounds.Left / modifiedTS.Width,
+                (int)bounds.Top / modifiedTS.Height,
+                (int)bounds.Width / modifiedTS.Width,
+                (int)bounds.Height / modifiedTS.Height
+            );
 
-                        // g.DrawImage(tileImage, new RectangleF
-                        //    (x * modifiedTS.Width, y * modifiedTS.Height, modifiedTS.Width, modifiedTS.Height));
+            for (int x = Math.Max(0, tileBounds.Left); x < Math.Min(tileBounds.Right + 2, Map.Length); x++)
+            {
+                for (int y = Math.Max(0, tileBounds.Top); y < Math.Min(tileBounds.Bottom + 2, Map.Width); y++)
+                {
+                    Bitmap tileImage;
+                    switch (Map.MapTiles[x, y].Type)
+                    {
+                        case TileType.Empty:
+                            tileImage = Loader.BasicTile[Scaler]; break;
+                        case TileType.Solid:
+                            tileImage = Loader.SolidTile[Scaler]; break;
+                        default:
+                            tileImage = Loader.NullTile[0]; break;
                     }
+                    g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * modifiedTS.Width, y * modifiedTS.Height));
+
+                    // g.DrawImage(tileImage, new RectangleF
+                    //    (x * modifiedTS.Width, y * modifiedTS.Height, modifiedTS.Width, modifiedTS.Height));
+                
                 }
             }
-        }
-
-        private bool TileInBounds(System.Drawing.Graphics g, int x, int y, SizeF modifiedTS)
-        {
-            return
-                (g.VisibleClipBounds.Contains(new PointF(x * modifiedTS.Width, y * modifiedTS.Height))
-                || g.VisibleClipBounds.Contains(new PointF((x + 1) * modifiedTS.Width, (y + 1) * modifiedTS.Height))
-                || g.VisibleClipBounds.Contains(new PointF((x + 1) * modifiedTS.Width, y * modifiedTS.Height))
-                || g.VisibleClipBounds.Contains(new PointF(x * modifiedTS.Width, (y + 1) * modifiedTS.Height)));
         }
 
         private void DrawUnits(System.Drawing.Graphics g, int Scaler)
