@@ -23,6 +23,8 @@ namespace MiniXauonre.Controller
         public int PickStep { get; private set; }
         public List<Tuple<int, GameRules.PickType>> PickSeq { get; private set; }
         
+        public Func<int, List<Point>> GetSpawnPoints { get; private set; }
+        
         public Game(GameRules rules)
         {
             HeroesPerPlayer = rules.HeroesPerPlayer;
@@ -40,6 +42,7 @@ namespace MiniXauonre.Controller
             AvailibleHeroes = rules.AllowedHeroes;
             PickStep = 0;
             PickSeq = rules.DraftSequence;
+            GetSpawnPoints = rules.GetSpawnPoints;
         }
 
         public void StartGame()
@@ -60,19 +63,27 @@ namespace MiniXauonre.Controller
         
         private void HeroPlacing()
         {
-            
+            for (int pl = 0; pl < Players.Count; pl++)
+            {
+                var v = GetSpawnPoints(pl);
+                for (int h = 0; h < HeroesPerPlayer; h++)
+                {
+                    Maze.UnitPositions.Add(Players[pl].Heroes[h], v[h % v.Count]);
+                    Players[pl].Heroes[h].Init(Players[pl], Maze, Shop);
+                }
+            }
         }
 
         private void GameProcess()
         {
-            
+            var form = new ScreenForm(this);
+            Application.Run(form);
         }
         
         private void GameFinish()
         {
             
         }
-
         
     }
 }

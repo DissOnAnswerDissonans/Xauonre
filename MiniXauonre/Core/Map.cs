@@ -19,7 +19,7 @@ namespace MiniXauonre.Core
         public int Width { get; protected set; }
         public int Length { get; protected set; }
 
-        public Map(int length = 20, int width = 50)
+        public Map(int length = 30, int width = 15)
         {
             Effects = new List<Effect>();
             UnitPositions = new Dictionary<Hero, Point>();

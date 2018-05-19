@@ -118,6 +118,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Res.resx</DependentUpon>
     </Compile>
+    <Compile Include="Graphics\resources\Tiles\TileLoader.cs" />
     <Compile Include="Graphics\ScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <None Include="Graphics\resources\Tiles\TileSolidR3.png" />
+    <None Include="Graphics\resources\Tiles\TileSolidR2.png" />
+    <None Include="Graphics\resources\Tiles\TileSolidR1.png" />
     <None Include="Graphics\resources\GUI_elements\available_tile.png" />
     <None Include="Graphics\resources\GUI_elements\chooseable_tile.png" />
     <None Include="Graphics\resources\GUI_elements\unavailable_tile.png" />
@@ -156,6 +160,9 @@
     <Content Include="Graphics\resources\Heroes\Tupotrof.png" />
     <Content Include="Graphics\resources\Tiles\noyhing.png" />
     <Content Include="Graphics\resources\Tiles\Tile.png" />
+    <None Include="Graphics\resources\Tiles\TileR1.png" />
+    <None Include="Graphics\resources\Tiles\TileR2.png" />
+    <None Include="Graphics\resources\Tiles\TileR3.png" />
     <Content Include="Graphics\resources\Tiles\TileSolid.png" />
   </ItemGroup>
   <ItemGroup>

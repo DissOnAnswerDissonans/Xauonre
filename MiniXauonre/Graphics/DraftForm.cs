@@ -26,16 +26,16 @@ namespace MiniXauonre.Graphics
         
         private readonly Size iconSize = new Size(128, 128);
         private readonly Padding iconBorders = new Padding(8,8,8,8);
-        
+        private const int TopPanelHeight = 50;
+
         protected override void OnLoad(EventArgs e)
-        {
+        { 
             base.OnLoad(e);
             DoubleBuffered = true;
-            WindowState = FormWindowState.Maximized;
         }
         
         private Dictionary<Player, FlowLayoutPanel> PlayersPickedHeroesPanel { get; set; }   
-        private Dictionary<Player, List<Panel>> PlayersPickedHeroesElements { get; set; }
+        private Dictionary<Player, Panel> PlayersPickedHeroesState { get; set; }
         private FlowLayoutPanel HeroesToPickPanel { get; set; }
         private Panel PickingPlayerNamePanel { get; set; }
         
@@ -48,17 +48,24 @@ namespace MiniXauonre.Graphics
         public DraftForm(Game game)
         {
             Game = game;
+            ClientSize = new Size(
+                (iconSize.Width + iconBorders.Left + iconBorders.Right) 
+                    * (Game.Players.Count + Game.AvailibleHeroes.Count / Game.HeroesPerPlayer + 1),
+                (iconSize.Height + iconBorders.Top + iconBorders.Bottom)
+                    * (Game.HeroesPerPlayer) + TopPanelHeight
+            );
             PlayersPickedHeroesPanel = new Dictionary<Player, FlowLayoutPanel>();
+            PlayersPickedHeroesState = new Dictionary<Player, Panel>();
             PickingPlayerNamePanel = new Panel()
             {
                 Dock = DockStyle.Top,
-                Height = iconSize.Height * 2 / 5 - 4,
+                Height = TopPanelHeight,
                 BackColor = Color.White,
             };
 
             CurrentHeroLabel = new Label()
             {
-                Font = new Font(SystemFonts.DefaultFont.FontFamily, iconSize.Height / 4),
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, TopPanelHeight * 2 / 3),
                 ForeColor = Color.Black,
                 AutoSize = true,
             };
@@ -118,6 +125,21 @@ namespace MiniXauonre.Graphics
             
             foreach (var player in Game.Players)
             {
+
+                var statePanel = new Panel()
+                {
+                    Dock = DockStyle.Bottom,
+                    BackColor = Color.Black,
+                    Padding = iconBorders,
+                    Height = TopPanelHeight - iconBorders.Vertical
+                };
+                
+                statePanel.Controls.Add(new Label()
+                {
+                    Text = player.Name,
+                    ForeColor = Color.White,
+                });
+                
                 var panel = new FlowLayoutPanel()
                 {
                     FlowDirection = FlowDirection.TopDown,
@@ -125,10 +147,12 @@ namespace MiniXauonre.Graphics
                     BackColor = plColors[PlayersPickedHeroesPanel.Count % 4],
                     Width = iconSize.Width + iconBorders.Left + iconBorders.Right,
                 };
-                PlayersPickedHeroesPanel.Add(player, panel);              
-                Controls.Add(panel);
-            }
-                 
+
+                panel.Controls.Add(statePanel);  
+                Controls.Add(panel);  
+                PlayersPickedHeroesState.Add(player, statePanel);
+                PlayersPickedHeroesPanel.Add(player, panel);                      
+            }        
             UpdateView();
         }
 
@@ -143,6 +167,24 @@ namespace MiniXauonre.Graphics
         {
             var stage = Game.PickSeq[Game.PickStep];
             CurrentHeroLabel.Text = stage.Item2 + @": " + Game.Players[stage.Item1].Name;
+            foreach (var v in PlayersPickedHeroesState.Values)
+            {
+                v.BackColor = Color.Black;
+            }
+
+            Player p = Game.Players[Game.PickSeq[Game.PickStep].Item1];
+            switch (Game.PickSeq[Game.PickStep].Item2)
+            {
+                case GameRules.PickType.Ban:
+                    PlayersPickedHeroesState[p].BackColor = Color.Red; break;
+                case GameRules.PickType.Pick:
+                    PlayersPickedHeroesState[p].BackColor = Color.Green; break;
+                case GameRules.PickType.Choose:
+                    PlayersPickedHeroesState[p].BackColor = Color.GreenYellow; break;
+                default:
+                    PlayersPickedHeroesState[p].BackColor = Color.Black; break;
+            }
+            
         }
 
         private void AddHeroToView(Hero hero)

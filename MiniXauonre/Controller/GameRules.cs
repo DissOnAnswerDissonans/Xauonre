@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MiniXauonre.Core;
 using MiniXauonre.Core.Heroes;
 using MiniXauonre.Core.Shops;
+using Xauonre.Core;
 
 namespace MiniXauonre.Controller
 {
@@ -18,15 +19,40 @@ namespace MiniXauonre.Controller
         public List<Hero> AllowedHeroes { get; protected set; }
         
         public List<Tuple<int, PickType>> DraftSequence { get; protected set; }
+        
+        public Func<int, List<Point>> GetSpawnPoints { get; protected set; }
 
         public GameRules()
         {
             HeroesPerPlayer = 3;
             PlayersNumber = 2;
-            GameMap = new Map();
+            GameMap = new Map(100, 50);
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
             DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);
+            GetSpawnPoints = (pl) =>
+            {
+                Point p;
+                switch (pl)
+                {
+                    case 0:
+                        p = new Point(1, 1);
+                        break;
+                    case 1:
+                        p = new Point(GameMap.Length - 2, GameMap.Width - 2);
+                        break;
+                    default:
+                        throw new ArgumentException();
+                }
+                return new List<Point>()
+                {
+                    p,
+                    p + new Point(1, 1),
+                    p + new Point(-1, -1),
+                    p + new Point(1, -1),
+                    p + new Point(-1, 1),
+                };
+            };
         }
 
         public List<Tuple<int, PickType>> GenerateDraft(DraftType type, int pl, int h)
@@ -46,6 +72,8 @@ namespace MiniXauonre.Controller
             }
             return seq;
         }
+        
+        
         
         public enum PickType
         {

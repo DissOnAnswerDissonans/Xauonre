@@ -190,4 +190,22 @@
   <data name="Resist" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GUI_elements\icons\Resist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TileR1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileR1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileR2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileR2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileR3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileR3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileSolidR1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileSolidR1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileSolidR2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileSolidR2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileSolidR3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileSolidR3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
