@@ -74,6 +74,11 @@ namespace MiniXauonre.Controller
             }
         }
 
+        public void ClickedOnTile(Point point, MouseButtons button)
+        {
+            Console.WriteLine(point.X + " " + point.Y + " " + button);
+        }
+
         private void GameProcess()
         {
             var form = new ScreenForm(this);

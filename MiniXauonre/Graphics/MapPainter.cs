@@ -35,11 +35,18 @@ namespace MiniXauonre.Graphics
         private Size MapSize { get; set; }
         private SizeF TileSize { get; set; }
         private TileLoader Loader { get; set; }
+        
+        private ScreenForm Screen { get; set; }
 
-        public MapPainter(Map map, Size size)
+        private int Scaler { get; set; }
+        private int ScaleFactor { get; set; }
+        private Size ModifiedTS { get; set; }
+
+        public MapPainter(Map map, ScreenForm s)
         {
+            Screen = s;
             Map = map;
-            DrawSize = size;
+            DrawSize = Screen.Size;
             Loader = new TileLoader();
             Av = new List<Tuple<Point, MapPointMode>>();
             SwitchMap(map);      
@@ -47,27 +54,12 @@ namespace MiniXauonre.Graphics
 
         public void Paint(System.Drawing.Graphics g, int s)
         {
-            DrawMap(g, s);
-            DrawUnits(g, s);
+            Scaler = s;
+            ScaleFactor = (int)Math.Pow(2, s);
+            ModifiedTS = new Size((int)(TileSize.Width / ScaleFactor), (int)(TileSize.Height / ScaleFactor));
+            DrawMap(g);
+            DrawUnits(g);
             //DrawAvs(g);           
-        }
-
-        public void FastPaint(System.Drawing.Graphics g, int s)
-        {
-            var ScaleFactor = (int)Math.Pow(2, s);
-            g.DrawRectangle(
-                new Pen(Color.Green, 3.0f),
-                new Rectangle(0, 0, (int)(TileSize.Width * Map.Length / ScaleFactor), (int)(TileSize.Height * Map.Width / ScaleFactor))
-                );
-            for (int i = 1; i < Map.Length; ++i)
-                g.DrawLine(new Pen(Color.Green),
-                    new PointF((TileSize.Width * i / ScaleFactor), 0),
-                    new PointF((TileSize.Width * i / ScaleFactor), (TileSize.Height * Map.Width / ScaleFactor)));
-            for (int i = 1; i < Map.Width; ++i)
-                g.DrawLine(new Pen(Color.Green),
-                    new PointF(0, (TileSize.Height * i / ScaleFactor)),
-                    new PointF((TileSize.Width * Map.Length / ScaleFactor), (TileSize.Height * i / ScaleFactor)));
-            DrawUnits(g, s);
         }
 
         public void ResizeMap(Size s) => DrawSize = s;
@@ -78,19 +70,16 @@ namespace MiniXauonre.Graphics
             TileSize = new SizeF(128, 128);        
         }
 
-        private void DrawMap(System.Drawing.Graphics g, int Scaler)
+        private void DrawMap(System.Drawing.Graphics g)
         {
-            var ScaleFactor = (int)Math.Pow(2, Scaler);
-            var modifiedTS = new Size((int)(TileSize.Width / ScaleFactor), (int)(TileSize.Height / ScaleFactor));
-
             var test = Graphics.resources.Res.TileR3;
 
             var bounds = g.VisibleClipBounds;
             var tileBounds = new Rectangle(
-                (int)bounds.Left / modifiedTS.Width,
-                (int)bounds.Top / modifiedTS.Height,
-                (int)bounds.Width / modifiedTS.Width,
-                (int)bounds.Height / modifiedTS.Height
+                (int)bounds.Left / ModifiedTS.Width,
+                (int)bounds.Top / ModifiedTS.Height,
+                (int)bounds.Width / ModifiedTS.Width,
+                (int)bounds.Height / ModifiedTS.Height
             );
 
             for (int x = Math.Max(0, tileBounds.Left); x < Math.Min(tileBounds.Right + 2, Map.Length); x++)
@@ -107,7 +96,7 @@ namespace MiniXauonre.Graphics
                         default:
                             tileImage = Loader.NullTile[0]; break;
                     }
-                    g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * modifiedTS.Width, y * modifiedTS.Height));
+                    g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * ModifiedTS.Width, y * ModifiedTS.Height));
 
                     // g.DrawImage(tileImage, new RectangleF
                     //    (x * modifiedTS.Width, y * modifiedTS.Height, modifiedTS.Width, modifiedTS.Height));
@@ -116,17 +105,15 @@ namespace MiniXauonre.Graphics
             }
         }
 
-        private void DrawUnits(System.Drawing.Graphics g, int Scaler)
+        private void DrawUnits(System.Drawing.Graphics g)
         {
-            var ScaleFactor = (int)Math.Pow(2, Scaler);
-            var modifiedTS = new SizeF(TileSize.Width / ScaleFactor, TileSize.Height / ScaleFactor);
             const float unitShift = 0.3f;
             foreach (var unit in Map.UnitPositions.Keys)
             {
                 var coords = Map.UnitPositions[unit];
                 var heroImage = unit.GetImage();
-                var borders = new RectangleF(coords.X * modifiedTS.Width, 
-                    (coords.Y - unitShift) * modifiedTS.Height, modifiedTS.Width, modifiedTS.Height);
+                var borders = new RectangleF(coords.X * ModifiedTS.Width, 
+                    (coords.Y - unitShift) * ModifiedTS.Height, ModifiedTS.Width, ModifiedTS.Height);
                 
                 g.DrawImage(heroImage, borders);
                 //DrawUnitInfo(g, unit, borders);
@@ -163,6 +150,11 @@ namespace MiniXauonre.Graphics
                 g.DrawImage(tileImage, new RectangleF
                     (p.Item1.X * TileSize.Width, p.Item1.Y * TileSize.Height, TileSize.Width, TileSize.Height));
             }
+        }
+
+        public void OnMouseClick(System.Drawing.Point truncate, MouseButtons button)
+        { 
+            Screen.ClickedOnMap(new Point(truncate.X / ModifiedTS.Width, truncate.Y / ModifiedTS.Height), button);
         }
     }
 }

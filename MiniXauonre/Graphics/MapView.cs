@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MiniXauonre.Controller;
 using MiniXauonre.Core;
 
 namespace MiniXauonre.Graphics
@@ -48,8 +49,8 @@ namespace MiniXauonre.Graphics
 		protected override void OnMouseClick(MouseEventArgs e)
 		{
 			base.OnMouseClick(e);
-		}
-			    
+			painter.OnMouseClick(Point.Truncate(mouseLogicalPos), e.Button);
+		}		    
 
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
@@ -60,17 +61,12 @@ namespace MiniXauonre.Graphics
 				dragStart = e.Location;
 				dragStartCenter = CenterLogicalPos;
 			}
-			else if (e.Button == MouseButtons.Left)
-			{
-				//painter.OnMouseDown(Point.Truncate(mouseLogicalPos));
-			}
 		}	
 	    
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			base.OnMouseUp(e);
 			dragInProgress = false;
-            //painter.OnMouseUp();
             Invalidate();
 		}
 		
@@ -108,8 +104,8 @@ namespace MiniXauonre.Graphics
 		{
 			var shift = GetShift();
 			return new PointF(
-				(p.X - shift.X) * (float)Math.Pow(2, ZoomScale),
-				(p.Y - shift.Y) * (float)Math.Pow(2, ZoomScale));
+				(p.X - shift.X),
+				(p.Y - shift.Y));
 		}
 	    
 		private PointF GetShift()

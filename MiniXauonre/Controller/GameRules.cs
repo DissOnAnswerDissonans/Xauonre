@@ -24,12 +24,12 @@ namespace MiniXauonre.Controller
 
         public GameRules()
         {
-            HeroesPerPlayer = 3;
+            HeroesPerPlayer = 2;
             PlayersNumber = 2;
             GameMap = new Map(100, 50);
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
-            DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);
+            DraftSequence = GenerateDraft(DraftType.SimpleBanPick, PlayersNumber, HeroesPerPlayer);
             GetSpawnPoints = (pl) =>
             {
                 Point p;
@@ -70,6 +70,15 @@ namespace MiniXauonre.Controller
                     for (int j = 0; j < pl; j++)
                         seq.Add(Tuple.Create(j, PickType.Choose));
             }
+            else if (type == DraftType.SimpleBanPick)
+            {
+                for (int i = 0; i < h; i++)
+                    for (int j = 0; j < pl; j++)
+                        seq.Add(Tuple.Create(j, PickType.Ban));
+                for (int i = 0; i < h; i++)
+                    for (int j = 0; j < pl; j++)
+                        seq.Add(Tuple.Create(j, PickType.Pick));
+            }
             return seq;
         }
         
@@ -89,6 +98,7 @@ namespace MiniXauonre.Controller
             Normal,
             Choosing,
             OneTwo,
+            SimpleBanPick,
         }
     }
 }

@@ -18,11 +18,14 @@ namespace MiniXauonre.Graphics
     {
         private MapPainter MPainter;
         private MapView View;
+        private Game Game { get; set; }
         
         private const int fontSize = 8;
         private const int debugFontSize = 16;
 
         private const int levelPanelSize = 64;
+
+        private FlowLayoutPanel StatPanel { get; set; }
         
         protected override void OnLoad(EventArgs e)
         {
@@ -33,9 +36,10 @@ namespace MiniXauonre.Graphics
 
         public ScreenForm(Game game)
         {
-            MPainter = new MapPainter(game.Maze, this.Size);
+            MPainter = new MapPainter(game.Maze, this);
+            Game = game;
 
-            var statPanel = new FlowLayoutPanel
+            StatPanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.BottomUp,
                 Dock = DockStyle.Bottom,
@@ -52,12 +56,12 @@ namespace MiniXauonre.Graphics
                 BackColor = Color.Black,        
             };
 
-            var playerPanels = CreatePlayerPanels(topPanel, game.Players);           
+            var playerPanels = CreatePlayerPanels(topPanel, Game.Players);           
             
             View = new MapView(MPainter) { Dock = DockStyle.Fill };
             
             Controls.Add(View);
-            Controls.Add(statPanel);
+            Controls.Add(StatPanel);
             Controls.Add(topPanel);
 
             SizeChanged += (sender, args) =>
@@ -82,6 +86,19 @@ namespace MiniXauonre.Graphics
         {
             foreach (var v in d.Values)
                 v.Resize((Size.Width - 32) / d.Count);
+        }
+
+        public void ClickedOnMap(Point point, MouseButtons b)
+        {
+            Game.ClickedOnTile(point, b);
+            StatPanel.Controls.Clear();
+            StatPanel.Controls.Add(new Label()
+            {
+                Text = "X = " + point.X + " Y = " + point.Y + " | " + b.ToString(),
+                AutoSize = true,
+                ForeColor = Color.White,
+            });         
+            StatPanel.Refresh();
         }
 
     }

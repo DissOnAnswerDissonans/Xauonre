@@ -111,7 +111,7 @@ namespace MiniXauonre.Graphics
                             break;
                     }
                     game.NextPick();
-                    if (game.PickStep >= game.HeroesPerPlayer * game.Players.Count)
+                    if (game.PickStep >= game.PickSeq.Count)
                         Finish();
                     else
                         UpdateView();
@@ -123,21 +123,30 @@ namespace MiniXauonre.Graphics
             
             Controls.Add(PickingPlayerNamePanel);
             
-            foreach (var player in Game.Players)
+            for (var p = 0; p < Game.Players.Count; ++p)
             {
-
+                var player = Game.Players[p];
                 var statePanel = new Panel()
                 {
-                    Dock = DockStyle.Bottom,
+                    Bounds = new Rectangle(
+                        (iconSize.Width + iconBorders.Horizontal) * (Game.Players.Count - p - 1), 
+                        ClientSize.Height - TopPanelHeight, 
+                        iconSize.Width, 
+                        TopPanelHeight
+                    ),
                     BackColor = Color.Black,
-                    Padding = iconBorders,
-                    Height = TopPanelHeight - iconBorders.Vertical
+                    Padding = Padding.Empty,
+                    Height = TopPanelHeight - iconBorders.Vertical,                
                 };
                 
                 statePanel.Controls.Add(new Label()
                 {
+                    Dock = DockStyle.Fill,
+                    Font = new Font(SystemFonts.DefaultFont.FontFamily, TopPanelHeight / 3),
                     Text = player.Name,
                     ForeColor = Color.White,
+                    TextAlign = ContentAlignment.MiddleRight,
+                    Padding = Padding.Empty
                 });
                 
                 var panel = new FlowLayoutPanel()
@@ -146,18 +155,24 @@ namespace MiniXauonre.Graphics
                     Dock = DockStyle.Left,
                     BackColor = plColors[PlayersPickedHeroesPanel.Count % 4],
                     Width = iconSize.Width + iconBorders.Left + iconBorders.Right,
-                };
-
-                panel.Controls.Add(statePanel);  
-                Controls.Add(panel);  
+                };  
                 PlayersPickedHeroesState.Add(player, statePanel);
-                PlayersPickedHeroesPanel.Add(player, panel);                      
-            }        
+                PlayersPickedHeroesPanel.Add(player, panel); 
+                Controls.Add(statePanel); 
+            }
+            foreach (var player in Game.Players)
+                Controls.Add(PlayersPickedHeroesPanel[player]);
+            
             UpdateView();
         }
 
         private void Finish()
         { 
+            foreach (var v in PlayersPickedHeroesState.Values)
+            {
+                v.BackColor = Color.Black;
+                v.Controls[0].ForeColor = Color.White;
+            }
             HeroesToPickPanel.Controls.Clear();
             HeroesToPickPanel.Click += (sender, args) => { Close();};
             CurrentHeroLabel.Text = @"Ready to play";
@@ -170,18 +185,23 @@ namespace MiniXauonre.Graphics
             foreach (var v in PlayersPickedHeroesState.Values)
             {
                 v.BackColor = Color.Black;
+                v.Controls[0].ForeColor = Color.White;
             }
 
             Player p = Game.Players[Game.PickSeq[Game.PickStep].Item1];
             switch (Game.PickSeq[Game.PickStep].Item2)
             {
                 case GameRules.PickType.Ban:
-                    PlayersPickedHeroesState[p].BackColor = Color.Red; break;
+                    PlayersPickedHeroesState[p].Controls[0].ForeColor = Color.Black;
+                    PlayersPickedHeroesState[p].BackColor = Color.OrangeRed; break;
                 case GameRules.PickType.Pick:
-                    PlayersPickedHeroesState[p].BackColor = Color.Green; break;
+                    PlayersPickedHeroesState[p].Controls[0].ForeColor = Color.Black;
+                    PlayersPickedHeroesState[p].BackColor = Color.LimeGreen; break;
                 case GameRules.PickType.Choose:
-                    PlayersPickedHeroesState[p].BackColor = Color.GreenYellow; break;
+                    PlayersPickedHeroesState[p].Controls[0].ForeColor = Color.Black;
+                    PlayersPickedHeroesState[p].BackColor = Color.DeepSkyBlue; break;
                 default:
+                    PlayersPickedHeroesState[p].Controls[0].ForeColor = Color.White;
                     PlayersPickedHeroesState[p].BackColor = Color.Black; break;
             }
             

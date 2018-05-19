@@ -70,7 +70,6 @@ namespace MiniXauonre.Graphics
                 Width = h * 2,
                 Padding = new Padding(h / 16),
                 BackColor = plColors[num % plColors.Count],
-                AutoSize = true,
             };
 
             DamageDisp.Controls.Add(new Label
@@ -130,9 +129,7 @@ namespace MiniXauonre.Graphics
                     ForeColor = hero.Chosen ? Color.Black : Color.White,
                     Padding = Padding.Empty,
                 });
-
                 
-
                 Controls.Add(panel);
                 HeroesPanels.Add(panel);
             }
