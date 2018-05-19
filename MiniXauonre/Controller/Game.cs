@@ -25,6 +25,8 @@ namespace MiniXauonre.Controller
         
         public Func<int, List<Point>> GetSpawnPoints { get; private set; }
         
+        
+        
         public Game(GameRules rules)
         {
             HeroesPerPlayer = rules.HeroesPerPlayer;
@@ -76,7 +78,7 @@ namespace MiniXauonre.Controller
 
         public void ClickedOnTile(Point point, MouseButtons button)
         {
-            Console.WriteLine(point.X + " " + point.Y + " " + button);
+            Console.WriteLine(point.X + @" " + point.Y + @" " + button);
         }
 
         private void GameProcess()

@@ -77,6 +77,7 @@ namespace MiniXauonre.Graphics
                 FlowDirection = FlowDirection.TopDown,
                 Dock = DockStyle.Fill,
                 BackColor = Color.Black,
+                AutoScroll = true
             };
 
             foreach (var h in Game.AvailibleHeroes)
@@ -155,6 +156,8 @@ namespace MiniXauonre.Graphics
                     Dock = DockStyle.Left,
                     BackColor = plColors[PlayersPickedHeroesPanel.Count % 4],
                     Width = iconSize.Width + iconBorders.Left + iconBorders.Right,
+                    WrapContents = false,
+                    AutoScroll = true,
                 };  
                 PlayersPickedHeroesState.Add(player, statePanel);
                 PlayersPickedHeroesPanel.Add(player, panel); 

@@ -96,11 +96,7 @@ namespace MiniXauonre.Graphics
                         default:
                             tileImage = Loader.NullTile[0]; break;
                     }
-                    g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * ModifiedTS.Width, y * ModifiedTS.Height));
-
-                    // g.DrawImage(tileImage, new RectangleF
-                    //    (x * modifiedTS.Width, y * modifiedTS.Height, modifiedTS.Width, modifiedTS.Height));
-                
+                    g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * ModifiedTS.Width, y * ModifiedTS.Height));           
                 }
             }
         }
@@ -116,7 +112,7 @@ namespace MiniXauonre.Graphics
                     (coords.Y - unitShift) * ModifiedTS.Height, ModifiedTS.Width, ModifiedTS.Height);
                 
                 g.DrawImage(heroImage, borders);
-                //DrawUnitInfo(g, unit, borders);
+                DrawUnitInfo(g, unit, borders);
             }
         }
 
@@ -125,10 +121,26 @@ namespace MiniXauonre.Graphics
         private void DrawUnitInfo(System.Drawing.Graphics g, Hero unit, RectangleF borders)
         {
             var b = new RectangleF(borders.Location, borders.Size);
-            b.Y += TileSize.Height;
-            g.DrawString((((int)unit.GetHp()).ToString(CultureInfo.CurrentCulture) + "/"
-                          + ((int)unit.GetMaxHp()).ToString(CultureInfo.CurrentCulture)),
-                kok, new SolidBrush(Color.Black), b);
+            b.Y += ModifiedTS.Height;
+            b.Height -= ModifiedTS.Height * 0.7f;
+            g.FillRectangle(new SolidBrush(Color.Black), b.X, b.Y, b.Width, b.Height);
+            g.FillRectangle(new SolidBrush(Color.Firebrick), b.X, b.Y, b.Width * (float)(unit.GetHp() / unit.GetMaxHp()), b.Height);
+            g.DrawRectangle(new Pen(Color.Black), b.X, b.Y, b.Width, b.Height);
+            if (Scaler == 0)
+            {
+                g.DrawRectangle(new Pen(Color.Black, 3.0f), b.X, b.Y, b.Width, b.Height);
+                b.Y += 6;
+                g.DrawString(((int) unit.GetHp()).ToString(CultureInfo.CurrentCulture) + "/"
+                 + ((int) unit.GetMaxHp()).ToString(CultureInfo.CurrentCulture),
+                    kok, new SolidBrush(Color.White), b);
+            }
+            else if (Scaler == 1)
+            {
+                b.Y -= 3;
+                b.Height += 8;
+                g.DrawString(((int) unit.GetHp()).ToString(CultureInfo.CurrentCulture),
+                    kok, new SolidBrush(Color.White), b);
+            }
         }
 
         private void DrawAvs(System.Drawing.Graphics g)

@@ -25,11 +25,11 @@ namespace MiniXauonre.Controller
         public GameRules()
         {
             HeroesPerPlayer = 2;
-            PlayersNumber = 2;
-            GameMap = new Map(100, 50);
+            PlayersNumber = 4;
+            GameMap = new Map(16, 7);
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
-            DraftSequence = GenerateDraft(DraftType.SimpleBanPick, PlayersNumber, HeroesPerPlayer);
+            DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);
             GetSpawnPoints = (pl) =>
             {
                 Point p;
@@ -40,6 +40,12 @@ namespace MiniXauonre.Controller
                         break;
                     case 1:
                         p = new Point(GameMap.Length - 2, GameMap.Width - 2);
+                        break;
+                    case 2:
+                        p = new Point(1, GameMap.Width - 2);
+                        break;
+                    case 3:
+                        p = new Point(GameMap.Length - 2, 1);
                         break;
                     default:
                         throw new ArgumentException();

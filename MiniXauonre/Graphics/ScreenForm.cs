@@ -26,6 +26,8 @@ namespace MiniXauonre.Graphics
         private const int levelPanelSize = 64;
 
         private FlowLayoutPanel StatPanel { get; set; }
+   
+        private FlowLayoutPanel ControlPanel { get; set; }
         
         protected override void OnLoad(EventArgs e)
         {
@@ -49,17 +51,26 @@ namespace MiniXauonre.Graphics
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, debugFontSize)       
             };
 
-            var topPanel = new Panel
+            ControlPanel = new FlowLayoutPanel
+            {
+                Bounds = new Rectangle(16, levelPanelSize + 16, 256, 512),
+                BackColor = Color.OrangeRed,
+            };
+
+            var topPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
                 Height = levelPanelSize,
-                BackColor = Color.Black,        
+                BackColor = Color.Black,    
             };
+            for (int i = 0; i < Game.Players.Count; i++)
+                topPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / Game.Players.Count));
 
             var playerPanels = CreatePlayerPanels(topPanel, Game.Players);           
             
             View = new MapView(MPainter) { Dock = DockStyle.Fill };
             
+            Controls.Add(ControlPanel);
             Controls.Add(View);
             Controls.Add(StatPanel);
             Controls.Add(topPanel);
@@ -71,13 +82,13 @@ namespace MiniXauonre.Graphics
             };
         }
 
-        private Dictionary<Player, PlayerPanel> CreatePlayerPanels(Panel basePanel, List<Player> players)
+        private Dictionary<Player, PlayerPanel> CreatePlayerPanels(TableLayoutPanel basePanel, List<Player> players)
         {
             var d = new Dictionary<Player, PlayerPanel>();           
             foreach (var p in players)
             {
                 d.Add(p, new PlayerPanel(p, d.Count, Size.Width / players.Count, d.Count % 2 != 0));
-                basePanel.Controls.Add(d[p]);
+                basePanel.Controls.Add(d[p], d.Count - 1, 0);
             }
             return d;
         }
