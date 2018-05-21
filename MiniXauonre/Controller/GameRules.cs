@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using MiniXauonre.Core;
 using MiniXauonre.Core.Heroes;
 using MiniXauonre.Core.Shops;
@@ -21,15 +23,18 @@ namespace MiniXauonre.Controller
         public List<Tuple<int, PickType>> DraftSequence { get; protected set; }
         
         public Func<int, List<Point>> GetSpawnPoints { get; protected set; }
+        
+        public Func<Game, Hero> TurnFunction { get; protected set; }
 
         public GameRules()
         {
             HeroesPerPlayer = 2;
             PlayersNumber = 4;
-            GameMap = new Map(16, 7);
+            GameMap = new Map(15, 7);
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
             DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);
+            TurnFunction = GenerateTurn;
             GetSpawnPoints = (pl) =>
             {
                 Point p;
@@ -60,8 +65,25 @@ namespace MiniXauonre.Controller
                 };
             };
         }
+        
+        private static Hero GenerateTurn(Game game)
+        {
+            if (game.CurrentHero == null)
+                return game.Players.SelectMany(p => p.Heroes).First();
+            
+            var players = game.Players;
+            var index = players.FindIndex(p => p == game.CurrentPlayer);
+            var nextIndex = (index + 1) % players.Count;
+            var nextPlayer = players[nextIndex];
+            var heroes = nextPlayer.Heroes;
+            var heroindex = heroes.FindIndex(p => p == nextPlayer.CurrentHero);
+            var heronextIndex = (heroindex + 1) % heroes.Count;
+            var nextHero = heroes[heronextIndex];
+            return nextHero;
+        }
+      
 
-        public List<Tuple<int, PickType>> GenerateDraft(DraftType type, int pl, int h)
+        public static List<Tuple<int, PickType>> GenerateDraft(DraftType type, int pl, int h)
         {
             List<Tuple<int, PickType>> seq = new List<Tuple<int, PickType>>();
             if (type == DraftType.Normal)
@@ -105,6 +127,11 @@ namespace MiniXauonre.Controller
             Choosing,
             OneTwo,
             SimpleBanPick,
+        }
+
+        public enum TurnType
+        {
+            Normal,
         }
     }
 }

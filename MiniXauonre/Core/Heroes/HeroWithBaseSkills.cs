@@ -90,25 +90,16 @@ namespace MiniXauonre.Core.Heroes
                             .Select(u => u.Key)
                             .ToList();
 
+        
         protected Hero ChooseTarget(List<Hero> targets, Player player)
         {
-            var possibleCommands = new List<Command>
-                    {
-                        new Command(CommandType.Choose, new List<List<string>>{ targets.Select(h => h.Name).ToList() }),
-                    };
-            var answer = player.GetCommand(possibleCommands);
-            return targets[answer.Data[0]];
+            return new Hero();
         }
 
 
         protected Point ChoosePoint(List<Point> points, Player player)
         {
-            var possibleCommands = new List<Command>
-                {
-                    new Command(CommandType.Choose, new List<List<string>>{ points.Select(p => p.X + " " + p.Y).ToList()}),
-                };
-            var answer = player.GetCommand(possibleCommands);
-            return points[answer.Data[0]];
+            return new Point();
         }
 
         protected Point AskRelativePoint(Point zero, Player player)
@@ -118,12 +109,8 @@ namespace MiniXauonre.Core.Heroes
 
         protected StepTypes ChooseDirection(List<StepTypes> steps, Player player)
         {
-            var possibleCommands = new List<Command>
-                    {
-                        new Command(CommandType.Choose, new List<List<string>>{ steps.Select(h => h.ToString()).ToList() }),
-                    };
-            var answer = player.GetCommand(possibleCommands);
-            return steps[answer.Data[0]];
+            return StepTypes.Right;
         }
+        
     }
 }

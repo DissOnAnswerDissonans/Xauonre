@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MiniXauonre.Controller;
 using MiniXauonre.Core;
+using MiniXauonre.Core.Heroes;
 
 namespace MiniXauonre.Graphics
 {
@@ -24,11 +25,10 @@ namespace MiniXauonre.Graphics
         };
         
         private Player Player { get; set; }
-  
         
         private Panel LevelDisp { get; set; }
         private Panel DamageDisp { get; set; }
-        private List<Panel> HeroesPanels { get; set; }
+        private Dictionary<Hero, Panel> HeroesPanels { get; set; }
 
         
         public PlayerPanel(Player player, int num, int width, bool dock)
@@ -38,7 +38,7 @@ namespace MiniXauonre.Graphics
             Width = width;
             BackColor = plColors[num % plColors.Count];
             Player = player;
-
+            
             var h = 64;
 
             LevelDisp = new Panel
@@ -93,7 +93,7 @@ namespace MiniXauonre.Graphics
 
             Controls.Add(DamageDisp);
 
-            HeroesPanels = new List<Panel>();
+            HeroesPanels = new Dictionary<Hero, Panel>();
 
             foreach (var hero in player.Heroes)
             {
@@ -131,9 +131,21 @@ namespace MiniXauonre.Graphics
                 });
                 
                 Controls.Add(panel);
-                HeroesPanels.Add(panel);
+                HeroesPanels.Add(hero, panel);
             }
                  
+        }
+
+        public void PanelUpdate(Game game)
+        {
+            BorderStyle = BorderStyle.None;
+            foreach (var v in HeroesPanels.Values)
+                v.BackColor = Color.Black;
+            if (Player == game.CurrentPlayer)
+            {
+                this.BorderStyle = BorderStyle.Fixed3D;
+                HeroesPanels[Player.CurrentHero].BackColor = Color.Green;
+            } 
         }
 
         public new void Resize(int width)

@@ -37,11 +37,11 @@ namespace MiniXauonre.Core
 
         public bool CellIsFree(Point p) => IsInBounds(p) && MapTiles[p.X, p.Y].Type == TileType.Empty && GetIn(p).Count() == 0;
 
-        public void TickTalents(Player player, Hero hero)
+        public void TickTalents(Player player)
         {
-            foreach(var effect in Effects.Where(e => e.Creator == hero).ToList())
+            foreach(var effect in Effects.Where(e => e.Creator == player.CurrentHero).ToList())
             {
-                effect.Tick(hero);
+                effect.Tick(player.CurrentHero);
                 if (effect.Timer < 0)
                     Effects.Remove(effect);
             }

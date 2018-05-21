@@ -23,9 +23,12 @@ namespace MiniXauonre.Controller
         public int PickStep { get; private set; }
         public List<Tuple<int, GameRules.PickType>> PickSeq { get; private set; }
         
-        public Func<int, List<Point>> GetSpawnPoints { get; private set; }
+        public Player CurrentPlayer { get; private set; }
+        public Hero CurrentHero { get; private set; }
         
+        public Func<Game, Hero> TurnFunc { get; private set; } 
         
+        public Func<int, List<Point>> GetSpawnPoints { get; private set; }        
         
         public Game(GameRules rules)
         {
@@ -37,7 +40,7 @@ namespace MiniXauonre.Controller
             {
                 var nameForm = new PlayerNameForm(i + 1);
                 Application.Run(nameForm);
-                Players.Add(new Player(nameForm.PlayerName));
+                Players.Add(new Player(this, nameForm.PlayerName));
             }
 
             Shop = rules.GameShop;
@@ -45,12 +48,13 @@ namespace MiniXauonre.Controller
             PickStep = 0;
             PickSeq = rules.DraftSequence;
             GetSpawnPoints = rules.GetSpawnPoints;
+            TurnFunc = rules.TurnFunction;
         }
 
         public void StartGame()
         {
             HeroDraft();
-            HeroPlacing();
+            GamePreparing();
             GameProcess();
             GameFinish();
         }
@@ -63,7 +67,7 @@ namespace MiniXauonre.Controller
 
         public void NextPick() => ++PickStep;
         
-        private void HeroPlacing()
+        private void GamePreparing()
         {
             for (int pl = 0; pl < Players.Count; pl++)
             {
@@ -73,12 +77,27 @@ namespace MiniXauonre.Controller
                     Maze.UnitPositions.Add(Players[pl].Heroes[h], v[h % v.Count]);
                     Players[pl].Heroes[h].Init(Players[pl], Maze, Shop);
                 }
+                Players[pl].InitPlayer();          
             }
+
+            NextHero();
         }
 
         public void ClickedOnTile(Point point, MouseButtons button)
         {
-            Console.WriteLine(point.X + @" " + point.Y + @" " + button);
+            switch (button)
+            {
+                case MouseButtons.Left: // Если текущий герой НЕ активный просто выбор героя
+                    var pointHeroes = Maze.UnitPositions.Where(p => p.Value == point).Select(p => p.Key).ToList();
+                    //List<Effect> pointEffects = Maze.Effects. TODO: 
+                    var tile = Maze.MapTiles[point.X, point.Y];
+                    break;
+                case MouseButtons.Right: 
+                    // TODO: если выбран скилл и акт. герой, применить в point
+                    break;
+                case MouseButtons.Middle:
+                    break;
+            }
         }
 
         private void GameProcess()
@@ -86,7 +105,23 @@ namespace MiniXauonre.Controller
             var form = new ScreenForm(this);
             Application.Run(form);
         }
-        
+
+        private void NextHero()
+        {
+            CurrentHero = TurnFunc(this);
+            CurrentPlayer = CurrentHero.P;
+            CurrentPlayer.CurrentHero = CurrentHero;
+        }
+
+        public void EndTurn()
+        {
+            CurrentPlayer.EndTurn();
+            Maze.TickTalents(CurrentPlayer);
+            NextHero();
+        }
+
+        private Shop GetShop() => CurrentPlayer.GetShop();
+
         private void GameFinish()
         {
             

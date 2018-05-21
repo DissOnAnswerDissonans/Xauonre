@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,6 +29,8 @@ namespace MiniXauonre.Graphics
         private FlowLayoutPanel StatPanel { get; set; }
    
         private FlowLayoutPanel ControlPanel { get; set; }
+
+        private Dictionary<Player, PlayerPanel> PlayerPanels { get; set; }
         
         protected override void OnLoad(EventArgs e)
         {
@@ -43,13 +46,23 @@ namespace MiniXauonre.Graphics
 
             StatPanel = new FlowLayoutPanel
             {
-                FlowDirection = FlowDirection.BottomUp,
-                Dock = DockStyle.Bottom,
-                //Height = map.UnitPositions.Count * debugFontSize * 2,
-                
-                BackColor = Color.MidnightBlue,
-                Font = new Font(SystemFonts.DefaultFont.FontFamily, debugFontSize)       
+                Bounds = new Rectangle(ClientSize.Width - 272, levelPanelSize + 16, 256, 512),
+                BackColor = Color.MidnightBlue,    
             };
+
+            var b = new Button()
+            {
+                Text = "END TURN",
+                BackColor = Color.Beige,
+            };
+            b.Click += (sender, args) =>
+            {
+                Game.EndTurn();
+                foreach (var v in PlayerPanels.Values)
+                    v.PanelUpdate(Game);
+            };
+            StatPanel.Controls.Add(b);
+                
 
             ControlPanel = new FlowLayoutPanel
             {
@@ -66,19 +79,23 @@ namespace MiniXauonre.Graphics
             for (int i = 0; i < Game.Players.Count; i++)
                 topPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / Game.Players.Count));
 
-            var playerPanels = CreatePlayerPanels(topPanel, Game.Players);           
+            PlayerPanels = CreatePlayerPanels(topPanel, Game.Players);           
             
             View = new MapView(MPainter) { Dock = DockStyle.Fill };
             
-            Controls.Add(ControlPanel);
-            Controls.Add(View);
+            Controls.Add(ControlPanel);   
             Controls.Add(StatPanel);
+            Controls.Add(View);
             Controls.Add(topPanel);
+            
+            foreach (var v in PlayerPanels.Values)
+                v.PanelUpdate(Game);
 
             SizeChanged += (sender, args) =>
             {
+                StatPanel.Bounds = new Rectangle(ClientSize.Width - 272, ClientSize.Height - 528, 256, 512);
                 MPainter.ResizeMap(Size);
-                ResizePlayerPanels(playerPanels);
+                ResizePlayerPanels(PlayerPanels);
             };
         }
 
@@ -101,7 +118,8 @@ namespace MiniXauonre.Graphics
 
         public void ClickedOnMap(Point point, MouseButtons b)
         {
-            Game.ClickedOnTile(point, b);
+            if (Game.Maze.IsInBounds(point))
+                Game.ClickedOnTile(point, b);
             StatPanel.Controls.Clear();
             StatPanel.Controls.Add(new Label()
             {
