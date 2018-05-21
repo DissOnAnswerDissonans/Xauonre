@@ -21,21 +21,7 @@ namespace MiniXauonre.Graphics
         private Hero Hero { get; set; }
         
         private static readonly Size iconSize = new Size(32, 32);
-        private readonly Dictionary<string, Bitmap> StatIcons = new Dictionary<string, Bitmap>
-        {
-            {"HP", new Bitmap(resources.Res.Health, iconSize)},
-            {"E", new Bitmap(resources.Res.Energy, iconSize)},
-            {"AD", new Bitmap(resources.Res.AttackDamage, iconSize)},
-            {"AP", new Bitmap(resources.Res.AbilityPower, iconSize)},
-            {"A", new Bitmap(resources.Res.Armor, iconSize)},
-            {"R", new Bitmap(resources.Res.Resist, iconSize)},
-            {"AR", new Bitmap(resources.Res.AttackRange, iconSize)},
-            {"AS", new Bitmap(resources.Res.AttackSpeed, iconSize)},
-            {"MS", new Bitmap(resources.Res.MovementSpeed, iconSize)},
-            {"CDR", new Bitmap(resources.Res.CDReduction, iconSize)},
-            {"HR", new Bitmap(resources.Res.HealthRegen, iconSize)},
-            {"ER", new Bitmap(resources.Res.EnergyRegen, iconSize)},
-        };
+        private readonly Dictionary<string, Bitmap> StatIcons = resources.IconLoader.GetIcons(iconSize);
 
         private readonly Size panelSize = new Size(iconSize.Width*4, iconSize.Height);
         
@@ -58,7 +44,7 @@ namespace MiniXauonre.Graphics
                 {
                     ForeColor = Color.White,
                     Dock = DockStyle.Fill,
-                    Text = ((int)stat.Value).ToString(),
+                    Text = (((int)(stat.Value * 10)) / 10f).ToString(),
                     Font = textFont,
                     TextAlign = (stat.Key == "HP" || stat.Key == "E") ? 
                         ContentAlignment.MiddleRight : ContentAlignment.MiddleCenter,

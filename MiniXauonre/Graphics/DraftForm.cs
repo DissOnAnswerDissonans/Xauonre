@@ -15,15 +15,7 @@ using Xauonre.Core;
 namespace MiniXauonre.Graphics
 {
     class DraftForm : Form  
-    {     
-        static readonly List<Color> plColors = new List<Color>
-        {
-            Color.Maroon,
-            Color.Indigo,
-            Color.DarkGreen,
-            Color.DarkBlue,
-        };
-        
+    {           
         private readonly Size iconSize = new Size(128, 128);
         private readonly Padding iconBorders = new Padding(8,8,8,8);
         private const int TopPanelHeight = 50;
@@ -154,7 +146,7 @@ namespace MiniXauonre.Graphics
                 {
                     FlowDirection = FlowDirection.TopDown,
                     Dock = DockStyle.Left,
-                    BackColor = plColors[PlayersPickedHeroesPanel.Count % 4],
+                    BackColor = Colors.PlayerDarkColors[PlayersPickedHeroesPanel.Count % 4],
                     Width = iconSize.Width + iconBorders.Left + iconBorders.Right,
                     WrapContents = false,
                     AutoScroll = true,

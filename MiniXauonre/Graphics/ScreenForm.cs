@@ -32,6 +32,8 @@ namespace MiniXauonre.Graphics
 
         private Dictionary<Player, PlayerPanel> PlayerPanels { get; set; }
         
+        private ShopPanel ShopPanel { get; set; }
+        
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -57,8 +59,11 @@ namespace MiniXauonre.Graphics
 
             ControlPanel = new FlowLayoutPanel
             {
-                Bounds = new Rectangle(ClientSize.Width - 272, levelPanelSize + 16, 256, 512),  
+                Padding = Padding.Empty,
+                AutoSize = true,
+                Bounds = new Rectangle(ClientSize.Width - 272, levelPanelSize + 16, 256, 0),  
                 BackColor = Color.MidnightBlue,
+                FlowDirection = FlowDirection.TopDown
             };
 
             var topPanel = new TableLayoutPanel
@@ -79,15 +84,23 @@ namespace MiniXauonre.Graphics
             Controls.Add(View);
             Controls.Add(topPanel);
             
-            foreach (var v in PlayerPanels.Values)
-                v.PanelUpdate(Game);
-
+            PlayerPanelUpdate();
+            ControlPanelUpdate();
+            StatPanelUpdate();
+            
+            ShopPanel = new ShopPanel(Game.CurrentHero, this,
+                new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
+            
             SizeChanged += (sender, args) =>
             {
                 //StatPanel.Bounds = new Rectangle(ClientSize.Width - 272, ClientSize.Height - 528, 256, 512);
                 MPainter.ResizeMap(Size);
                 ResizePlayerPanels(PlayerPanels);
-            };
+                
+                ShopPanel = new ShopPanel(Game.CurrentHero, this,
+                    //new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
+                    new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
+            }; 
         }
 
         private Dictionary<Player, PlayerPanel> CreatePlayerPanels(TableLayoutPanel basePanel, List<Player> players)
@@ -107,15 +120,39 @@ namespace MiniXauonre.Graphics
                 v.Resize((Size.Width - 32) / d.Count);
         }
 
-        public void ClickedOnMap(Point point, MouseButtons b)
+        public void ControlPanelUpdate()
         {
-            if (Game.Maze.IsInBounds(point))
-                Game.ClickedOnTile(point, b);
+            ControlPanel.Controls.Clear();
+            var b = new Button();
+            b.Click += (sender, args) =>
+            {
+                Game.ChosenHero = Game.CurrentHero;
+                StatPanelUpdate();
+                Controls.Add(ShopPanel);
+                ShopPanel.BringToFront();
+            };
+            ControlPanel.Controls.Add(b);
+            ControlPanel.Controls.Add(new Label
+            {
+                ForeColor = Color.AliceBlue,
+                Text = "CURRENT: " + Game.CurrentHero.Name,
+            });
+        }
+
+        public void PlayerPanelUpdate()
+        {
+            foreach (var v in PlayerPanels.Values)
+            {
+                v.PanelUpdate(Game);
+            }
+        }
+
+        public void StatPanelUpdate()
+        {
             StatPanel.Controls.Clear();
-            
             var button = new Button()
             {
-                Width = StatPanel.Width + 28,
+                Width = 256 + 28,
                 Height = 32,
                 Text = "END TURN",
                 Font = new Font(FontFamily.GenericSerif, 16),
@@ -125,10 +162,14 @@ namespace MiniXauonre.Graphics
             };
             button.Click += (sender, args) =>
             {
+                Controls.Remove(ShopPanel);
                 Game.EndTurn();
-                foreach (var v in PlayerPanels.Values)
-                    v.PanelUpdate(Game);
-                ClickedOnMap(new Point(-1, -1), MouseButtons.None);
+                PlayerPanelUpdate();
+                StatPanelUpdate();
+                ControlPanelUpdate();
+                ShopPanel = new ShopPanel(Game.CurrentHero, this,
+                    //new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
+                    new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
             };
             StatPanel.Controls.Add(button);
             
@@ -149,8 +190,16 @@ namespace MiniXauonre.Graphics
                     TextAlign = ContentAlignment.MiddleCenter
                 });
             }
-
             StatPanel.Refresh();
+        }
+
+        public void ClickedOnMap(Point point, MouseButtons b)
+        {
+            if (Game.Maze.IsInBounds(point))
+                Game.ClickedOnTile(point, b);
+            
+            Controls.Remove(ShopPanel);
+            StatPanelUpdate();     
         }
 
     }

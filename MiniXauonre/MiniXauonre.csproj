@@ -114,6 +114,7 @@
     <Compile Include="Graphics\PlayerPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Graphics\resources\IconLoader.cs" />
     <Compile Include="Graphics\resources\Res.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,6 +124,7 @@
     <Compile Include="Graphics\ScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\ShopPanel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

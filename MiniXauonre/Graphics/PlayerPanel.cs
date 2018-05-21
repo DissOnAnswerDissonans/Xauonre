@@ -133,11 +133,21 @@ namespace MiniXauonre.Graphics
             BorderStyle = BorderStyle.None;
             foreach (var v in HeroesPanels.Values)
                 v.BackColor = Color.Black;
+            foreach (var v in HeroesPanels.Keys)
+                HeroUpdate(v);
+
             if (Player == game.CurrentPlayer)
             {
-                this.BorderStyle = BorderStyle.Fixed3D;
+                //this.BorderStyle = BorderStyle.Fixed3D;
                 HeroesPanels[Player.CurrentHero].BackColor = Color.Green;
+                
             } 
+        }
+
+        public void HeroUpdate(Hero hero)
+        {
+            var panel = HeroesPanels[hero];
+            panel.Controls[0].Text = hero.GetMoney() + "$";
         }
 
         public new void Resize(int width)

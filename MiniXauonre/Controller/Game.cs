@@ -26,7 +26,7 @@ namespace MiniXauonre.Controller
         public Player CurrentPlayer { get; private set; }
         public Hero CurrentHero { get; private set; }
         
-        public Hero ChosenHero { get; private set; }
+        public Hero ChosenHero { get; set; }
         
         public Func<Game, Hero> TurnFunc { get; private set; } 
         

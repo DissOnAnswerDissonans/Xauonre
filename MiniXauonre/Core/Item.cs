@@ -124,6 +124,22 @@ namespace MiniXauonre.Core
             }
         }
 
+        public Dictionary<string, double> GetExplanation()
+        {
+            var stats = new Dictionary<string, double>();
+            if (HP != 0) stats.Add("HP", HP);
+            if (E != 0) stats.Add("E", E);
+            if (AD != 0) stats.Add("AD", AD);
+            if (AP != 0) stats.Add("AP", AP);
+            if (R != 0) stats.Add("R", R);
+            if (A != 0) stats.Add("A", A);
+            if (HR != 0) stats.Add("HR", HR);
+            if (ER != 0) stats.Add("ER", ER);
+            if (MS != 0) stats.Add("MS", MS);
+            if (CDR != 0) stats.Add("CDR", CDR);
+            return stats;
+        }
+
 
         public override bool Equals(object obj) => Name == (obj as Item).Name;
 
