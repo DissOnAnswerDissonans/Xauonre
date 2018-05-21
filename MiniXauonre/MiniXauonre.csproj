@@ -99,9 +99,11 @@
     <Compile Include="Graphics\ChooseForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\Colors.cs" />
     <Compile Include="Graphics\DraftForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\HeroInfo.cs" />
     <Compile Include="Graphics\MapPainter.cs" />
     <Compile Include="Graphics\MapView.cs">
       <SubType>Component</SubType>

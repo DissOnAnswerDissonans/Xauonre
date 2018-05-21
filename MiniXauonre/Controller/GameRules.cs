@@ -28,7 +28,7 @@ namespace MiniXauonre.Controller
 
         public GameRules()
         {
-            HeroesPerPlayer = 2;
+            HeroesPerPlayer = 1;
             PlayersNumber = 4;
             GameMap = new Map(15, 7);
             GameShop = new BasicShop();

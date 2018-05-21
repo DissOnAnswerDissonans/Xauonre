@@ -26,6 +26,8 @@ namespace MiniXauonre.Controller
         public Player CurrentPlayer { get; private set; }
         public Hero CurrentHero { get; private set; }
         
+        public Hero ChosenHero { get; private set; }
+        
         public Func<Game, Hero> TurnFunc { get; private set; } 
         
         public Func<int, List<Point>> GetSpawnPoints { get; private set; }        
@@ -88,9 +90,10 @@ namespace MiniXauonre.Controller
             switch (button)
             {
                 case MouseButtons.Left: // Если текущий герой НЕ активный просто выбор героя
-                    var pointHeroes = Maze.UnitPositions.Where(p => p.Value == point).Select(p => p.Key).ToList();
+                    ChosenHero = Maze.UnitPositions.Where(p => p.Value.Equals(point)).Select(p => p.Key).FirstOrDefault();
                     //List<Effect> pointEffects = Maze.Effects. TODO: 
                     var tile = Maze.MapTiles[point.X, point.Y];
+                    
                     break;
                 case MouseButtons.Right: 
                     // TODO: если выбран скилл и акт. герой, применить в point

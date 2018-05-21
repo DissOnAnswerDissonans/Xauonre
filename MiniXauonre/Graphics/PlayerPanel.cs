@@ -15,15 +15,7 @@ using MiniXauonre.Core.Heroes;
 namespace MiniXauonre.Graphics
 {
     internal class PlayerPanel : FlowLayoutPanel
-    {     
-        static readonly List<Color> plColors = new List<Color>
-        {
-            Color.Maroon,
-            Color.Indigo,
-            Color.DarkGreen,
-            Color.DarkBlue,
-        };
-        
+    {          
         private Player Player { get; set; }
         
         private Panel LevelDisp { get; set; }
@@ -36,7 +28,7 @@ namespace MiniXauonre.Graphics
             DockStyle dockS = dock ? DockStyle.Right : DockStyle.Left;
             Dock = dockS;
             Width = width;
-            BackColor = plColors[num % plColors.Count];
+            BackColor = Colors.PlayerDarkColors[num % Colors.count];
             Player = player;
             
             var h = 64;
@@ -69,7 +61,7 @@ namespace MiniXauonre.Graphics
                 Height = h * 7 / 8,
                 Width = h * 2,
                 Padding = new Padding(h / 16),
-                BackColor = plColors[num % plColors.Count],
+                BackColor = Colors.PlayerDarkColors[num % Colors.count],
             };
 
             DamageDisp.Controls.Add(new Label

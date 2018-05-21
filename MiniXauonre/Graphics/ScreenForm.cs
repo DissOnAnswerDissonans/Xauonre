@@ -46,28 +46,19 @@ namespace MiniXauonre.Graphics
 
             StatPanel = new FlowLayoutPanel
             {
-                Bounds = new Rectangle(ClientSize.Width - 272, levelPanelSize + 16, 256, 512),
-                BackColor = Color.MidnightBlue,    
-            };
-
-            var b = new Button()
-            {
-                Text = "END TURN",
-                BackColor = Color.Beige,
-            };
-            b.Click += (sender, args) =>
-            {
-                Game.EndTurn();
-                foreach (var v in PlayerPanels.Values)
-                    v.PanelUpdate(Game);
-            };
-            StatPanel.Controls.Add(b);
-                
+                Padding = Padding.Empty,
+                AutoSize = true,
+                Location = new System.Drawing.Point(ClientSize.Width - (256 + 16), ClientSize.Height - (32 + 16)),
+                Anchor = (AnchorStyles.Right | AnchorStyles.Bottom),
+                Size = new Size(256, 32),
+                BackColor = Color.OrangeRed,   
+                FlowDirection = FlowDirection.BottomUp
+            };       
 
             ControlPanel = new FlowLayoutPanel
             {
-                Bounds = new Rectangle(16, levelPanelSize + 16, 256, 512),
-                BackColor = Color.OrangeRed,
+                Bounds = new Rectangle(ClientSize.Width - 272, levelPanelSize + 16, 256, 512),  
+                BackColor = Color.MidnightBlue,
             };
 
             var topPanel = new TableLayoutPanel
@@ -93,7 +84,7 @@ namespace MiniXauonre.Graphics
 
             SizeChanged += (sender, args) =>
             {
-                StatPanel.Bounds = new Rectangle(ClientSize.Width - 272, ClientSize.Height - 528, 256, 512);
+                //StatPanel.Bounds = new Rectangle(ClientSize.Width - 272, ClientSize.Height - 528, 256, 512);
                 MPainter.ResizeMap(Size);
                 ResizePlayerPanels(PlayerPanels);
             };
@@ -121,12 +112,44 @@ namespace MiniXauonre.Graphics
             if (Game.Maze.IsInBounds(point))
                 Game.ClickedOnTile(point, b);
             StatPanel.Controls.Clear();
-            StatPanel.Controls.Add(new Label()
+            
+            var button = new Button()
             {
-                Text = "X = " + point.X + " Y = " + point.Y + " | " + b.ToString(),
-                AutoSize = true,
+                Width = StatPanel.Width + 28,
+                Height = 32,
+                Text = "END TURN",
+                Font = new Font(FontFamily.GenericSerif, 16),
                 ForeColor = Color.White,
-            });         
+                BackColor = Colors.PlayerDarkColors
+                    [Game.Players.IndexOf(Game.CurrentPlayer) % Colors.count]
+            };
+            button.Click += (sender, args) =>
+            {
+                Game.EndTurn();
+                foreach (var v in PlayerPanels.Values)
+                    v.PanelUpdate(Game);
+                ClickedOnMap(new Point(-1, -1), MouseButtons.None);
+            };
+            StatPanel.Controls.Add(button);
+            
+            if (Game.ChosenHero != null)
+            { 
+                var h = new HeroInfo(Game.ChosenHero);
+                
+                StatPanel.Controls.Add(h);
+                StatPanel.Controls.Add(new Label
+                {
+                    BackColor = Color.Black,
+                    ForeColor = Colors.PlayerLightColors
+                        [Game.Players.IndexOf(Game.ChosenHero.P) % Colors.count],
+                    Text = Game.ChosenHero.Name,
+                    Font = new Font(FontFamily.GenericSansSerif, 16),
+                    Width = StatPanel.Width - 6,
+                    Height = 32,
+                    TextAlign = ContentAlignment.MiddleCenter
+                });
+            }
+
             StatPanel.Refresh();
         }
 

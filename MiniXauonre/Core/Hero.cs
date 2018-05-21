@@ -23,6 +23,8 @@ namespace MiniXauonre.Core.Heroes
         
         public bool Chosen { get; private set; }
         public List<Hero> Targets { get; set; }
+        
+        public Func<Dictionary<string, double>> StatsGetter { get; protected set; }
 
         private double maxHp;
         private double hp;
@@ -60,6 +62,7 @@ namespace MiniXauonre.Core.Heroes
             Items = new List<Item>();
             Image = Graphics.resources.Res.DefaultHero;
             Targets = new List<Hero>();
+            StatsGetter = GetAllStats;
             //Default Stats
             maxHp = 1000;
             hp = maxHp;
@@ -528,6 +531,25 @@ namespace MiniXauonre.Core.Heroes
                     return new FuncData(this);
             }
         }
+
+        public Dictionary<string, double> GetAllStats() => new Dictionary<string, double>
+        {
+            {"MHP", GetMaxHp()},
+            {"HP", GetHp()},
+            {"ME", GetMaxEnergy()},
+            {"E", GetEnergy()},
+            {"AD", GetAttackDamage()},
+            {"AP", GetAbilityPower()},
+            {"A", GetArmor()},
+            {"R", GetResist()},
+            {"AR", GetAttackRange()},
+            {"AS", GetAttackSpeed()},
+            {"MS", GetMovementSpeed()},
+            {"CDR", GetCDReduction()},
+            {"HR", GetRegen()},
+            {"ER", GetEnergyRegen()},
+            {"M", GetMoney()},
+        };
 
         public string FastStats() =>
             Name
