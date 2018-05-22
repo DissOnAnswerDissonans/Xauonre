@@ -56,7 +56,7 @@ namespace MiniXauonre.Controller
         public void StartGame()
         {
             HeroDraft();
-            GamePreparing();
+            if (!GamePreparing()) return;
             GameProcess();
             GameFinish();
         }
@@ -69,20 +69,28 @@ namespace MiniXauonre.Controller
 
         public void NextPick() => ++PickStep;
         
-        private void GamePreparing()
+        private bool GamePreparing()
         {
-            for (int pl = 0; pl < Players.Count; pl++)
-            {
-                var v = GetSpawnPoints(pl);
-                for (int h = 0; h < HeroesPerPlayer; h++)
+            try
+            {     
+                for (int pl = 0; pl < Players.Count; pl++)
                 {
-                    Maze.UnitPositions.Add(Players[pl].Heroes[h], v[h % v.Count]);
-                    Players[pl].Heroes[h].Init(Players[pl], Maze, Shop);
-                }
-                Players[pl].InitPlayer();          
-            }
+                    var v = GetSpawnPoints(pl);
+                    for (int h = 0; h < HeroesPerPlayer; h++)
+                    {
+                        Maze.UnitPositions.Add(Players[pl].Heroes[h], v[h % v.Count]);
+                        Players[pl].Heroes[h].Init(Players[pl], Maze, Shop);
+                    }
 
+                    Players[pl].InitPlayer();
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
             NextHero();
+            return true;
         }
 
         public void ClickedOnTile(Point point, MouseButtons button)
@@ -114,13 +122,16 @@ namespace MiniXauonre.Controller
             CurrentHero = TurnFunc(this);
             CurrentPlayer = CurrentHero.P;
             CurrentPlayer.CurrentHero = CurrentHero;
+            ChosenHero = CurrentHero;
         }
 
         public void EndTurn()
         {
             CurrentPlayer.EndTurn();
+            CurrentHero.EndTurn();
             Maze.TickTalents(CurrentPlayer);
             NextHero();
+            CurrentHero.StartTurn();
         }
 
         private Shop GetShop() => CurrentPlayer.GetShop();

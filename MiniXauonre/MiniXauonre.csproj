@@ -104,6 +104,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Graphics\HeroInfo.cs" />
+    <Compile Include="Graphics\HeroSkillPanel.cs" />
     <Compile Include="Graphics\MapPainter.cs" />
     <Compile Include="Graphics\MapView.cs">
       <SubType>Component</SubType>

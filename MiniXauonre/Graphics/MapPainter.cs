@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MiniXauonre.Controller;
 using MiniXauonre.Core;
 using MiniXauonre.Core.Heroes;
 using Point = Xauonre.Core.Point;
@@ -123,8 +124,9 @@ namespace MiniXauonre.Graphics
             var b = new RectangleF(borders.Location, borders.Size);
             b.Y += ModifiedTS.Height;
             b.Height -= ModifiedTS.Height * 0.7f;
+            var color = Colors.PlayerDarkColors[unit.P.Game.Players.IndexOf(unit.P) % Colors.count];
             g.FillRectangle(new SolidBrush(Color.Black), b.X, b.Y, b.Width, b.Height);
-            g.FillRectangle(new SolidBrush(Color.Firebrick), b.X, b.Y, b.Width * (float)(unit.GetHp() / unit.GetMaxHp()), b.Height);
+            g.FillRectangle(new SolidBrush(color), b.X, b.Y, b.Width * (float)(unit.GetHp() / unit.GetMaxHp()), b.Height);
             g.DrawRectangle(new Pen(Color.Black), b.X, b.Y, b.Width, b.Height);
             if (Scaler == 0)
             {

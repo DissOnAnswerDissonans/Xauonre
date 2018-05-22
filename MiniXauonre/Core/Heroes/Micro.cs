@@ -28,6 +28,8 @@ namespace MiniXauonre.Core.Heroes
         public const double RestoreCost = 50;
         public Skill Restore { get; set; }
         public Perk RestoreRegenBuff { get; set; }
+        
+        
 
         public Micro()
         {
@@ -42,13 +44,13 @@ namespace MiniXauonre.Core.Heroes
             Defence = new Perk
             {
                 GetArmor = (g) => () => 
-                    g() + DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count(),
+                    g() + DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
                 SetArmor = (s) => (v) => 
-                    s(v - DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count),
+                    s(v - DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
                 GetResist = (g) => () =>
-                    g() + DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count(),
+                    g() + DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
                 SetResist = (s) => (v) =>
-                    s(v - DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count),
+                    s(v - DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
             };
             Perks.Add(Defence);
 
@@ -62,10 +64,10 @@ namespace MiniXauonre.Core.Heroes
                 EnergyCost = DropCost,
                 Job = (h) =>
                 {
-                    var targets = GetHeroesInRange(h.P, h.M, DropCatchRadius).Where(t => t != this).ToList();
+                    var targets = GetHeroesInRange(h, DropCatchRadius).Where(t => t != h).ToList();
                     if (targets.Count == 0)
                         return false;
-                    Targets.Add(ChooseTarget(targets, h.P));
+                    h.Targets.Add(ChooseTarget(targets, h.P));
                     var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis)
                         .Where(p => h.M.CellIsFree(p)).ToList();
                     if (points.Count == 0)

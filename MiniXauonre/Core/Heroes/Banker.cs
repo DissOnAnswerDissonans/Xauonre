@@ -62,8 +62,9 @@ namespace MiniXauonre.Core.Heroes
             {
                 LevelUp = (a) => (d) =>
                 {
+                    var h = d.HeroValue;
                     var hpBuff = GetAbilityPower() * InterestRateHpBuffAPScale;
-                    var allies = P.Heroes.Where(h => h != this);
+                    var allies = h.P.Heroes.Where(hh => hh != h);
                     foreach (var ally in allies)
                     {
                         ally.AddMaxHp(hpBuff);
@@ -74,9 +75,10 @@ namespace MiniXauonre.Core.Heroes
 
                 EndTurn = (a) => (d) =>
                 {
-                    var targets = GetAlliesInRange(P, M, InterestRateHealRange);
+                    var h = d.HeroValue;
+                    var targets = GetAlliesInRange(h, InterestRateHealRange);
                             //heal for % of lost HP
-                            var percent = GetAbilityPower() * InterestRateHealAPScale + InteresRateHeal;
+                            var percent = h.GetAbilityPower() * InterestRateHealAPScale + InteresRateHeal;
                     foreach (var ally in targets)
                         ally.GetHeal((ally.GetMaxHp() - ally.GetHp()) * percent);
                     return a(d);
@@ -92,15 +94,16 @@ namespace MiniXauonre.Core.Heroes
                 Explanation = () => "Blank",
                 CoolDown = InvestmentCD,
                 EnergyCost = InvestmentCost,
-                Job = (he) =>
+                Job = (h) =>
                 {
-                    var moneySent = Math.Min(InvestmentMoney + GetAbilityPower() * InvestmentAPScale, GetMoney());
-                    var allies = P.Heroes.Where(h => h != this).ToList();
+                    var moneySent = Math.Min(InvestmentMoney + h.GetAbilityPower() * InvestmentAPScale, h.GetMoney());
+                    var allies = h.P.Heroes.Where(hh => hh != h).ToList();
                     if (allies.Count == 0)
                         return false;
-                    Targets.Add(ChooseTarget(allies, P));
-                    foreach(var t in Targets)AddMoney(moneySent);
-                    AddMoney(-moneySent);
+                    h.Targets.Add(ChooseTarget(allies, h.P));
+                    foreach(var t in h.Targets)
+                        t.AddMoney(moneySent);
+                    h.AddMoney(-moneySent);
                     return true;
                 },
             };
@@ -114,11 +117,11 @@ namespace MiniXauonre.Core.Heroes
                 Explanation = () => "Blank",
                 CoolDown = ExchangeCD,
                 EnergyCost = ExchangeCost,
-                Job = (he) =>
+                Job = (h) =>
                 {
-                    var hpCost = GetMaxHp() * (ExchangeHP + ExchangeAPScale * GetAbilityPower());
-                    AddHp(-hpCost);
-                    P.AllDamage += hpCost * ExchangeExpCoeff;
+                    var hpCost = h.GetMaxHp() * (ExchangeHP + ExchangeAPScale * h.GetAbilityPower());
+                    h.AddHp(-hpCost);
+                    h.P.AllDamage += hpCost * ExchangeExpCoeff;
                     return true;
                 },
             };

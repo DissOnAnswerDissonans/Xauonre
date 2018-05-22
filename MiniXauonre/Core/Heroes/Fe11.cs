@@ -79,13 +79,14 @@ namespace MiniXauonre.Core.Heroes
                 //Stuff from Wall skill
                 EndTurn = (i) => (d) =>
                 {
+                    var h = d.HeroValue;
                     var a = i(d);
                     if (WallOn)
                     {
-                        if (GetEnergy() < WallManaPerTurnCost)
-                            DestroyWall(d.MapValue);
+                        if (h.GetEnergy() < WallManaPerTurnCost)
+                            DestroyWall(h.M);
                         else
-                            AddEnergy(-WallManaPerTurnCost);
+                            h.AddEnergy(-WallManaPerTurnCost);
                     }
                     return a;
                 },

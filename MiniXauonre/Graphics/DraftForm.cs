@@ -205,7 +205,7 @@ namespace MiniXauonre.Graphics
         private void AddHeroToView(Hero hero)
         {
             var pl = Game.Players[Game.PickSeq[Game.PickStep].Item1];  
-            pl.Heroes.Add(HeroMaker.GetCopy(hero));
+            pl.Heroes.Add(HeroMaker.CreateHero(hero.Name));
             PlayersPickedHeroesPanel[pl].Controls.Add(new Button // вместо кнопки надо чтото ещё
             {
                 Dock = DockStyle.Left,

@@ -135,6 +135,11 @@ namespace MiniXauonre.Graphics
                 v.BackColor = Color.Black;
             foreach (var v in HeroesPanels.Keys)
                 HeroUpdate(v);
+            DamageDisp.Controls[0].Text = (Player.Level == Player.Levels.Length - 1)
+                ? (int) Player.AllDamage + " DMG"
+                : (int) Player.AllDamage + " / " +
+                  Player.Levels[Math.Min(Player.Level + 1, Player.Levels.Count() - 1)] + " DMG";
+
 
             if (Player == game.CurrentPlayer)
             {

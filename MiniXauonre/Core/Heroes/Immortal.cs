@@ -38,26 +38,27 @@ namespace MiniXauonre.Core.Heroes
             {
                 GetDamage = (a) => (d) =>
                 {
+                    var h = d.HeroValue;
                     var damage = d.DamageValue;
-                    var arm = GetArmor();
-                    var res = GetResist();
+                    var arm = h.GetArmor();
+                    var res = h.GetResist();
                     var armored = damage.Phys > arm ? arm : damage.Phys;
                     var resisted = damage.Magic > arm ? arm : damage.Magic;
-                    var resDamage = new Damage(this, d.PlayerValue, damage.Phys - armored,
+                    var resDamage = new Damage(h, h.P, damage.Phys - armored,
                         damage.Magic - resisted,
                         damage.Pure);
                     var damageShould = resDamage.Sum();
                     if(damageShould > ShieldMaxDamage)
                     {
                         var over = damageShould - ShieldMaxDamage;
-                        var energyLeft = GetEnergy();
+                        var energyLeft = h.GetEnergy();
                         var absorbed = energyLeft >= over ? over : energyLeft;
                         var damageLeft = over - absorbed + ShieldMaxDamage;
                         var coeff = damageLeft / damageShould;
                         resDamage.Phys *= coeff;
                         resDamage.Magic *= coeff;
                         resDamage.Pure *= coeff;
-                        AddEnergy(-absorbed);
+                        h.AddEnergy(-absorbed);
                     }
                     resDamage.Phys += armored;
                     resDamage.Magic += resisted;
@@ -67,7 +68,8 @@ namespace MiniXauonre.Core.Heroes
 
                 EndTurn = (a) => (d) =>
                 {
-                    AddEnergy(ShieldEnergyRegen * (GetMaxEnergy() - GetEnergy()));
+                    var h = d.HeroValue;
+                    h.AddEnergy(ShieldEnergyRegen * (h.GetMaxEnergy() - h.GetEnergy()));
                     return a(d);
                 }
             };
@@ -77,10 +79,11 @@ namespace MiniXauonre.Core.Heroes
             {
                 GetDamage = (a) => (d) =>
                 {
-                    var maxEnergy = GetMaxEnergy();
-                    var ap = GetAbilityPower();
+                    var h = d.HeroValue;
+                    var maxEnergy = h.GetMaxEnergy();
+                    var ap = h.GetAbilityPower();
                     d.DamageValue.Creator
-                        .GetDamage(new Damage(this, P,
+                        .GetDamage(new Damage(h, h.P,
                         magic: maxEnergy * StormMaxEnergyScale
                         + ap * StormAPScale));
                     return a(d);
@@ -89,12 +92,13 @@ namespace MiniXauonre.Core.Heroes
 
                 EndTurn = (a) => (d) =>
                 {
-                    var maxEnergy = GetMaxEnergy();
-                    var ap = GetAbilityPower();
-                    var damage = new Damage(this, P,
+                    var h = d.HeroValue;
+                    var maxEnergy = h.GetMaxEnergy();
+                    var ap = h.GetAbilityPower();
+                    var damage = new Damage(h, h.P,
                         magic: maxEnergy * StormMaxEnergyScale
                         + ap * StormAPScale);
-                    var targets = GetEnemiesInRange(P, M, StormRange);
+                    var targets = GetEnemiesInRange(h, StormRange);
                     foreach (var target in targets)
                         target.GetDamage(damage);
                     return a(d);
@@ -121,8 +125,8 @@ namespace MiniXauonre.Core.Heroes
                         Disactivate = (eh) => eh.Perks.Remove(Reflection),
                     };
                     h.M.Effects.Add(ef);
-                    ef.Activate(this);
-                    SetEnergy(GetEnergy() * (1 - StormCost));
+                    ef.Activate(h);
+                    h.SetEnergy(h.GetEnergy() * (1 - StormCost));
                     return true;
                 }
             };

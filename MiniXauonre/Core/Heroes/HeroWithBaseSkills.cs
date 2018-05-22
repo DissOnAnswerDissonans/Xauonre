@@ -25,14 +25,14 @@ namespace MiniXauonre.Core.Heroes
                 {
                     if (AttacksLeft != 0)
                     {
-                        var enemiesInRange = GetEnemiesInRange(h.P, h.M, GetAttackRange());
+                        var enemiesInRange = GetEnemiesInRange(h, h.GetAttackRange());
                         if (enemiesInRange.Count != 0)
                         {
-                            Targets.Add(ChooseTarget(enemiesInRange, P));
-                            var at = new Damage(h, P, phys: GetAttackDamage());
+                            h.Targets.Add(ChooseTarget(enemiesInRange, h.P));
+                            var at = new Damage(h, h.P, phys: h.GetAttackDamage());
                             foreach(var t in Targets)
-                                GetDamage(at);
-                            AttacksLeft--;
+                                t.GetDamage(at);
+                            h.AttacksLeft--;
                             //Console.WriteLine(Attack.ToString());
                             return true;
                         }
@@ -52,16 +52,16 @@ namespace MiniXauonre.Core.Heroes
                 {
                     var hA = h as HeroWithBaseSkills;
                     var possibleSteps = PossibleSteps
-                        .Where(s => s.Value <= MovementLeft && M.CellIsFree(s.Key + M.UnitPositions[h]))
+                        .Where(s => s.Value <= MovementLeft && h.M.CellIsFree(s.Key + h.M.UnitPositions[h]))
                         .Select(po => po.Key.ToStep())
                         .ToList();
                     if (possibleSteps.Count != 0)
                     {
-                        var step = ChooseDirection(possibleSteps, P);
+                        var step = ChooseDirection(possibleSteps, h.P);
                         var pStep = StepToPoint(step);
                         var dist = new Point(0, 0).GetStepsTo(pStep);
-                        MovementLeft -= dist;
-                        M.UnitPositions[h].Add(pStep);
+                        h.MovementLeft -= dist;
+                        h.M.UnitPositions[h].Add(pStep);
                         return true;
                     }
                     return false;
@@ -73,33 +73,33 @@ namespace MiniXauonre.Core.Heroes
             Skills.Add(Move);
         }
 
-        protected List<Hero> GetEnemiesInRange(Player p, Map m, double r) => m.UnitPositions
-                            .Where(u => !p.Heroes.Contains(u.Key))
-                            .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
+        protected List<Hero> GetEnemiesInRange(Hero h, double r) => h.M.UnitPositions
+                            .Where(u => !h.P.Heroes.Contains(u.Key))
+                            .Where(u => h.M.UnitPositions[h].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)
                             .ToList();
 
-        protected List<Hero> GetAlliesInRange(Player p, Map m, double r) => m.UnitPositions
-                            .Where(u => p.Heroes.Contains(u.Key))
-                            .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
+        protected List<Hero> GetAlliesInRange(Hero h, double r) => h.M.UnitPositions
+                            .Where(u => h.P.Heroes.Contains(u.Key))
+                            .Where(u => h.M.UnitPositions[this].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)
                             .ToList();
 
-        protected List<Hero> GetHeroesInRange(Player p, Map m, double r) => m.UnitPositions
-                            .Where(u => m.UnitPositions[this].GetStepsTo(u.Value) <= r)
+        protected List<Hero> GetHeroesInRange(Hero h, double r) => h.M.UnitPositions
+                            .Where(u => h.M.UnitPositions[this].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)
                             .ToList();
 
         
         protected Hero ChooseTarget(List<Hero> targets, Player player)
         {
-            return new Hero();
+            return targets[0];
         }
 
 
         protected Point ChoosePoint(List<Point> points, Player player)
         {
-            return new Point();
+            return points[0];
         }
 
         protected Point AskRelativePoint(Point zero, Player player)

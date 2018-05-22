@@ -10,17 +10,17 @@ namespace MiniXauonre.Graphics
         public static readonly List<Color> PlayerDarkColors = new List<Color>
         {
             Color.Maroon,
+            Color.DarkBlue,
             Color.Indigo,
             Color.DarkGreen,
-            Color.DarkBlue,
         };
         
         public static readonly List<Color> PlayerLightColors = new List<Color>
         {
             Color.OrangeRed,
+            Color.DodgerBlue,
             Color.Fuchsia,
             Color.LimeGreen,
-            Color.DodgerBlue,
         };
     }
 }

@@ -17,8 +17,8 @@ namespace MiniXauonre.Graphics
 {
     internal class ScreenForm : Form
     {
-        private MapPainter MPainter;
-        private MapView View;
+        private MapPainter MPainter { get; set; }
+        private MapView View { get; set; }
         private Game Game { get; set; }
         
         private const int fontSize = 8;
@@ -33,6 +33,8 @@ namespace MiniXauonre.Graphics
         private Dictionary<Player, PlayerPanel> PlayerPanels { get; set; }
         
         private ShopPanel ShopPanel { get; set; }
+        
+        private HeroSkillPanel SkillPanel { get; set; }
         
         protected override void OnLoad(EventArgs e)
         {
@@ -50,6 +52,7 @@ namespace MiniXauonre.Graphics
             {
                 Padding = Padding.Empty,
                 AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 Location = new System.Drawing.Point(ClientSize.Width - (256 + 16), ClientSize.Height - (32 + 16)),
                 Anchor = (AnchorStyles.Right | AnchorStyles.Bottom),
                 Size = new Size(256, 32),
@@ -61,9 +64,10 @@ namespace MiniXauonre.Graphics
             {
                 Padding = Padding.Empty,
                 AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 Bounds = new Rectangle(ClientSize.Width - 272, levelPanelSize + 16, 256, 0),  
                 BackColor = Color.MidnightBlue,
-                FlowDirection = FlowDirection.TopDown
+                FlowDirection = FlowDirection.TopDown,
             };
 
             var topPanel = new TableLayoutPanel
@@ -87,16 +91,21 @@ namespace MiniXauonre.Graphics
             PlayerPanelUpdate();
             ControlPanelUpdate();
             StatPanelUpdate();
+
+            SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);
             
             ShopPanel = new ShopPanel(Game.CurrentHero, this,
                 new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
             
             SizeChanged += (sender, args) =>
             {
+                Controls.Remove(ShopPanel);
+                Controls.Remove(SkillPanel);
                 //StatPanel.Bounds = new Rectangle(ClientSize.Width - 272, ClientSize.Height - 528, 256, 512);
                 MPainter.ResizeMap(Size);
                 ResizePlayerPanels(PlayerPanels);
-                
+
+                SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);
                 ShopPanel = new ShopPanel(Game.CurrentHero, this,
                     //new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
                     new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
@@ -123,7 +132,20 @@ namespace MiniXauonre.Graphics
         public void ControlPanelUpdate()
         {
             ControlPanel.Controls.Clear();
-            var b = new Button();
+            var panel = new Panel()
+            {
+                Size = new Size(256, 32),
+                BackColor = Color.Black,
+            };
+            
+            var b = new Button()
+            {
+                ForeColor = Color.Goldenrod,
+                Text = "SHOP",
+                Font = new Font(FontFamily.GenericSansSerif, 16),
+                AutoSize = true,
+                Dock = DockStyle.Right,
+            };
             b.Click += (sender, args) =>
             {
                 Game.ChosenHero = Game.CurrentHero;
@@ -131,12 +153,26 @@ namespace MiniXauonre.Graphics
                 Controls.Add(ShopPanel);
                 ShopPanel.BringToFront();
             };
-            ControlPanel.Controls.Add(b);
-            ControlPanel.Controls.Add(new Label
+            
+            panel.Controls.Add(new Label
             {
-                ForeColor = Color.AliceBlue,
-                Text = "CURRENT: " + Game.CurrentHero.Name,
+                ForeColor = Game.ChosenHero != null ?
+                    Colors.PlayerLightColors[Game.Players.IndexOf(Game.ChosenHero.P) % Colors.count]
+                    : Colors.PlayerLightColors[Game.Players.IndexOf(Game.CurrentPlayer) % Colors.count],
+                Text = Game.ChosenHero != null ? Game.ChosenHero.Name : Game.CurrentHero.Name,
+                Font = new Font(FontFamily.GenericSansSerif, 20),
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft,
             });
+  
+            ControlPanel.Controls.Add(panel);
+            panel.Controls.Add(b);
+
+            if (Game.ChosenHero != null)
+            {
+                SkillPanel = new HeroSkillPanel(Game, Game.ChosenHero, this, ControlPanel.Width);
+                ControlPanel.Controls.Add(SkillPanel);
+            }
         }
 
         public void PlayerPanelUpdate()
@@ -146,6 +182,8 @@ namespace MiniXauonre.Graphics
                 v.PanelUpdate(Game);
             }
         }
+
+        public void MapUpdate() => View.Invalidate();
 
         public void StatPanelUpdate()
         {
@@ -165,11 +203,13 @@ namespace MiniXauonre.Graphics
                 Controls.Remove(ShopPanel);
                 Game.EndTurn();
                 PlayerPanelUpdate();
-                StatPanelUpdate();
-                ControlPanelUpdate();
+                StatPanelUpdate();         
                 ShopPanel = new ShopPanel(Game.CurrentHero, this,
-                    //new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
                     new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
+                
+                SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);     
+                ControlPanelUpdate();
+                MapUpdate();
             };
             StatPanel.Controls.Add(button);
             
@@ -200,6 +240,7 @@ namespace MiniXauonre.Graphics
             
             Controls.Remove(ShopPanel);
             StatPanelUpdate();     
+            ControlPanelUpdate();
         }
 
     }

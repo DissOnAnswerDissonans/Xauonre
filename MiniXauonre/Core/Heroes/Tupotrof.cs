@@ -19,7 +19,7 @@ namespace MiniXauonre.Core.Heroes
 
         public Tupotrof()
         {
-            Name = "tupotrof";
+            Name = "Tupotrof";
             Image = Graphics.resources.Res.Tupotrof;
             
             SetMaxHp(900);
@@ -47,8 +47,8 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = CutterCooldown,
                 Job = (h) =>
                 {
-                    var damage = new Damage(h, h.P, phys: CutterDamage + CutterADScale * GetAttackDamage());
-                    var targets = GetEnemiesInRange(P, M, GetAttackRange());
+                    var damage = new Damage(h, h.P, phys: CutterDamage + CutterADScale * h.GetAttackDamage());
+                    var targets = GetEnemiesInRange(h, h.GetAttackRange());
                     foreach (var target in targets)
                         target.GetDamage(damage);
                     return true;

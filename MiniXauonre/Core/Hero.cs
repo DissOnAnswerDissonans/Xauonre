@@ -90,6 +90,8 @@ namespace MiniXauonre.Core.Heroes
             Perks = hero.Perks;
             Skills = hero.Skills;
             S = hero.S;
+            M = hero.M;
+            P = hero.P;
             Items = hero.Items;
             Image = hero.Image;
             Targets = hero.Targets;
@@ -135,7 +137,7 @@ namespace MiniXauonre.Core.Heroes
             CDReduction,
         }
 
-        public void UseSkill(int id, Map map, Player player)
+        public void UseSkill(int id)
         {
             if(id >= 0 && id < Skills.Count)
             {
@@ -428,7 +430,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void StartTurn(Map m, Player p) => DoWithPerks(Actions.StartTurn, new FuncData(this,mapvalue: m, playerValue: p));
+        public void StartTurn() => DoWithPerks(Actions.StartTurn, new FuncData(this));
 
         private FuncData FStartTurn(FuncData data)
         {
@@ -440,7 +442,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void EndTurn(Map m, Player p) => DoWithPerks(Actions.EndTurn, new FuncData(this,mapvalue: m, playerValue: p));
+        public void EndTurn() => DoWithPerks(Actions.EndTurn, new FuncData(this));
 
         private FuncData FEndTurn(FuncData data)
         {
@@ -562,6 +564,10 @@ namespace MiniXauonre.Core.Heroes
             + ", AttacksLeft-" + AttacksLeft
             + ", Money-" + GetMoney();
 
+        public override int GetHashCode()
+        {
+            return 123142738 + Name.GetHashCode();
+        }
     }
 
 }

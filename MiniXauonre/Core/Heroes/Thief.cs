@@ -28,12 +28,12 @@ namespace MiniXauonre.Core.Heroes
                     + ") MaxHp from target forever.",
                 Job = (h) =>
                 {
-                    var st = Steal + GetAbilityPower() * APScale + GetAttackDamage() * ADScale;
+                    var st = Steal + h.GetAbilityPower() * APScale + h.GetAttackDamage() * ADScale;
                     if (Attack.Job(h))
                     {
                         foreach(var t in Targets)
                             t.AddMaxHp(-st);
-                        AddMaxHp(st);
+                        h.AddMaxHp(st);
                         return true;
                     }
                     return false;
