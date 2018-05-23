@@ -25,6 +25,7 @@ namespace MiniXauonre.Core.Items
             HP = 150;
 
             //Conterspell
+            /*
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>
@@ -33,6 +34,7 @@ namespace MiniXauonre.Core.Items
                     return d;
                 },
             };
+            */
 
         }
     }

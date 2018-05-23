@@ -26,9 +26,9 @@ namespace MiniXauonre.Core.Heroes
             SetAttackDamage(60);
             SetAbilityPower(20);
             SetAttackRange(14);
-            SetRegen(2);
+            SetRegen(7);
             SetMaxEnergy(200);
-            SetEnergyRegen(4);
+            SetEnergyRegen(10);
 
             Snipe = new Skill
             {
@@ -43,7 +43,9 @@ namespace MiniXauonre.Core.Heroes
                     var enemiesInRange = GetEnemiesInRange(h, SnipeRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        h.Targets.Add(ChooseTarget(enemiesInRange, h.P));
+                        var tg = ChooseTarget(enemiesInRange, h.P);
+                        if (tg == null) return false;
+                        h.Targets.Add(tg);
                         var damage = new Damage(h, h.P, phys: SnipeDamage + SnipeApScale * h.GetAbilityPower());
                         foreach(var t in h.Targets)t.GetDamage(damage);
 

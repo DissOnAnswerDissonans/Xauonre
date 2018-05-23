@@ -68,9 +68,9 @@ namespace MiniXauonre.Core.Heroes
             hp = maxHp;
             armor = 0;
             resist = 0;
-            regen = 3;
+            regen = 10;
 
-            money = 1000;
+            money = 0;
             abilityPower = 0;
             attackDamage = 50;
             attackSpeed = 1;

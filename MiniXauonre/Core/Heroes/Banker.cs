@@ -50,11 +50,12 @@ namespace MiniXauonre.Core.Heroes
         public Banker()
         {
             Name = "Banker";
+            Image = Graphics.resources.Res.Banker;
             SetMaxHp(950);
             SetArmor(15);
             SetResist(20);
             SetMaxEnergy(100);
-            SetEnergyRegen(5);
+            SetEnergyRegen(10);
             SetMovementSpeed(10);
 
 
@@ -100,7 +101,9 @@ namespace MiniXauonre.Core.Heroes
                     var allies = h.P.Heroes.Where(hh => hh != h).ToList();
                     if (allies.Count == 0)
                         return false;
-                    h.Targets.Add(ChooseTarget(allies, h.P));
+                    var target = ChooseTarget(allies, h.P);
+                    if (target == null) return false;
+                    h.Targets.Add(target);
                     foreach(var t in h.Targets)
                         t.AddMoney(moneySent);
                     h.AddMoney(-moneySent);

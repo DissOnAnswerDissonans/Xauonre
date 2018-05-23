@@ -16,15 +16,17 @@ namespace MiniXauonre.Core.Items
 
 
             //Conterspell
+            /*
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>
                 {
                     var conter = new Damage(d.HeroValue, d.HeroValue.P, pure: Math.Min(d.DamageValue.Magic, 10));
                     d.DamageValue.Creator.GetDamage(conter);
-                    return d;
+                    return f(d);
                 },
             };
+            */
         }
     }
 }

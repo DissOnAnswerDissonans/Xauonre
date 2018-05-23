@@ -40,7 +40,7 @@ namespace MiniXauonre.Graphics
             {
                 var panel = new Panel();
                 panel.Width = width - 12;
-                panel.BackColor = skill.Availiable(Hero) ? Color.Black : Color.DarkSlateGray;
+                panel.BackColor = (Game.CurrentHero == Hero && skill.Availiable(Hero)) ? Color.Black : Color.DarkSlateGray;
 
                 var skillName = new Label()
                 {

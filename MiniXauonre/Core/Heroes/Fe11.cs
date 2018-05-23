@@ -30,6 +30,7 @@ namespace MiniXauonre.Core.Heroes
         public Fe11()
         {
             Name = "Fe11";
+            Image = Graphics.resources.Res.Fe11;
             SetMaxHp(1300);
             SetAttackDamage(30);
             SetResist(5);

@@ -20,6 +20,7 @@ namespace MiniXauonre.Graphics
         private TableLayoutPanel ItemChoosingPanel { get; set; }    
         private FlowLayoutPanel InfoPanel { get; set; }   
         private FlowLayoutPanel ExplanationPanel { get; set; }
+        private TableLayoutPanel RecipePanel { get; set; }
         private Button BuyButton { get; set; }
         
         private Shop Shop { get; set; } 
@@ -84,17 +85,25 @@ namespace MiniXauonre.Graphics
                 form.StatPanelUpdate();
                 form.PlayerPanelUpdate();
             };
+
+            ExplanationPanel = new FlowLayoutPanel();
+            ExplanationPanel.BackColor = Color.Black;
+            ExplanationPanel.Size = new Size(Width/2, 36);
             
-            ExplanationPanel = new FlowLayoutPanel(){AutoSize = true};
+            RecipePanel = new TableLayoutPanel(){RowStyles = { new RowStyle(SizeType.AutoSize)}};
+            RecipePanel.Size = new Size(Width/2, 64);
             
             Controls.Add(InfoPanel);
             Controls.Add(BuyButton);
             Controls.Add(ItemChoosingPanel);
+            Controls.Add(RecipePanel);
             
             UpdateInfo();
 
             SizeChanged += (sender, args) =>
             {
+                RecipePanel.Size = new Size(Width/2, 64);
+                ExplanationPanel.Size = new Size(Width/2, 36);
                 ItemChoosingPanel.Size = new Size(Width / 2, Height);
                 BuyButton.Size = new Size(Width / 2, 64);
                 UpdateInfo();
@@ -117,25 +126,23 @@ namespace MiniXauonre.Graphics
             InfoPanel.Controls.Add(new Label
             {
                 ForeColor = Color.AliceBlue,
-                Font = new Font(FontFamily.GenericSerif, 32),
+                Font = new Font(FontFamily.GenericSerif, 36),
                 Text = ChosenItem.Name,
                 Dock = DockStyle.Top,
                 Width = InfoPanel.Width,
-                Height = 64,
+                Height = 72,
+                TextAlign = ContentAlignment.MiddleCenter,
             }); 
             
-            InfoPanel.Controls.Add(ExplanationPanel);        
-                
+            InfoPanel.Controls.Add(ExplanationPanel);            
+            InfoPanel.Controls.Add(RecipePanel);               
             InfoPanel.Refresh();
             
             BuyButton.Text = "Buy " + ChosenItem.Name + " (" + (int)ChosenItem.GetFinalCost(Customer) + ")";
 
-            var itemExp = ChosenItem.GetExplanation();
-            
+            var itemExp = ChosenItem.GetExplanation();  
             ExplanationPanel.Controls.Clear();
-
             var icons = resources.IconLoader.GetIcons(new Size(32, 32));
-
             foreach (var item in itemExp)
             {
                 ExplanationPanel.Controls.Add(new PictureBox()
@@ -150,6 +157,30 @@ namespace MiniXauonre.Graphics
                     Font = new Font(FontFamily.GenericSansSerif, 24),
                     AutoSize = true,
                 });
+            }
+            
+            RecipePanel.Controls.Clear();
+            RecipePanel.RowCount = ChosenItem.Parts.Count;
+            RecipePanel.Width = Width / 2;
+            RecipePanel.Height = ChosenItem.Parts.Count * 64;
+            var kik = new List<Item>(Customer.Items);
+            foreach (var part in ChosenItem.Parts)
+            {
+                RecipePanel.Controls.Add(new Label()
+                {
+                    Font = new Font(FontFamily.GenericSerif, 32),
+                    Text = part.Name,
+                    BackColor = Color.Azure,
+                    ForeColor = Color.Black,
+                    Size = new Size(RecipePanel.Width, 60),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Margin = new Padding(0, 2, 0, 2)
+                });
+                if (kik.Contains(part))
+                {
+                    kik.Remove(part);
+                    RecipePanel.Controls[RecipePanel.Controls.Count - 1].BackColor = Color.Chartreuse;
+                }              
             }
         }
     }

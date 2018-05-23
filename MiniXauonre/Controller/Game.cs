@@ -36,9 +36,12 @@ namespace MiniXauonre.Controller
         public Func<Game, Hero> TurnFunc { get; private set; } 
         
         public Func<int, List<Point>> GetSpawnPoints { get; private set; }
+
+        public GameRules Rules { get; private set; }
         
         public Game(GameRules rules)
         {
+            Rules = rules;
             HeroesPerPlayer = rules.HeroesPerPlayer;
             Maze = rules.GameMap;
             Players = new List<Player>();

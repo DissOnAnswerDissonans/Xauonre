@@ -17,6 +17,7 @@ namespace MiniXauonre.Core.Items
             Cost = 250;
             AP = 50;
 
+            /*
             Effect = new Perk
             {
                 EndTurn = (a) => (d) =>
@@ -25,6 +26,8 @@ namespace MiniXauonre.Core.Items
                     return a(d);
                 },
             };
+            */
+
             Parts = new List<Item>
             {
                 new MagicStone(),

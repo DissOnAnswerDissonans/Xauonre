@@ -48,9 +48,10 @@ namespace MiniXauonre.Core.Heroes
         public Cyprys()
         {
             Name = "Cyprys";
+            Image = Graphics.resources.Res.Cyprus;
             SetMaxHp(900);
             SetMaxEnergy(500);
-            SetEnergyRegen(3);
+            SetEnergyRegen(7);
             SetAttackDamage(40);
             SetMovementSpeed(10);
             SetAttackRange(11);
@@ -69,6 +70,7 @@ namespace MiniXauonre.Core.Heroes
                     var damage = new Damage(this, h.P, magic: RockDamage + RockDamageAPscale * h.GetAbilityPower());
                     var pos = h.M.UnitPositions[h].GetPointsInDistance(0, RockRange).Keys.Where(pp => h.M.IsInBounds(pp)).ToList();
                     var point = ChoosePoint(pos, h.P);
+                    if (point == null) return false;
 
                     var RockEffect = new Effect(h, (int)RockSustain);
                     RockEffect.Activate = (eh) =>
@@ -91,7 +93,8 @@ namespace MiniXauonre.Core.Heroes
                     var p = point.GetPointsInDistance(0, RockDamageRadius).Keys;
                     foreach (var victim in h.M.UnitPositions.Where(t => p.Contains(t.Value)))
                     {
-                        victim.Key.GetDamage(damage);
+                        if (!h.P.Heroes.Contains(victim.Key))
+                            victim.Key.GetDamage(damage);
                     }
                     return true;
                 },
@@ -115,7 +118,9 @@ namespace MiniXauonre.Core.Heroes
                     var targets = GetEnemiesInRange(h, EarthRange);
                     if (targets.Count == 0)
                         return false;
-                    h.Targets.Add(ChooseTarget(targets, h.P)); 
+                    var target = ChooseTarget(targets, h.P);
+                    if (target == null) return false;
+                    h.Targets.Add(target);
                     var rocks = PlacedRocks.Where(p => p.Item1.GetStepsTo(h.M.UnitPositions[h]) <= EarthRangeReq);
                     var rocksNumber = rocks.Count();
                     Effect maxLifeRock = null;

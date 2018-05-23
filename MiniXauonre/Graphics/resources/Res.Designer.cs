@@ -123,6 +123,16 @@ namespace MiniXauonre.Graphics.resources {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Banker {
+            get {
+                object obj = ResourceManager.GetObject("Banker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CDReduction {
             get {
                 object obj = ResourceManager.GetObject("CDReduction", resourceCulture);
@@ -136,6 +146,16 @@ namespace MiniXauonre.Graphics.resources {
         internal static System.Drawing.Bitmap chooseable_tile {
             get {
                 object obj = ResourceManager.GetObject("chooseable_tile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Cyprus {
+            get {
+                object obj = ResourceManager.GetObject("Cyprus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,6 +203,16 @@ namespace MiniXauonre.Graphics.resources {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Fe11 {
+            get {
+                object obj = ResourceManager.GetObject("Fe11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Health {
             get {
                 object obj = ResourceManager.GetObject("Health", resourceCulture);
@@ -196,6 +226,16 @@ namespace MiniXauonre.Graphics.resources {
         internal static System.Drawing.Bitmap HealthRegen {
             get {
                 object obj = ResourceManager.GetObject("HealthRegen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Immortal {
+            get {
+                object obj = ResourceManager.GetObject("Immortal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +296,16 @@ namespace MiniXauonre.Graphics.resources {
         internal static System.Drawing.Bitmap Sniper {
             get {
                 object obj = ResourceManager.GetObject("Sniper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Thief {
+            get {
+                object obj = ResourceManager.GetObject("Thief", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

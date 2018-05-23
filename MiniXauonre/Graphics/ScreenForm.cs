@@ -172,6 +172,7 @@ namespace MiniXauonre.Graphics
                 ForeColor = Game.ChosenHero != null ?
                     Colors.PlayerLightColors[Game.Players.IndexOf(Game.ChosenHero.P) % Colors.count]
                     : Colors.PlayerLightColors[Game.Players.IndexOf(Game.CurrentPlayer) % Colors.count],
+                BackColor = Game.ChosenHero == Game.CurrentHero ? Color.Black : Color.DarkSlateGray,
                 Text = Game.ChosenHero != null ? Game.ChosenHero.Name : Game.CurrentHero.Name,
                 Font = new Font(FontFamily.GenericSansSerif, 20),
                 Dock = DockStyle.Fill,

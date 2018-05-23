@@ -15,6 +15,7 @@ namespace MiniXauonre.Core.Heroes
         public Thief()
         {
             Name = "Thief";
+            Image = Graphics.resources.Res.Thief;
             SetResist(10);
             SetMovementSpeed(15);
 

@@ -20,9 +20,9 @@ namespace MiniXauonre.Core.Items
             HP = 50;
             A = 5;
             AD = 45;
-            HR = 2.5;
+            HR = 8;
 
-            Effect = new Perk()
+            /*Effect = new Perk()
             {
                 SkillFix = (s) =>
                 {
@@ -50,6 +50,7 @@ namespace MiniXauonre.Core.Items
                     return s;
                 }
             };
+            */
 
             //300
             Parts = new List<Item> {

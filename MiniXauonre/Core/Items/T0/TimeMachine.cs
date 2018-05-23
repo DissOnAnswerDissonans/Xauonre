@@ -17,7 +17,7 @@ namespace MiniXauonre.Core.Items
             HP = 200;
             AP = 225;
             E = 100;
-            ER = 15;
+            ER = 30;
             MS = 2;
             CDR = 2;
 

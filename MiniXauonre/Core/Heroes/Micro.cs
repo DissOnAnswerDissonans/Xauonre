@@ -37,9 +37,9 @@ namespace MiniXauonre.Core.Heroes
             SetAttackDamage(70);
             SetMaxHp(1500);
             SetMaxEnergy(200);
-            SetEnergyRegen(2);
+            SetEnergyRegen(10);
             SetMovementSpeed(13);
-            SetRegen(5);
+            SetRegen(15);
 
             Defence = new Perk
             {

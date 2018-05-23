@@ -26,11 +26,14 @@ namespace MiniXauonre.Controller
         
         public Func<Game, Hero> TurnFunction { get; protected set; }
 
+        public double StartMoney { get; protected set; }
+
         public GameRules()
         {
             HeroesPerPlayer = 3;
             PlayersNumber = 2;
-            GameMap = new Map(10, 10);
+            GameMap = new Map(20, 10);
+            StartMoney = 100;
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
             DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);

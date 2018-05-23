@@ -24,7 +24,7 @@ namespace MiniXauonre.Core.Heroes
             
             SetMaxHp(1200);
             SetMaxEnergy(150);
-            SetRegen(5);
+            SetRegen(15);
             SetEnergyRegen(5);
 
             Boom = new Skill
@@ -39,7 +39,9 @@ namespace MiniXauonre.Core.Heroes
                     var enemiesInRange = GetEnemiesInRange(h, BoomJumpRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        h.Targets.Add(ChooseTarget(enemiesInRange, h.P));
+                        var target = ChooseTarget(enemiesInRange, h.P);
+                        if (target == null) return false;
+                        h.Targets.Add(target);
                         if (h.Targets.Count == 0) return false;
                         var damage = new Damage(h, h.P, pure: BoomDamage + BoomDamageAPScale * h.GetAbilityPower());
                         h.M.UnitPositions[h] = h.M.UnitPositions[h.Targets[0]] + new Point();
