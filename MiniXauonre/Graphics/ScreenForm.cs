@@ -37,6 +37,8 @@ namespace MiniXauonre.Graphics
         
         private HeroSkillPanel SkillPanel { get; set; }
         
+        private CurrentHeroPanel HeroPanel { get; set; }
+        
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -84,10 +86,20 @@ namespace MiniXauonre.Graphics
             
             View = new MapView(MPainter) { Dock = DockStyle.Fill };
             
+            HeroPanel = new CurrentHeroPanel(Game.CurrentHero, this)
+            {
+                Size = new Size(128, 128),
+                Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
+                Location = new System.Drawing.Point(32, ClientSize.Height - 160)
+            };
+            
+            Controls.Add(HeroPanel);
             Controls.Add(ControlPanel);   
             Controls.Add(StatPanel);
             Controls.Add(View);
             Controls.Add(topPanel);
+            
+            CenterOnPoint(Game.Maze.UnitPositions[Game.CurrentHero]);
             
             PlayerPanelUpdate();
             ControlPanelUpdate();
@@ -96,7 +108,7 @@ namespace MiniXauonre.Graphics
             SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);
             
             ShopPanel = new ShopPanel(Game.CurrentHero, this,
-                new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
+                new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2)); 
             
             SizeChanged += (sender, args) =>
             {
@@ -182,6 +194,7 @@ namespace MiniXauonre.Graphics
             {
                 v.PanelUpdate(Game);
             }
+            HeroPanel.UpdateItems();
         }
 
         public void MapUpdate() => View.Invalidate();
@@ -204,11 +217,21 @@ namespace MiniXauonre.Graphics
                 Controls.Remove(ShopPanel);
                 Game.EndTurn();
                 PlayerPanelUpdate();
-                StatPanelUpdate();         
+                StatPanelUpdate(); 
+                Controls.Remove(HeroPanel);
+                HeroPanel = new CurrentHeroPanel(Game.CurrentHero, this)
+                {
+                    Size = new Size(128, 128),
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
+                    Location = new System.Drawing.Point(32, ClientSize.Height - 160)
+                };
+                Controls.Add(HeroPanel);
+                HeroPanel.BringToFront();
                 ShopPanel = new ShopPanel(Game.CurrentHero, this,
                     new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
                 
-                SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);     
+                SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);  
+                CenterOnPoint(Game.Maze.UnitPositions[Game.CurrentHero]);
                 ControlPanelUpdate();
                 MapUpdate();
             };
@@ -235,8 +258,6 @@ namespace MiniXauonre.Graphics
         }
 
         private Point ClickedPoint { get; set; }
-        
-        private int TotalKek { get; set; }
 
         public Point ChoosePoint(List<Point> points)
         {
@@ -271,6 +292,13 @@ namespace MiniXauonre.Graphics
             return task;
         }
         */
+
+        public void CenterOnPoint(Point point)
+        {
+            var scale = 128 / (float)Math.Pow(2, View.ZoomScale);
+            View.CenterLogicalPos = new PointF(point.X * scale + scale/2, point.Y * scale + scale/2);
+            View.Invalidate();
+        }
 
         public void ClickedOnMap(Point point, MouseButtons b)
         {

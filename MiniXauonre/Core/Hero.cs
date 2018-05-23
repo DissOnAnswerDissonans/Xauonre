@@ -151,9 +151,8 @@ namespace MiniXauonre.Core.Heroes
 
         public bool BuyItem(Item item)
         {
-            if(Items.Count >= MaxNumberOfItems)
-                return false;
-            return S.Buy(this, item);
+            var itemsAreParts = item.Parts.Count(p => Items.Contains(p));
+            return !(Items.Count - itemsAreParts >= MaxNumberOfItems) && S.Buy(this, item);
         }
 
         public Image GetImage() => Image;

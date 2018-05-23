@@ -21,6 +21,7 @@ namespace MiniXauonre.Core.Heroes
             {
                 Name = "Attack",
                 Explanation = () => "Deales " + GetAttackDamage() + " phys damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
+                Availiable = (h) => h.AttacksLeft >= 1,
                 Job = (h) =>
                 {
                     if (h.AttacksLeft != 0)
@@ -50,6 +51,7 @@ namespace MiniXauonre.Core.Heroes
                 Name = "Move",
                 Explanation = () => "Moves you into nearby empty cell on the map (linearry costs " + GeometryRules.NormalFactor + " movement, dioganally "
                     + GeometryRules.DiagonalFactor + " movement).",
+                Availiable = (h) => h.MovementLeft >= 2,
                 Job = (h) =>
                 {
                     var stepsLeft = h.MovementLeft;

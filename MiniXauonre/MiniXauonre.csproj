@@ -100,6 +100,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Graphics\Colors.cs" />
+    <Compile Include="Graphics\CurrentHeroPanel.cs" />
     <Compile Include="Graphics\DraftForm.cs">
       <SubType>Form</SubType>
     </Compile>

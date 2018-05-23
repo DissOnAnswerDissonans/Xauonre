@@ -31,7 +31,6 @@ namespace MiniXauonre.Graphics
     {
         private Map Map { get; set; }
         public List<Point> Av;
-        private Bitmap mapImage;
         public Size DrawSize { get; set; }
         private Size MapSize { get; set; }
         private SizeF TileSize { get; set; }

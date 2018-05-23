@@ -39,8 +39,8 @@ namespace MiniXauonre.Graphics
             foreach (var skill in Hero.Skills)
             {
                 var panel = new Panel();
-                panel.Width = width - 12;              
-                panel.BackColor = Color.Black;
+                panel.Width = width - 12;
+                panel.BackColor = skill.Availiable(Hero) ? Color.Black : Color.DarkSlateGray;
 
                 var skillName = new Label()
                 {
@@ -67,6 +67,25 @@ namespace MiniXauonre.Graphics
          
                 panel.Controls.Add(skillExp);
                 panel.Controls.Add(skillName);
+      
+                if (skill.Timer > 0)
+                {
+                    panel.Controls.Add(new PictureBox
+                    {
+                        Size = new Size(32, 32),
+                        Image = resources.IconLoader.GetIcons(new Size(32, 32))["CDR"],
+                        Dock = DockStyle.Right,
+                    });
+                    
+                    panel.Controls.Add(new Label
+                    {
+                        Text = skill.Timer.ToString(),
+                        AutoSize = true,
+                        Dock = DockStyle.Right,
+                        Font = new Font(FontFamily.GenericSansSerif, 24),
+                        ForeColor = Color.Yellow,
+                    });
+                }
 
                 panel.Height = skillName.Height + skillExp.Height;
                 

@@ -15,8 +15,10 @@ namespace MiniXauonre.Core
         public string Name { get; set; }
         public double CoolDown { get; set; }
         public double EnergyCost { get; set; }
-        private double Timer { get; set; }
+        public double Timer { get; private set; }
         public Func<Hero, bool> Job  { get; set; }
+        
+        public Func<Hero, bool> Availiable { get; set; }
 
         public Skill()
         {
@@ -26,11 +28,12 @@ namespace MiniXauonre.Core
             Name = "Base";
             Explanation = () => "Nothing";
             Job = (h) => true;
+            Availiable = (h) => Timer <= 0 && h.GetEnergy() >= EnergyCost;
         }
 
         public void Work(Hero hero)
         {
-            if (Timer <= 0 && hero.GetEnergy() >= EnergyCost && Job(hero))
+            if (Availiable(hero) && Job(hero))
             {
                 hero.Targets = new List<Hero>();
                 Timer = CoolDown;
