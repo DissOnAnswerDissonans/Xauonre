@@ -44,13 +44,13 @@ namespace MiniXauonre.Core.Heroes
             Defence = new Perk
             {
                 GetArmor = (g) => () => 
-                    g() + DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
+                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
                 SetArmor = (s) => (v) => 
-                    s(v - DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
+                    s(v - GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
                 GetResist = (g) => () =>
-                    g() + DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
+                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
                 SetResist = (s) => (v) =>
-                    s(v - DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
+                    s(v - GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
             };
             Perks.Add(Defence);
 
@@ -65,16 +65,17 @@ namespace MiniXauonre.Core.Heroes
                 Job = (h) =>
                 {
                     var targets = GetHeroesInRange(h, DropCatchRadius).Where(t => t != h).ToList();
-                    if (targets.Count == 0)
-                        return false;
-                    h.Targets.Add(ChooseTarget(targets, h.P));
-                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis)
+                        if (targets.Count == 0) return false;
+                    var target = ChooseTarget(targets, h.P);
+                        if (target == null) return false;
+                    h.Targets.Add(target);
+                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis).Keys
                         .Where(p => h.M.CellIsFree(p)).ToList();
-                    if (points.Count == 0)
-                        return false;
+                        if (points.Count == 0) return false;
                     var point = ChoosePoint(points, h.P);
+                        if (point == null) return false;
                     h.M.UnitPositions[Targets[0]] = point;
-                    return true;
+                        return true;
                 }
             };
             Drop.SkillTypes.Add(SkillType.Special);

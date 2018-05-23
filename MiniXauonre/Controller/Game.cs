@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MiniXauonre.Graphics;
@@ -14,6 +15,8 @@ namespace MiniXauonre.Controller
 {
     class Game
     {
+        public ScreenForm MainForm { get; set; }
+        
         public List<Player> Players { get; private set; }
         public Map Maze { get; private set; }
         public Shop Shop { get; private set; }
@@ -27,10 +30,12 @@ namespace MiniXauonre.Controller
         public Hero CurrentHero { get; private set; }
         
         public Hero ChosenHero { get; set; }
+
+        private List<Point> PointTargets { get; set; }
         
         public Func<Game, Hero> TurnFunc { get; private set; } 
         
-        public Func<int, List<Point>> GetSpawnPoints { get; private set; }        
+        public Func<int, List<Point>> GetSpawnPoints { get; private set; }
         
         public Game(GameRules rules)
         {
@@ -90,6 +95,7 @@ namespace MiniXauonre.Controller
                 return false;
             }
             NextHero();
+            CurrentHero.StartTurn();
             return true;
         }
 
@@ -113,8 +119,8 @@ namespace MiniXauonre.Controller
 
         private void GameProcess()
         {
-            var form = new ScreenForm(this);
-            Application.Run(form);
+            MainForm = new ScreenForm(this);
+            Application.Run(MainForm);
         }
 
         private void NextHero()
@@ -136,10 +142,20 @@ namespace MiniXauonre.Controller
 
         private Shop GetShop() => CurrentPlayer.GetShop();
 
+        public Hero ChooseTarget(List<Hero> targets)
+        {
+            PointTargets = targets.Select(x => Maze.UnitPositions[x]).ToList();
+            var point = MainForm.ChoosePoint(PointTargets);
+            if (point == null) return null;
+            return Maze.UnitPositions.Where(x => x.Value.Equals(point)).Select(x => x.Key).FirstOrDefault();
+        }
+        
+        public Point ChoosePoint(List<Point> points) => MainForm.ChoosePoint(points);    
+
         private void GameFinish()
         {
             
         }
-        
+  
     }
 }

@@ -207,7 +207,11 @@ namespace MiniXauonre.Core.Heroes
 
         public double GetMovementSpeed() => GetWithPerks(Chars.MovementSpeed);
         public void SetMovementSpeed(double v) => SetWithPerks(Chars.MovementSpeed, v);
-        public void AddMovementSpeed(double v) => SetMovementSpeed(GetMovementSpeed() + v);
+        public void AddMovementSpeed(double v)
+        {
+            SetMovementSpeed(GetMovementSpeed() + v);
+            MovementLeft += v;
+        }
 
         public double GetEnergy() => GetWithPerks(Chars.Energy);
         public void SetEnergy(double v) => SetWithPerks(Chars.Energy, v);

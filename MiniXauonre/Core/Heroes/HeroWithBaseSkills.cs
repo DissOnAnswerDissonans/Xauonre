@@ -23,12 +23,14 @@ namespace MiniXauonre.Core.Heroes
                 Explanation = () => "Deales " + GetAttackDamage() + " phys damage to target Enemy in " + GetAttackRange()  + " units from you. Costs 1 weapon attack.",
                 Job = (h) =>
                 {
-                    if (AttacksLeft != 0)
+                    if (h.AttacksLeft != 0)
                     {
                         var enemiesInRange = GetEnemiesInRange(h, h.GetAttackRange());
                         if (enemiesInRange.Count != 0)
                         {
-                            h.Targets.Add(ChooseTarget(enemiesInRange, h.P));
+                            var target = ChooseTarget(enemiesInRange, h.P);
+                            if (target == null) return false;
+                            h.Targets.Add(target);
                             var at = new Damage(h, h.P, phys: h.GetAttackDamage());
                             foreach(var t in Targets)
                                 t.GetDamage(at);
@@ -50,21 +52,15 @@ namespace MiniXauonre.Core.Heroes
                     + GeometryRules.DiagonalFactor + " movement).",
                 Job = (h) =>
                 {
-                    var hA = h as HeroWithBaseSkills;
-                    var possibleSteps = PossibleSteps
-                        .Where(s => s.Value <= MovementLeft && h.M.CellIsFree(s.Key + h.M.UnitPositions[h]))
-                        .Select(po => po.Key.ToStep())
-                        .ToList();
-                    if (possibleSteps.Count != 0)
-                    {
-                        var step = ChooseDirection(possibleSteps, h.P);
-                        var pStep = StepToPoint(step);
-                        var dist = new Point(0, 0).GetStepsTo(pStep);
-                        h.MovementLeft -= dist;
-                        h.M.UnitPositions[h].Add(pStep);
-                        return true;
-                    }
-                    return false;
+                    var stepsLeft = h.MovementLeft;
+                    var points = h.M.UnitPositions[h].GetPointsInDistance(1, stepsLeft, (p) => h.M.CellIsFree(p));
+                    if (points == null) return false;
+                    var point = ChoosePoint(points.Keys.ToList(), h.P);
+                    if (point == null) return false;
+                    var distance = points[point];
+                    h.M.UnitPositions[h] = point;
+                    h.MovementLeft -= distance;
+                    return true;
                 },
             };
             Attack.SkillTypes.Add(SkillType.Attack);
@@ -90,16 +86,19 @@ namespace MiniXauonre.Core.Heroes
                             .Select(u => u.Key)
                             .ToList();
 
-        
+
         protected Hero ChooseTarget(List<Hero> targets, Player player)
         {
-            return targets[0];
+            var tg = player.ChooseTarget(targets);
+            if (targets.Contains(tg)) return tg;
+            return null;
         }
-
 
         protected Point ChoosePoint(List<Point> points, Player player)
         {
-            return points[0];
+            var tg = player.ChoosePoint(points);
+            if (points.Contains(tg)) return tg;
+            return null;
         }
 
         protected Point AskRelativePoint(Point zero, Player player)

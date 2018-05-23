@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MiniXauonre.Graphics;
 using System.Windows.Forms;
+using Xauonre.Core;
 
 namespace MiniXauonre.Controller
 {
@@ -76,10 +77,9 @@ namespace MiniXauonre.Controller
                 LevelUp();
         }
 
-        ///////////UNDER CONSTRUCTION//////////////
-
+        public Hero ChooseTarget(List<Hero> targets) => Game.ChooseTarget(targets);
+        public Point ChoosePoint(List<Point> points) => Game.ChoosePoint(points);
         
-        ///////////UNDER CONSTRUCTION//////////////
         public Shop GetShop() => CurrentHero.S;
     }
 }

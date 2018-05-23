@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MiniXauonre.Controller;
 using MiniXauonre.Core;
+using MiniXauonre.Core.Heroes;
 using Point = Xauonre.Core.Point;
 
 namespace MiniXauonre.Graphics
@@ -233,12 +234,51 @@ namespace MiniXauonre.Graphics
             StatPanel.Refresh();
         }
 
+        private Point ClickedPoint { get; set; }
+        
+        private int TotalKek { get; set; }
+
+        public Point ChoosePoint(List<Point> points)
+        {
+            Application.DoEvents();
+            MPainter.Av = points;
+            View.Invalidate();        
+            ClickedPoint = null;
+            while (ClickedPoint == null)
+            {
+                Application.DoEvents();
+            }
+
+            var point = ClickedPoint;
+            MPainter.Av = new List<Point>();
+            Game.ChosenHero = Game.CurrentHero;
+            Application.DoEvents();           
+            return point;
+        }
+        
+        /*
+        private Task<Point> CatchClick()
+        {
+            var task = new Task<Point>(() => {
+                    while (ClickedPoint == null)
+                    {
+                        Application.DoEvents();
+                    }
+                    return ClickedPoint;
+                }
+            );
+            task.Start();
+            return task;
+        }
+        */
+
         public void ClickedOnMap(Point point, MouseButtons b)
         {
+            ClickedPoint = point;
             if (Game.Maze.IsInBounds(point))
                 Game.ClickedOnTile(point, b);
             
-            Controls.Remove(ShopPanel);
+            Controls.Remove(ShopPanel); 
             StatPanelUpdate();     
             ControlPanelUpdate();
         }

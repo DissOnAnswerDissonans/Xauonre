@@ -30,7 +30,7 @@ namespace MiniXauonre.Graphics
     class MapPainter
     {
         private Map Map { get; set; }
-        private List<Tuple<Point, MapPointMode>> Av;
+        public List<Point> Av;
         private Bitmap mapImage;
         public Size DrawSize { get; set; }
         private Size MapSize { get; set; }
@@ -49,7 +49,7 @@ namespace MiniXauonre.Graphics
             Map = map;
             DrawSize = Screen.Size;
             Loader = new TileLoader();
-            Av = new List<Tuple<Point, MapPointMode>>();
+            Av = new List<Point>();
             SwitchMap(map);      
         }
 
@@ -60,7 +60,7 @@ namespace MiniXauonre.Graphics
             ModifiedTS = new Size((int)(TileSize.Width / ScaleFactor), (int)(TileSize.Height / ScaleFactor));
             DrawMap(g);
             DrawUnits(g);
-            //DrawAvs(g);           
+            DrawAvs(g);           
         }
 
         public void ResizeMap(Size s) => DrawSize = s;
@@ -147,27 +147,17 @@ namespace MiniXauonre.Graphics
 
         private void DrawAvs(System.Drawing.Graphics g)
         {
+            var tileImage = resources.Res.chooseable_tile;
             foreach (var p in Av)
             {
-                Bitmap tileImage;
-                switch (p.Item2)
-                {
-                    case MapPointMode.Chooseable:
-                        tileImage = resources.Res.chooseable_tile; break;
-                    case MapPointMode.Availible:
-                        tileImage = resources.Res.available_tile; break;
-                    case MapPointMode.Unavailible:
-                        tileImage = resources.Res.unavailable_tile; break;
-                    default:
-                        tileImage = resources.Res.noyhing; break;
-                }
                 g.DrawImage(tileImage, new RectangleF
-                    (p.Item1.X * TileSize.Width, p.Item1.Y * TileSize.Height, TileSize.Width, TileSize.Height));
+                    (p.X * ModifiedTS.Width, p.Y * ModifiedTS.Height, ModifiedTS.Width, ModifiedTS.Height));
             }
         }
 
         public void OnMouseClick(System.Drawing.Point truncate, MouseButtons button)
         { 
+            
             Screen.ClickedOnMap(new Point(truncate.X / ModifiedTS.Width, truncate.Y / ModifiedTS.Height), button);
         }
     }

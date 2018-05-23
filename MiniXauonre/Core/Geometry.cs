@@ -33,12 +33,13 @@ namespace Xauonre.Core
         
         public double GetDistanceTo(Point p) => Math.Sqrt((p.X - this.X) * (p.X - this.X) + (p.Y - this.Y) * (p.Y - this.Y));
 
-        public List<Point> GetPointsInDistance(double min, double max)
+        public Dictionary<Point, int> GetPointsInDistance(double min, double max, Func<Point, bool> comp = null)
         {
+            if (comp == null) comp = (p) => true;
             var points = new List<Point>();
             var queue = new Queue<Point>();
             queue.Enqueue(this);
-            var distance = new Dictionary<Point, double>
+            var distance = new Dictionary<Point, int>
             {
                 [this] = 0
             };
@@ -51,14 +52,18 @@ namespace Xauonre.Core
                     var v = step.Value + distance[point];
                     if (v > max)
                         continue;
-                    if (!(distance.ContainsKey(p) && v >= distance[p]))
+                    if (!(distance.ContainsKey(p) && v >= distance[p] && comp(p)))
                     {
                         queue.Enqueue(p);
                         distance[p] = v;
                     }
                 }
-            }
-            return distance.Where(p => p.Value <= max && p.Value >= min).Select(p => p.Key).ToList();
+            }           
+            var shit = distance.Where(p => p.Value >= min && p.Value <= max).ToList();
+            var result = new Dictionary<Point, int>();
+            foreach (var s in shit)
+                result[s.Key] = s.Value;
+            return result;
         }
 
 

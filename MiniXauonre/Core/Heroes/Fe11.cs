@@ -128,7 +128,7 @@ namespace MiniXauonre.Core.Heroes
         public void BuildWall(Map m)
         {
             WallOn = true;
-            PlacedWalls = m.UnitPositions[this].GetPointsInDistance(WallMinDist, WallMaxDist)
+            PlacedWalls = m.UnitPositions[this].GetPointsInDistance(WallMinDist, WallMaxDist).Keys
                 .Where(po => m.IsInBounds(po) && m.MapTiles[po.X, po.Y].Type != TileType.Solid)
                 .ToList();
             foreach (var wall in PlacedWalls)

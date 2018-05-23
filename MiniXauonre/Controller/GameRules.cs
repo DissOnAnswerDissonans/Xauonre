@@ -28,9 +28,9 @@ namespace MiniXauonre.Controller
 
         public GameRules()
         {
-            HeroesPerPlayer = 1;
+            HeroesPerPlayer = 3;
             PlayersNumber = 2;
-            GameMap = new Map(4, 4);
+            GameMap = new Map(10, 10);
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
             DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);

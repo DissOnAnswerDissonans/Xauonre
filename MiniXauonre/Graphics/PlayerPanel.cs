@@ -118,7 +118,7 @@ namespace MiniXauonre.Graphics
                     Font = new Font(SystemFonts.DefaultFont.FontFamily, h / 6),
                     Height = h * 3 / 8,
                     //AutoSize = true,
-                    ForeColor = hero.Chosen ? Color.Black : Color.White,
+                    ForeColor = Color.White,
                     Padding = Padding.Empty,
                 });
                 
@@ -135,6 +135,7 @@ namespace MiniXauonre.Graphics
                 v.BackColor = Color.Black;
             foreach (var v in HeroesPanels.Keys)
                 HeroUpdate(v);
+            LevelDisp.Controls[0].Text = Player.Level.ToString();
             DamageDisp.Controls[0].Text = (Player.Level == Player.Levels.Length - 1)
                 ? (int) Player.AllDamage + " DMG"
                 : (int) Player.AllDamage + " / " +
