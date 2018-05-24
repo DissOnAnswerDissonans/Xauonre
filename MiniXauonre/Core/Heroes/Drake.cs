@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Heroes
         public Perk Burn { get; set; }
         public Skill Martyr { get; set; }
 
-        public const double HpScale = 0.02;
+        public const double HpScale = 0.05;
         public const double AoeRange = 5;
         public const double APScale = 0.1;
 
@@ -39,9 +39,9 @@ namespace MiniXauonre.Core.Heroes
                     if (Burning)
                     {
                         var dmg = h.GetHp() * HpScale + h.GetAbilityPower() * APScale;
-                        var enemiesInRange = GetEnemiesInRange(h, AoeRange);
+                        var enemiesInRange = new List<Hero>(GetEnemiesInRange(h, AoeRange));
                         var attack = new Damage(h, h.P, magic: dmg);
-                        foreach (var enemy in enemiesInRange)
+                        foreach (var enemy in GetEnemiesInRange(h, AoeRange))
                             enemy.GetDamage(attack);
                         h.GetDamage(attack);
                     }

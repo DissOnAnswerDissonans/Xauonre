@@ -24,16 +24,16 @@ namespace MiniXauonre.Controller
         public static double[] Levels =
         {
             0,
-            600,
+            300,
+            1000,
             2000,
-            4000,
-            7000,
-            12000,
-            20000,
-            32000,
-            60000,
+            3500,
+            6000,
+            10000,
+            16000,
+            30000,
+            50000,
             100000,
-            1000000,
         };
 
         public int Level { get; set; }

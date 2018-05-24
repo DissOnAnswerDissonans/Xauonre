@@ -6,44 +6,42 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core.Heroes
 {
+/*
+    Banker
+- Interest Rate: Все союзники в радиусе 10 восстонавливают(5 + 2%AP)
 
+        недостающего запаса здоровья,
+	 а при повышении уровня получают(100%AP) MaxHp.
+- Investment: Передает выбранному союзнику(5 + 10%AP) Money.
+    CD 8. Cost 100.
+- Currency Exchange: Получает чистый урон равный(10 + 10%AP)%
+	 MaxHp всех противников и получает за это опыт.CD 6. Cost 150.
 
-    /*
-     Banker
-        - Interest Rate: Âñå ñîþçíèêè â ðàäèóñå 10 âîññòîíàâëèâàþò (5 + 2%AP) 
-	        íåäîñòàþùåãî çàïàñà çäîðîâüÿ,
-	        à ïðè ïîâûøåíèè óðîâíÿ ïîëó÷àþò (100%AP) MaxHp.
-        - Investment: Ïåðåäàåò âûáðàííîìó ñîþçíèêó (5 + 10%AP) Money.
-	        CD 8. Cost 30.
-        - Currency Exchange: Ïîëó÷àåò ÷èñòûé óðîí ðàâíûé (10 + 10%AP)%
-	        MaxHp âñåõ ïðîòèâíèêîâ è ïîëó÷àåò çà ýòî îïûò. CD 6. Cost 40.
-
-        Hp = 950
-        Armor = 15
-        Resist = 20
-        Energy = 100
-        ER = 5
-        MS = 10
-        */
+Hp = 950
+Armor = 15
+Resist = 20
+Energy = 300
+ER = 15
+MS = 10*/
 
     class Banker : HeroWithBaseSkills
     {
         public const double InteresRateHeal = 0.05;
-        public const double InterestRateHealAPScale = 0.002;
+        public const double InterestRateHealAPScale = 0.0002;
         public const double InterestRateHealRange = 10;
-        public const double InterestRateHpBuffAPScale = 1;
+        public const double InterestRateHpBuffAPScale = 0.5;
         public Perk InterestRate { get; set; }
 
         public const double InvestmentMoney = 5;
         public const double InvestmentAPScale = 0.1;
-        public const double InvestmentCD = 8;
-        public const double InvestmentCost = 30;
+        public const double InvestmentCD = 6;
+        public const double InvestmentCost = 100;
         public Skill Investment { get; set; }
 
         public const double ExchangeHP = 0.1;
         public const double ExchangeAPScale = 0.001;
         public const double ExchangeCD = 6;
-        public const double ExchangeCost = 40;
+        public const double ExchangeCost = 150;
         public const double ExchangeExpCoeff = 2;
         public Skill CurrencyExchange { get; set; }
 
@@ -54,8 +52,8 @@ namespace MiniXauonre.Core.Heroes
             SetMaxHp(950);
             SetArmor(15);
             SetResist(20);
-            SetMaxEnergy(100);
-            SetEnergyRegen(10);
+            SetMaxEnergy(300);
+            SetEnergyRegen(15);
             SetMovementSpeed(10);
 
 
@@ -92,7 +90,9 @@ namespace MiniXauonre.Core.Heroes
             Investment = new Skill
             {
                 Name = "Investment",
-                Explanation = () => "Blank",
+                Explanation = () => "Give chosen ally " + InvestmentMoney + " + " + InvestmentAPScale * 100 + "%AP("+
+                + (InvestmentMoney + InvestmentAPScale * GetAbilityPower()) + ") of your Money.CD " + InvestmentCD + ". Cost "
+                + InvestmentCost + ".",
                 CoolDown = InvestmentCD,
                 EnergyCost = InvestmentCost,
                 Job = (h) =>
@@ -116,13 +116,18 @@ namespace MiniXauonre.Core.Heroes
 
             CurrencyExchange = new Skill
             {
-                Name = "CurrecnyExchange",
-                Explanation = () => "Blank",
+                Name = "Exchange",
+                Explanation = () => "Damage yourself by (" + ExchangeHP + " + " + ExchangeAPScale * 100 + "% AP)% of MaxHp ("
+                + (ExchangeHP + ExchangeAPScale * GetAbilityPower())*GetMaxHp() + "). Earns " + ExchangeExpCoeff*100 + "% ("
+                + (ExchangeHP + ExchangeAPScale * GetAbilityPower()) * ExchangeExpCoeff * GetMaxHp() + ") of it as EXP. CD " + ExchangeCD
+                + ". Cost "+ ExchangeCost + ".",
                 CoolDown = ExchangeCD,
                 EnergyCost = ExchangeCost,
                 Job = (h) =>
                 {
                     var hpCost = h.GetMaxHp() * (ExchangeHP + ExchangeAPScale * h.GetAbilityPower());
+                    if (hpCost >= h.GetHp())
+                        hpCost = h.GetHp() - 1;
                     h.AddHp(-hpCost);
                     h.P.AllDamage += hpCost * ExchangeExpCoeff;
                     return true;

@@ -17,7 +17,7 @@ namespace MiniXauonre.Core.Heroes
 
         public const double DropCatchRadius = 5;
         public const double DropRaduis = 20;
-        public const double DropCD = 10;
+        public const double DropCD = 9;
         public const double DropCost = 100;
         public Skill Drop { get; set; }
 

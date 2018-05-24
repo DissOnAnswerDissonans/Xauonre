@@ -91,7 +91,8 @@ namespace MiniXauonre.Core.Heroes
                     RockEffect.Activate(h);
                     h.M.Effects.Add(RockEffect);
                     var p = point.GetPointsInDistance(0, RockDamageRadius).Keys;
-                    foreach (var victim in h.M.UnitPositions.Where(t => p.Contains(t.Value)))
+                    var victims = new List<KeyValuePair<Hero, Point>>(h.M.UnitPositions.Where(t => p.Contains(t.Value)));
+                    foreach (var victim in victims)
                     {
                         if (!h.P.Heroes.Contains(victim.Key))
                             victim.Key.GetDamage(damage);
@@ -132,11 +133,12 @@ namespace MiniXauonre.Core.Heroes
                         r.Item2.Disactivate(h);
                     }
                     var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * h.GetAbilityPower() +
-                        rocks.Count() * (EarthRockDamage + EarthRockDamageAPscale * h.GetAbilityPower()));
+                        rocksNumber * (EarthRockDamage + EarthRockDamageAPscale * h.GetAbilityPower()));
+                    var tgPoint = h.M.UnitPositions[Targets[0]] + new Point(0, 0);
                     h.Targets[0].GetDamage(damage);
                     if (rocksNumber > 0)
                     {
-                        var point = h.M.UnitPositions[Targets[0]] + new Point(0,0);
+                        var point = tgPoint;
                         var RockEffect = new Effect(h, maxLifeRock.Timer);
                         RockEffect.Activate = (eh) =>
                         {

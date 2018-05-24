@@ -449,7 +449,7 @@ namespace MiniXauonre.Core.Heroes
             RefreshAttacks();
             RefreshMovement();
             foreach (var skill in Skills)
-                skill.Tick(1);
+                skill.Tick(GetCDReduction());
             return data;
         }
 

@@ -36,7 +36,7 @@ namespace MiniXauonre.Core
             if (Availiable(hero) && Job(hero))
             {
                 hero.Targets = new List<Hero>();
-                Timer = CoolDown;
+                Timer = CoolDown - hero.GetCDReduction();
                 hero.AddEnergy(-EnergyCost);
             }
         }
@@ -44,7 +44,7 @@ namespace MiniXauonre.Core
         public void Tick(double CDR)
         {
             Timer -= 1;
-            if (Timer < CDR)
+            if (Timer < 0)
                 Timer = 0;
         }
     }

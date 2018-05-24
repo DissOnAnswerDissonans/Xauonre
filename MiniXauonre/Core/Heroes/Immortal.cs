@@ -8,16 +8,17 @@ namespace MiniXauonre.Core.Heroes
 {
     class Immortal : HeroWithBaseSkills
     {
-        public const double ShieldMaxDamage = 20;
-        public const double ShieldEnergyRegen = 0.05;
+        public const double ShieldMaxDamage = 40;
+        public const double ShieldEnergyRegen = 0.02;
+        public const double ShieldEnergyExpCoeff = 0.5;
         public Perk Shield { get; set; }
 
         public const int StormDuration = 3;
         public const double StormRange = 7;
         public const double StormMaxEnergyScale = 0.1;
-        public const double StormAPScale = 0.5;
-        public const double StormCost = 0.2;
-        public const double StormCD = 6;
+        public const double StormAPScale = 0.25;
+        public const double StormCost = 0.4;
+        public const double StormCD = 8;
         public Skill Storm { get; set; }
         public Perk Reflection { get; set; }
 
@@ -60,6 +61,7 @@ namespace MiniXauonre.Core.Heroes
                         resDamage.Magic *= coeff;
                         resDamage.Pure *= coeff;
                         h.AddEnergy(-absorbed);
+                        d.PlayerValue.AllDamage += absorbed * ShieldEnergyExpCoeff;
                     }
                     resDamage.Phys += armored;
                     resDamage.Magic += resisted;

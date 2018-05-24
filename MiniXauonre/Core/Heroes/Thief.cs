@@ -10,13 +10,14 @@ namespace MiniXauonre.Core.Heroes
     {
         private Skill BuffedAttack { get; set; }
         public const double Steal = 2;
-        public const double ADScale = 0.01;
-        public const double APScale = 0.01;
+        public const double ADScale = 0.03;
+        public const double APScale = 0.03;
         public Thief()
         {
             Name = "Thief";
             Image = Graphics.resources.Res.Thief;
             SetResist(10);
+            SetAttackDamage(80);
             SetMovementSpeed(15);
 
             Skills.Remove(Attack);
