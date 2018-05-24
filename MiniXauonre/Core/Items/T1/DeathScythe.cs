@@ -1,8 +1,14 @@
 ﻿using System;
+
 using System.Collections.Generic;
+
 using System.Linq;
+
 using System.Text;
+
 using System.Threading.Tasks;
+
+
 
 namespace MiniXauonre.Core.Items
 {
@@ -16,56 +22,64 @@ namespace MiniXauonre.Core.Items
             Name = "Death Scythe";
             Cost = 777;
 
-
             HP = 50;
             A = 5;
             AD = 45;
-            HR = 2.5;
-
+            HR = 8;
             Effect = new Perk()
             {
                 SkillFix = (s) =>
                 {
-                    if (s.SkillTypes.Contains(SkillType.Attack))
+                    if (!s.SkillTypes.Contains(SkillType.Attack))
                     {
-                        var prev = s.Job;
-                        var attack = new Skill
-                        {
-                            Name = s.Name,
-                            Explanation = s.Explanation,
-                            EnergyCost = s.EnergyCost,
-                            CoolDown = s.CoolDown,
-                            Job = (h) =>
-                            {
-                                if (prev(h))
-                                {
-                                    var damage = new Damage(h, h.P, magic: h.GetAbilityPower() * APScale);
-                                    foreach (var t in h.Targets) t.GetDamage(damage);
-                                    return true;
-                                }
-                                return false;
-                            },
-                        };
+                        return s;
                     }
+                    var newSkill = new Skill()
+                    {
+                        Name = s.Name,
+                        CoolDown = s.CoolDown,
+                        Job = (h) =>
+                        {
+                            var res = s.Job(h);
+                            if (res)
+                            {
+                                var tgts = h.Targets;
+                                var effect = new Effect(h)
+                                {
+                                    Activate = (he) => { },
+                                    Disactivate = (he) =>
+                                    {
+                                        var damage = new Damage(he, he.P, magic: h.GetAbilityPower() * APScale);
+                                        foreach (var t in tgts) t.GetDamage(damage);
+                                    },
+                                    Timer = 2,
+                                };
+                                h.M.Effects.Add(effect);
+                                effect.Activate(h);
+                                return true;
+                            }
+                            return false;
+                        },
+                        Explanation = s.Explanation,
+                    };
+
                     return s;
+
                 }
+
             };
+
 
             //300
+
             Parts = new List<Item> {
+
                 new XPeke(),
+
                 new Razor(),
+
             };
-
-
-
         }
-
-
-
-
-
-
-
     }
+
 }

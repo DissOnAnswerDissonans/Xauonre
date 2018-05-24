@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiniXauonre.Core.Heroes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,11 @@ namespace MiniXauonre.Core.Items
             {
                 EndTurn = (a) => (d) =>
                 {
-                    d.PlayerValue.AllDamage += ExpAPScale * d.HeroValue.GetAbilityPower();
+                    var at = new Damage(d.HeroValue, d.HeroValue.P, pure: d.HeroValue.GetAbilityPower() * ExpAPScale);
+                    var target = new Hero();
+                    target.GetDamage(at);
                     return a(d);
-                },
+               },
             };
             Parts = new List<Item>
             {

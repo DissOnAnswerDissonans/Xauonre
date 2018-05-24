@@ -70,12 +70,15 @@
     <Compile Include="Core\Items\T1\DeathScythe.cs" />
     <Compile Include="Core\Items\T1\HyperShell.cs" />
     <Compile Include="Core\Items\T1\KingSword.cs" />
+    <Compile Include="Core\Items\T1\MagicCrystal.cs" />
     <Compile Include="Core\Items\T2\Accelerator.cs" />
+    <Compile Include="Core\Items\T2\Accumulator.cs" />
     <Compile Include="Core\Items\T2\Blade.cs" />
     <Compile Include="Core\Items\T2\Bulker.cs" />
     <Compile Include="Core\Items\T2\Carapace.cs" />
     <Compile Include="Core\Items\T2\Leaven.cs" />
     <Compile Include="Core\Items\T3\Amulet.cs" />
+    <Compile Include="Core\Items\T3\Battery.cs" />
     <Compile Include="Core\Items\T3\FlameCoast.cs" />
     <Compile Include="Core\Items\T2\Knife.cs" />
     <Compile Include="Core\Items\T1\MagicBoots.cs" />
