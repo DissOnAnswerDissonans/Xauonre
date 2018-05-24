@@ -9,7 +9,7 @@ namespace MiniXauonre.Core.Items
 {
     class Bablonomicon : Item
     {
-        public const double ExpAPScale = 10;
+        public const double ExpAPScale = 0.2;
 
         public Bablonomicon()
         {
@@ -26,8 +26,10 @@ namespace MiniXauonre.Core.Items
                     var target = new Hero();
                     target.GetDamage(at);
                     return a(d);
-               },
+                },
             };
+
+
             Parts = new List<Item>
             {
                 new MagicStone(),

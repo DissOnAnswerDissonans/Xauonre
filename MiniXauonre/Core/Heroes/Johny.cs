@@ -20,9 +20,11 @@ namespace MiniXauonre.Core.Heroes
         public Johny()
         {
             Name = "Johny";
+            Image = Graphics.resources.Res.Johny;
+            
             SetMaxHp(1200);
             SetMaxEnergy(150);
-            SetRegen(5);
+            SetRegen(15);
             SetEnergyRegen(5);
 
             Boom = new Skill
@@ -34,13 +36,16 @@ namespace MiniXauonre.Core.Heroes
                     + BoomBombRange + " units around you. Energy cost " + BoomEnergyCost + ". Cooldown " + BoomCooldown + ".",
                 Job = (h) =>
                 {
-                    var enemiesInRange = GetEnemiesInRange(P, M, BoomJumpRange);
+                    var enemiesInRange = GetEnemiesInRange(h, BoomJumpRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        Targets.Add(ChooseTarget(enemiesInRange, P));
-                        var damage = new Damage(this, P, pure: BoomDamage + BoomDamageAPScale * GetAbilityPower());
-                        M.UnitPositions[this] = M.UnitPositions[Targets[0]] + new Point();
-                        var enemiesInBombRange = GetEnemiesInRange(P, M, BoomBombRange);
+                        var target = ChooseTarget(enemiesInRange, h.P);
+                        if (target == null) return false;
+                        h.Targets.Add(target);
+                        if (h.Targets.Count == 0) return false;
+                        var damage = new Damage(h, h.P, pure: BoomDamage + BoomDamageAPScale * h.GetAbilityPower());
+                        h.M.UnitPositions[h] = h.M.UnitPositions[h.Targets[0]] + new Point();
+                        var enemiesInBombRange = GetEnemiesInRange(h, BoomBombRange);
                         foreach (var enemy in enemiesInBombRange)
                             enemy.GetDamage(damage);
                         return true;

@@ -190,4 +190,40 @@
   <data name="Resist" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GUI_elements\icons\Resist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TileR1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileR1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileR2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileR2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileR3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileR3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileSolidR1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileSolidR1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileSolidR2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileSolidR2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TileSolidR3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tiles\TileSolidR3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Banker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Heroes\Banker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cyprus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Heroes\Cyprus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Fe11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Heroes\Fe11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Immortal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Heroes\Immortal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Thief" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Heroes\Thief.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SimpleMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Maps\SimpleMap.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
+  </data>
 </root>

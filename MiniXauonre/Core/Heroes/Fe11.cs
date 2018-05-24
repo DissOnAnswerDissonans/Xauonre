@@ -30,6 +30,7 @@ namespace MiniXauonre.Core.Heroes
         public Fe11()
         {
             Name = "Fe11";
+            Image = Graphics.resources.Res.Fe11;
             SetMaxHp(1300);
             SetAttackDamage(30);
             SetResist(5);
@@ -60,8 +61,10 @@ namespace MiniXauonre.Core.Heroes
 
                 SkillFix = (sf) => {
                     if (sf.SkillTypes.Contains(SkillType.Attack))
-                        return new Skill
+                    {
+                        var newSkill = new Skill()
                         {
+                            SkillTypes = sf.SkillTypes,
                             Job = (h) =>
                             {
                                 var prev = sf.Job(h);
@@ -73,19 +76,23 @@ namespace MiniXauonre.Core.Heroes
                                 return prev;
                             }
                         };
+                        
+                        return newSkill;
+                    }
                     return sf;
                 },
 
                 //Stuff from Wall skill
                 EndTurn = (i) => (d) =>
                 {
+                    var h = d.HeroValue;
                     var a = i(d);
                     if (WallOn)
                     {
-                        if (GetEnergy() < WallManaPerTurnCost)
-                            DestroyWall(d.MapValue);
+                        if (h.GetEnergy() < WallManaPerTurnCost)
+                            DestroyWall(h.M);
                         else
-                            AddEnergy(-WallManaPerTurnCost);
+                            h.AddEnergy(-WallManaPerTurnCost);
                     }
                     return a;
                 },
@@ -127,7 +134,7 @@ namespace MiniXauonre.Core.Heroes
         public void BuildWall(Map m)
         {
             WallOn = true;
-            PlacedWalls = m.UnitPositions[this].GetPointsInDistance(WallMinDist, WallMaxDist)
+            PlacedWalls = m.UnitPositions[this].GetPointsInDistance(WallMinDist, WallMaxDist).Keys
                 .Where(po => m.IsInBounds(po) && m.MapTiles[po.X, po.Y].Type != TileType.Solid)
                 .ToList();
             foreach (var wall in PlacedWalls)

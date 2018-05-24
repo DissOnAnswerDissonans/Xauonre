@@ -19,7 +19,8 @@ namespace MiniXauonre
             
 
             var game = new Game(new GameRules());
-            game.StartGame();
+       
+                game.StartGame();
 
         }
     }

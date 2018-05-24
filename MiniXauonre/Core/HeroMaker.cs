@@ -25,5 +25,28 @@ namespace MiniXauonre.Core
                 new Banker(),
             };
         }
+
+        public static Hero CreateHero(string name)
+        {
+            switch (name)
+            {
+                    case "Fe11": return new Fe11();
+                    case "Thief": return new Thief();
+                    case "Drake": return new Drake();
+                    case "Sniper": return new Sniper();
+                    case "Johny": return new Johny();
+                    case "Tupotrof": return new Tupotrof();
+                    case "Micro": return new Micro();
+                    case "Immortal": return new Immortal();
+                    case "Cyprys": return new Cyprys();
+                    case "Banker": return new Banker();
+                    default: return new Hero();
+            }
+        }
+
+        public static Hero GetCopy(Hero hero)
+        {
+            return new Hero(hero);
+        }
     }
 }

@@ -16,8 +16,12 @@ namespace MiniXauonre.Core.Items
 
 
             //Conterspell
-            Effect = new Perk
 
+            Explanation = () => "При получении магического урона ответно наносит до 10 чистого урона.";
+
+
+
+            Effect = new Perk
             {
 
                 GetDamage = (f) => (d) =>
@@ -27,6 +31,7 @@ namespace MiniXauonre.Core.Items
                     return f(d);
                 },
             };
+
         }
     }
 }

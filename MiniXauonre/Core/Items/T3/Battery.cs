@@ -15,21 +15,12 @@ namespace MiniXauonre.Core.Items
 {
 
     class Battery : Item
-
     {
-
         public Battery()
-
         {
-
             Name = "Battery";
-
-
-
             Cost = 50;
-
             E = 150;
-
         }
 
 

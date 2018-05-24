@@ -20,9 +20,11 @@ namespace MiniXauonre.Core.Heroes
         protected Image Image { get; set; }
 
         public double MaxNumberOfItems { get; protected set; }
-        
+
         public bool Chosen { get; private set; }
         public List<Hero> Targets { get; set; }
+
+        public Func<Dictionary<string, double>> StatsGetter { get; protected set; }
 
         private double maxHp;
         private double hp;
@@ -60,14 +62,15 @@ namespace MiniXauonre.Core.Heroes
             Items = new List<Item>();
             Image = Graphics.resources.Res.DefaultHero;
             Targets = new List<Hero>();
+            StatsGetter = GetAllStats;
             //Default Stats
             maxHp = 1000;
             hp = maxHp;
             armor = 0;
             resist = 0;
-            regen = 3;
+            regen = 10;
 
-            money = 1000;
+            money = 0;
             abilityPower = 0;
             attackDamage = 50;
             attackSpeed = 1;
@@ -79,6 +82,38 @@ namespace MiniXauonre.Core.Heroes
 
             Level = 0;
             MaxNumberOfItems = 4;
+        }
+
+        public Hero(Hero hero) //  ГООООООВВНННООООООО!!!!!!!!
+        {
+            Name = hero.Name;
+            Perks = hero.Perks;
+            Skills = hero.Skills;
+            S = hero.S;
+            M = hero.M;
+            P = hero.P;
+            Items = hero.Items;
+            Image = hero.Image;
+            Targets = hero.Targets;
+
+            maxHp = hero.maxHp;
+            hp = hero.hp;
+            armor = hero.armor;
+            resist = hero.resist;
+            regen = hero.regen;
+
+            money = hero.money;
+            abilityPower = hero.abilityPower;
+            attackDamage = hero.attackDamage;
+            attackSpeed = hero.attackSpeed;
+            attackRange = hero.attackRange;
+            movementSpeed = hero.movementSpeed;
+            maxEnergy = hero.maxEnergy;
+            energy = hero.energy;
+            energyRegen = hero.energyRegen;
+
+            Level = hero.Level;
+            MaxNumberOfItems = hero.MaxNumberOfItems;
         }
 
 
@@ -99,13 +134,12 @@ namespace MiniXauonre.Core.Heroes
             Energy,
             MaxEnergy,
             EnergyRegen,
-            CDReduction
-            //TODO: Add CDR and put into Refresh
+            CDReduction,
         }
 
-        public void UseSkill(int id, Map map, Player player)
+        public void UseSkill(int id)
         {
-            if(id >= 0 && id < Skills.Count)
+            if (id >= 0 && id < Skills.Count)
             {
                 var skill = Skills[id];
                 foreach (var perk in Perks)
@@ -117,16 +151,21 @@ namespace MiniXauonre.Core.Heroes
 
         public bool BuyItem(Item item)
         {
-            if(Items.Count >= MaxNumberOfItems)
-                return false;
-            return S.Buy(this, item);
+            var itemsAreParts = item.Parts.Count(p => Items.Contains(p));
+            return !(Items.Count - itemsAreParts >= MaxNumberOfItems) && S.Buy(this, item);
         }
 
         public Image GetImage() => Image;
 
+        public void Kill()
+        {
+            M.UnitPositions.Remove(this);
+            P.Heroes.Remove(this);
+        }
+
         public double GetMaxHp() => GetWithPerks(Chars.MaxHp);
         public void SetMaxHp(double v) => SetWithPerks(Chars.MaxHp, v);
-        public void AddMaxHp(double v) {  SetMaxHp(GetMaxHp() + v); AddHp(v); }
+        public void AddMaxHp(double v) { SetMaxHp(GetMaxHp() + v); AddHp(Math.Max(v, 0)); }
 
         public double GetHp() => GetWithPerks(Chars.Hp);
         public void SetHp(double v) => SetWithPerks(Chars.Hp, v);
@@ -137,6 +176,8 @@ namespace MiniXauonre.Core.Heroes
             var tMaxHp = GetMaxHp();
             if (GetHp() > tMaxHp)
                 SetHp(tMaxHp);
+            if (P != null)
+                P.Game.GameCheck();
         }
 
         public double GetArmor() => GetWithPerks(Chars.Armor);
@@ -165,7 +206,7 @@ namespace MiniXauonre.Core.Heroes
 
         public double GetAttackSpeed() => GetWithPerks(Chars.AttackSpeed);
         public void SetAttackSpeed(double v) => SetWithPerks(Chars.AttackSpeed, v);
-        public void AddAttackSpeed(double v) => SetAttackSpeed(GetAttackSpeed() + v);
+        public void AddAttackSpeed(double v) { SetAttackSpeed(GetAttackSpeed() + v); AttacksLeft += (int)(v); }
 
         public double GetAttackRange() => GetWithPerks(Chars.AttackRange);
         public void SetAttackRange(double v) => SetWithPerks(Chars.AttackRange, v);
@@ -173,15 +214,19 @@ namespace MiniXauonre.Core.Heroes
 
         public double GetMovementSpeed() => GetWithPerks(Chars.MovementSpeed);
         public void SetMovementSpeed(double v) => SetWithPerks(Chars.MovementSpeed, v);
-        public void AddMovementSpeed(double v) => SetMovementSpeed(GetMovementSpeed() + v);
+        public void AddMovementSpeed(double v)
+        {
+            SetMovementSpeed(GetMovementSpeed() + v);
+            MovementLeft += v;
+        }
 
         public double GetEnergy() => GetWithPerks(Chars.Energy);
         public void SetEnergy(double v) => SetWithPerks(Chars.Energy, v);
-        public void AddEnergy(double v) => SetEnergy(GetEnergy() + v);
+        public void AddEnergy(double v) { SetEnergy(GetEnergy() + v); }
 
         public double GetMaxEnergy() => GetWithPerks(Chars.MaxEnergy);
         public void SetMaxEnergy(double v) => SetWithPerks(Chars.MaxEnergy, v);
-        public void AddMaxEnergy(double v) => SetMaxEnergy(GetMaxEnergy() + v);
+        public void AddMaxEnergy(double v) { SetMaxEnergy(GetMaxEnergy() + v); AddEnergy(Math.Max(0, v)); }
 
         public double GetEnergyRegen() => GetWithPerks(Chars.EnergyRegen);
         public void SetEnergyRegen(double v) => SetWithPerks(Chars.EnergyRegen, v);
@@ -396,7 +441,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void StartTurn(Map m, Player p) => DoWithPerks(Actions.StartTurn, new FuncData(this,mapvalue: m, playerValue: p));
+        public void StartTurn() => DoWithPerks(Actions.StartTurn, new FuncData(this));
 
         private FuncData FStartTurn(FuncData data)
         {
@@ -408,7 +453,7 @@ namespace MiniXauonre.Core.Heroes
             return data;
         }
 
-        public void EndTurn(Map m, Player p) => DoWithPerks(Actions.EndTurn, new FuncData(this,mapvalue: m, playerValue: p));
+        public void EndTurn() => DoWithPerks(Actions.EndTurn, new FuncData(this));
 
         private FuncData FEndTurn(FuncData data)
         {
@@ -500,7 +545,24 @@ namespace MiniXauonre.Core.Heroes
             }
         }
 
-
+        public Dictionary<string, double> GetAllStats() => new Dictionary<string, double>
+        {
+            {"MHP", GetMaxHp()},
+            {"HP", GetHp()},
+            {"ME", GetMaxEnergy()},
+            {"E", GetEnergy()},
+            {"AD", GetAttackDamage()},
+            {"AP", GetAbilityPower()},
+            {"A", GetArmor()},
+            {"R", GetResist()},
+            {"AR", GetAttackRange()},
+            {"AS", GetAttackSpeed()},
+            {"MS", GetMovementSpeed()},
+            {"CDR", GetCDReduction()},
+            {"HR", GetRegen()},
+            {"ER", GetEnergyRegen()},
+            {"M", GetMoney()},
+        };
 
         public string FastStats() =>
             Name
@@ -513,6 +575,10 @@ namespace MiniXauonre.Core.Heroes
             + ", AttacksLeft-" + AttacksLeft
             + ", Money-" + GetMoney();
 
+        public override int GetHashCode()
+        {
+            return 123142738 + Name.GetHashCode();
+        }
     }
 
 }

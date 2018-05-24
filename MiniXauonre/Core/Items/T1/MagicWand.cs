@@ -19,20 +19,21 @@ namespace MiniXauonre.Core.Items
                 new XPeke(),
             };
 
-            AD = 40;
+            AD = 50;
             AP = 50;
             A = 5;
             HP = 150;
 
-            //Conterspell
+            
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>
                 {
-                    d.DamageValue.Magic *= 0.98;
-                    return d;
+                    d.DamageValue.Magic *= 0.95;
+                    return f(d);
                 },
             };
+            
 
         }
     }

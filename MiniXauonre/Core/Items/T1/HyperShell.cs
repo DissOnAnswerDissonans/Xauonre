@@ -16,7 +16,7 @@ namespace MiniXauonre.Core.Items
             HP = 470;
             A = 15;
             R = 15;
-            HR = 10;
+            HR = 20;
 
 
             //515

@@ -11,13 +11,14 @@ namespace MiniXauonre.Core.Items
         public Carapace()
         {
             Name = "Carapace";
-            Cost = 225;
-            A = 10;
-            R = 10;
-            HP = 20;
-
+            Cost = 260;
+            A = 8;
+            R = 8;
+            HP = 8;
+            //255
             Parts = new List<Item>
             {
+                new RestoreRing(),
                 new Steel(),
                 new Amulet(),
             };

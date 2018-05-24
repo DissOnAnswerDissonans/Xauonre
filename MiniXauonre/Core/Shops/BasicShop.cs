@@ -12,17 +12,40 @@ namespace MiniXauonre.Core.Shops
         public static List<Item> set = new List<Item>
         {
             new MagicStone(),
+            new Razor(),
+            new RestoreRing(),
+            new SpellBook(),
+            new Amulet(),
+            new Steel(),
+            new FlameCoast(),       
+            new Battery(),
+
+            new Shield(),
             new MagicRelic(),
             new Bablonomicon(),
-            new SpellBook(),
-            new Bulker(),
-            new FlameCoast(),
-            new Knife(),
-            new MagicBoots(),
-            new MagicWand(),
-            new Razor(),
-            new Steel(),
             new XPeke(),
+            new Accelerator(),
+            new Bulker(), 
+            new Knife(),
+            new Blade(),
+            new Carapace(),
+            new Leaven(),
+            new Accumulator(),
+            new Booster(),
+            
+            new MagicBoots(),
+            new MagicCrystal(),
+            new MagicWand(),
+            new KingSword(),
+            new HyperShell(),
+            new DeathScythe(),
+            new NanoArmor(),
+            new Leach(),
+            
+            new TimeMachine(),
+            new Items.Buffer(),
+            new GiantArmor(),
+            new Minigun(),
         };
 
 

@@ -12,7 +12,7 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Restore Ring";
             Cost = 80;
-            HR = 4;
+            HR = 8;
         }
     }
 }

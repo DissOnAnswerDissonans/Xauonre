@@ -21,7 +21,6 @@ namespace MiniXauonre.Core.Items
         public MagicCrystal()
 
         {
-
             Name = "Magic Crystal";
 
             Cost = 800;
@@ -29,9 +28,7 @@ namespace MiniXauonre.Core.Items
 
 
             E = 600;
-
             AP = 100;
-
             ER = 20;
 
 
@@ -39,15 +36,10 @@ namespace MiniXauonre.Core.Items
             //420
 
             Parts = new List<Item>
-
             {
-
                 new Accumulator(),
-
                 new MagicStone(),
-
                 new MagicStone(),
-
             };
 
         }

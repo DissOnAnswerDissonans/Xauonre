@@ -25,6 +25,7 @@ namespace MiniXauonre.Core
         public double HR { get; protected set; }
         public double ER { get; protected set; }
         public double MS { get; protected set; }
+        public double AS { get; protected set; }
         public double CDR { get; protected set; }
 
 
@@ -45,6 +46,7 @@ namespace MiniXauonre.Core
             HR = 0;
             ER = 0;
             MS = 0;
+            AS = 0;
             CDR = 0;
         }
 
@@ -52,7 +54,7 @@ namespace MiniXauonre.Core
         private void AddStats(Hero h)
         {
             h.AddMaxHp(HP);
-            h.AddEnergy(E);
+            h.AddMaxEnergy(E);
             h.AddAttackDamage(AD);
             h.AddAbilityPower(AP);
             h.AddArmor(A);
@@ -60,13 +62,14 @@ namespace MiniXauonre.Core
             h.AddRegen(HR);
             h.AddEnergyRegen(ER);
             h.AddMovementSpeed(MS);
+            h.AddAttackSpeed(AS);
             h.AddCDReduction(CDR);
         }
 
         private void RemoveStats(Hero h)
         {
             h.AddMaxHp(-HP);
-            h.AddEnergy(-E);
+            h.AddMaxEnergy(-E);
             h.AddAttackDamage(-AD);
             h.AddAbilityPower(-AP);
             h.AddArmor(-A);
@@ -74,6 +77,7 @@ namespace MiniXauonre.Core
             h.AddRegen(-HR);
             h.AddEnergyRegen(-ER);
             h.AddMovementSpeed(-MS);
+            h.AddAttackSpeed(-AS);
             h.AddCDReduction(-CDR);
         }
 
@@ -122,6 +126,23 @@ namespace MiniXauonre.Core
                 if (!h.Items.Contains(this))
                     h.Perks.Remove(Effect);
             }
+        }
+
+        public Dictionary<string, double> GetExplanation()
+        {
+            var stats = new Dictionary<string, double>();
+            if (HP != 0) stats.Add("HP", HP);
+            if (E != 0) stats.Add("E", E);
+            if (AD != 0) stats.Add("AD", AD);
+            if (AP != 0) stats.Add("AP", AP);
+            if (R != 0) stats.Add("R", R);
+            if (A != 0) stats.Add("A", A);
+            if (HR != 0) stats.Add("HR", HR);
+            if (ER != 0) stats.Add("ER", ER);
+            if (MS != 0) stats.Add("MS", MS);
+            if (AS != 0) stats.Add("AS", AS);
+            if (CDR != 0) stats.Add("CDR", CDR);
+            return stats;
         }
 
 

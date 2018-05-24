@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B92B173B-5D0E-4A2F-90FC-73E2E0058006}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>MiniXauonre</RootNamespace>
     <AssemblyName>MiniXauonre</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Command.cs" />
     <Compile Include="Controller\Game.cs" />
     <Compile Include="Controller\GameRules.cs" />
     <Compile Include="Controller\Player.cs" />
@@ -66,17 +68,24 @@
     <Compile Include="Core\Heroes\Tupotrof.cs" />
     <Compile Include="Core\HeroMaker.cs" />
     <Compile Include="Core\Item.cs" />
+    <Compile Include="Core\Items\T0\Buffer.cs" />
+    <Compile Include="Core\Items\T0\GiantArmor.cs" />
+    <Compile Include="Core\Items\T0\Minigun.cs" />
     <Compile Include="Core\Items\T0\TimeMachine.cs" />
     <Compile Include="Core\Items\T1\DeathScythe.cs" />
     <Compile Include="Core\Items\T1\HyperShell.cs" />
     <Compile Include="Core\Items\T1\KingSword.cs" />
+    <Compile Include="Core\Items\T1\Leach.cs" />
     <Compile Include="Core\Items\T1\MagicCrystal.cs" />
+    <Compile Include="Core\Items\T1\NanoArmor.cs" />
     <Compile Include="Core\Items\T2\Accelerator.cs" />
     <Compile Include="Core\Items\T2\Accumulator.cs" />
     <Compile Include="Core\Items\T2\Blade.cs" />
+    <Compile Include="Core\Items\T2\Booster.cs" />
     <Compile Include="Core\Items\T2\Bulker.cs" />
     <Compile Include="Core\Items\T2\Carapace.cs" />
     <Compile Include="Core\Items\T2\Leaven.cs" />
+    <Compile Include="Core\Items\T2\Shield.cs" />
     <Compile Include="Core\Items\T3\Amulet.cs" />
     <Compile Include="Core\Items\T3\Battery.cs" />
     <Compile Include="Core\Items\T3\FlameCoast.cs" />
@@ -103,8 +112,18 @@
     <Compile Include="Graphics\ChooseForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\Colors.cs" />
+    <Compile Include="Graphics\CurrentHeroPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Graphics\DraftForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphics\HeroInfo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Graphics\HeroSkillPanel.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Graphics\MapPainter.cs" />
     <Compile Include="Graphics\MapView.cs">
@@ -116,14 +135,20 @@
     <Compile Include="Graphics\PlayerPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Graphics\resources\IconLoader.cs" />
     <Compile Include="Graphics\resources\Res.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Res.resx</DependentUpon>
     </Compile>
+    <Compile Include="Graphics\resources\Tiles\TileLoader.cs" />
     <Compile Include="Graphics\ScreenForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Graphics\ShopPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\Map\MapLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -136,6 +161,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <None Include="Resources\map.txt" />
+    <None Include="Graphics\resources\Tiles\TileSolidR3.png" />
+    <None Include="Graphics\resources\Tiles\TileSolidR2.png" />
+    <None Include="Graphics\resources\Tiles\TileSolidR1.png" />
     <None Include="Graphics\resources\GUI_elements\available_tile.png" />
     <None Include="Graphics\resources\GUI_elements\chooseable_tile.png" />
     <None Include="Graphics\resources\GUI_elements\unavailable_tile.png" />
@@ -151,14 +180,23 @@
     <None Include="Graphics\resources\GUI_elements\icons\HealthRegen.png" />
     <None Include="Graphics\resources\GUI_elements\icons\MovementSpeed.png" />
     <None Include="Graphics\resources\GUI_elements\icons\Resist.png" />
+    <Content Include="Graphics\resources\Heroes\Banker.png" />
+    <Content Include="Graphics\resources\Heroes\Cyprus.png" />
     <Content Include="Graphics\resources\Heroes\DefaultHero.png" />
     <Content Include="Graphics\resources\Heroes\Drake.png" />
+    <Content Include="Graphics\resources\Heroes\Fe11.png" />
+    <Content Include="Graphics\resources\Heroes\Immortal.png" />
     <Content Include="Graphics\resources\Heroes\Johny.png" />
     <Content Include="Graphics\resources\Heroes\Kerri.png" />
     <Content Include="Graphics\resources\Heroes\Sniper.png" />
+    <Content Include="Graphics\resources\Heroes\Thief.png" />
     <Content Include="Graphics\resources\Heroes\Tupotrof.png" />
+    <Content Include="Graphics\resources\Maps\SimpleMap.txt" />
     <Content Include="Graphics\resources\Tiles\noyhing.png" />
     <Content Include="Graphics\resources\Tiles\Tile.png" />
+    <None Include="Graphics\resources\Tiles\TileR1.png" />
+    <None Include="Graphics\resources\Tiles\TileR2.png" />
+    <None Include="Graphics\resources\Tiles\TileR3.png" />
     <Content Include="Graphics\resources\Tiles\TileSolid.png" />
   </ItemGroup>
   <ItemGroup>

@@ -20,13 +20,15 @@ namespace MiniXauonre.Core.Heroes
         public Sniper()
         {
             Name = "Sniper";
+            Image = Graphics.resources.Res.Sniper;
+            
             SetMaxHp(800);
             SetAttackDamage(60);
             SetAbilityPower(20);
             SetAttackRange(14);
-            SetRegen(2);
+            SetRegen(7);
             SetMaxEnergy(200);
-            SetEnergyRegen(4);
+            SetEnergyRegen(10);
 
             Snipe = new Skill
             {
@@ -38,15 +40,17 @@ namespace MiniXauonre.Core.Heroes
                     ". Energy cost " + SnipeEnergyCost + ". Cooldown " + SnipeCooldown + ".",
                 Job = (h) =>
                 {
-                    var enemiesInRange = GetEnemiesInRange(P, M, SnipeRange);
+                    var enemiesInRange = GetEnemiesInRange(h, SnipeRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        Targets.Add(ChooseTarget(enemiesInRange, P));
-                        var damage = new Damage(this, P, phys: SnipeDamage + SnipeApScale * GetAbilityPower());
-                        foreach(var t in Targets)t.GetDamage(damage);
+                        var tg = ChooseTarget(enemiesInRange, h.P);
+                        if (tg == null) return false;
+                        h.Targets.Add(tg);
+                        var damage = new Damage(h, h.P, phys: SnipeDamage + SnipeApScale * h.GetAbilityPower());
+                        foreach(var t in h.Targets)t.GetDamage(damage);
 
-                        var enemyMoveSkills = Targets.SelectMany(t => t.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move))).ToList();
-                        var target = Targets;
+                        var enemyMoveSkills = h.Targets.SelectMany(t => t.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move))).ToList();
+                        var target = h.Targets;
                         var root = new Effect(this)
                         {
                             Timer = SnipeRootTime,
@@ -62,7 +66,7 @@ namespace MiniXauonre.Core.Heroes
                                 },
                         };
 
-                        M.Effects.Add(root);
+                        h.M.Effects.Add(root);
                         foreach(var t in target) root.Activate(t);
                         return true;
                     }

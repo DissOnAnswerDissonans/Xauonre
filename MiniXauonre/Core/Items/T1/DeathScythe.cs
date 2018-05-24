@@ -22,7 +22,7 @@ namespace MiniXauonre.Core.Items
             Name = "Death Scythe";
             Cost = 777;
 
-            HP = 50;
+            HP = 100;
             A = 5;
             AD = 45;
             HR = 8;
@@ -38,6 +38,7 @@ namespace MiniXauonre.Core.Items
                     {
                         Name = s.Name,
                         CoolDown = s.CoolDown,
+                        SkillTypes = s.SkillTypes,
                         Job = (h) =>
                         {
                             var res = s.Job(h);
@@ -63,7 +64,7 @@ namespace MiniXauonre.Core.Items
                         Explanation = s.Explanation,
                     };
 
-                    return s;
+                    return newSkill;
 
                 }
 
@@ -73,11 +74,8 @@ namespace MiniXauonre.Core.Items
             //300
 
             Parts = new List<Item> {
-
                 new XPeke(),
-
                 new Razor(),
-
             };
         }
     }

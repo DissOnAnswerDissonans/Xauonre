@@ -28,6 +28,8 @@ namespace MiniXauonre.Core.Heroes
         public const double RestoreCost = 50;
         public Skill Restore { get; set; }
         public Perk RestoreRegenBuff { get; set; }
+        
+        
 
         public Micro()
         {
@@ -35,20 +37,20 @@ namespace MiniXauonre.Core.Heroes
             SetAttackDamage(70);
             SetMaxHp(1500);
             SetMaxEnergy(200);
-            SetEnergyRegen(2);
+            SetEnergyRegen(10);
             SetMovementSpeed(13);
-            SetRegen(5);
+            SetRegen(15);
 
             Defence = new Perk
             {
                 GetArmor = (g) => () => 
-                    g() + DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count(),
+                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
                 SetArmor = (s) => (v) => 
-                    s(v - DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count),
+                    s(v - GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
                 GetResist = (g) => () =>
-                    g() + DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count(),
+                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
                 SetResist = (s) => (v) =>
-                    s(v - DefenceADScale * GetEnemiesInRange(P, M, DefenceRadius).Count),
+                    s(v - GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
             };
             Perks.Add(Defence);
 
@@ -62,17 +64,18 @@ namespace MiniXauonre.Core.Heroes
                 EnergyCost = DropCost,
                 Job = (h) =>
                 {
-                    var targets = GetHeroesInRange(h.P, h.M, DropCatchRadius).Where(t => t != this).ToList();
-                    if (targets.Count == 0)
-                        return false;
-                    Targets.Add(ChooseTarget(targets, h.P));
-                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis)
+                    var targets = GetHeroesInRange(h, DropCatchRadius).Where(t => t != h).ToList();
+                        if (targets.Count == 0) return false;
+                    var target = ChooseTarget(targets, h.P);
+                        if (target == null) return false;
+                    h.Targets.Add(target);
+                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis).Keys
                         .Where(p => h.M.CellIsFree(p)).ToList();
-                    if (points.Count == 0)
-                        return false;
+                        if (points.Count == 0) return false;
                     var point = ChoosePoint(points, h.P);
+                        if (point == null) return false;
                     h.M.UnitPositions[Targets[0]] = point;
-                    return true;
+                        return true;
                 }
             };
             Drop.SkillTypes.Add(SkillType.Special);

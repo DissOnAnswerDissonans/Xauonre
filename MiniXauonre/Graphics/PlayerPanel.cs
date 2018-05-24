@@ -10,25 +10,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MiniXauonre.Controller;
 using MiniXauonre.Core;
+using MiniXauonre.Core.Heroes;
 
 namespace MiniXauonre.Graphics
 {
     internal class PlayerPanel : FlowLayoutPanel
-    {     
-        static readonly List<Color> plColors = new List<Color>
-        {
-            Color.Maroon,
-            Color.Indigo,
-            Color.DarkGreen,
-            Color.DarkBlue,
-        };
-        
+    {          
         private Player Player { get; set; }
-  
         
         private Panel LevelDisp { get; set; }
         private Panel DamageDisp { get; set; }
-        private List<Panel> HeroesPanels { get; set; }
+        private Dictionary<Hero, Panel> HeroesPanels { get; set; }
 
         
         public PlayerPanel(Player player, int num, int width, bool dock)
@@ -36,9 +28,9 @@ namespace MiniXauonre.Graphics
             DockStyle dockS = dock ? DockStyle.Right : DockStyle.Left;
             Dock = dockS;
             Width = width;
-            BackColor = plColors[num % plColors.Count];
+            BackColor = Colors.PlayerDarkColors[num % Colors.count];
             Player = player;
-
+            
             var h = 64;
 
             LevelDisp = new Panel
@@ -69,8 +61,7 @@ namespace MiniXauonre.Graphics
                 Height = h * 7 / 8,
                 Width = h * 2,
                 Padding = new Padding(h / 16),
-                BackColor = plColors[num % plColors.Count],
-                AutoSize = true,
+                BackColor = Colors.PlayerDarkColors[num % Colors.count],
             };
 
             DamageDisp.Controls.Add(new Label
@@ -94,7 +85,7 @@ namespace MiniXauonre.Graphics
 
             Controls.Add(DamageDisp);
 
-            HeroesPanels = new List<Panel>();
+            HeroesPanels = new Dictionary<Hero, Panel>();
 
             foreach (var hero in player.Heroes)
             {
@@ -127,16 +118,45 @@ namespace MiniXauonre.Graphics
                     Font = new Font(SystemFonts.DefaultFont.FontFamily, h / 6),
                     Height = h * 3 / 8,
                     //AutoSize = true,
-                    ForeColor = hero.Chosen ? Color.Black : Color.White,
+                    ForeColor = Color.White,
                     Padding = Padding.Empty,
                 });
-
                 
-
                 Controls.Add(panel);
-                HeroesPanels.Add(panel);
+                HeroesPanels.Add(hero, panel);
             }
                  
+        }
+
+        public void PanelUpdate(Game game)
+        {
+            BorderStyle = BorderStyle.None;
+            foreach (var v in HeroesPanels.Values)
+                v.BackColor = Color.Black;
+            foreach (var v in HeroesPanels.Keys)
+                HeroUpdate(v);
+            if (Controls.Count == 0)
+                return;
+            LevelDisp.Controls[0].Text = Player.Level.ToString();
+            DamageDisp.Controls[0].Text = (Player.Level == Player.Levels.Length - 1)
+                ? (int) Player.AllDamage + " DMG"
+                : (int) Player.AllDamage + " / " +
+                  Player.Levels[Math.Min(Player.Level + 1, Player.Levels.Count() - 1)] + " DMG";
+
+
+            if (Player == game.CurrentPlayer)
+            {
+                //this.BorderStyle = BorderStyle.Fixed3D;
+                HeroesPanels[Player.CurrentHero].BackColor = Color.Green;
+                
+            } 
+        }
+
+        public void HeroUpdate(Hero hero)
+        {
+            var panel = HeroesPanels[hero];
+            if(panel.Controls.Count != 0)
+                panel.Controls[0].Text = hero.GetMoney() + "$";
         }
 
         public new void Resize(int width)

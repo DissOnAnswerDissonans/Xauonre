@@ -48,9 +48,10 @@ namespace MiniXauonre.Core.Heroes
         public Cyprys()
         {
             Name = "Cyprys";
+            Image = Graphics.resources.Res.Cyprus;
             SetMaxHp(900);
             SetMaxEnergy(500);
-            SetEnergyRegen(3);
+            SetEnergyRegen(7);
             SetAttackDamage(40);
             SetMovementSpeed(10);
             SetAttackRange(11);
@@ -66,9 +67,10 @@ namespace MiniXauonre.Core.Heroes
                 "Cooldown " + RockCooldown + ". Cost " + RockEnergyCost,
                 Job = (h) =>
                 {
-                    var damage = new Damage(this, h.P, magic: RockDamage + RockDamageAPscale * GetAbilityPower());
-                    var pos = h.M.UnitPositions[h].GetPointsInDistance(0, RockRange).Where(pp => h.M.IsInBounds(pp)).ToList();
+                    var damage = new Damage(this, h.P, magic: RockDamage + RockDamageAPscale * h.GetAbilityPower());
+                    var pos = h.M.UnitPositions[h].GetPointsInDistance(0, RockRange).Keys.Where(pp => h.M.IsInBounds(pp)).ToList();
                     var point = ChoosePoint(pos, h.P);
+                    if (point == null) return false;
 
                     var RockEffect = new Effect(h, (int)RockSustain);
                     RockEffect.Activate = (eh) =>
@@ -88,10 +90,11 @@ namespace MiniXauonre.Core.Heroes
 
                     RockEffect.Activate(h);
                     h.M.Effects.Add(RockEffect);
-                    var p = point.GetPointsInDistance(0, RockDamageRadius);
+                    var p = point.GetPointsInDistance(0, RockDamageRadius).Keys;
                     foreach (var victim in h.M.UnitPositions.Where(t => p.Contains(t.Value)))
                     {
-                        victim.Key.GetDamage(damage);
+                        if (!h.P.Heroes.Contains(victim.Key))
+                            victim.Key.GetDamage(damage);
                     }
                     return true;
                 },
@@ -106,16 +109,18 @@ namespace MiniXauonre.Core.Heroes
                 + EarthRange + " units dealing " + EarthDamage + " + " + EarthDamageAPscale * 100
                 + "%AP  +  for each Rock thrown " + EarthRockDamage + " + " + EarthRockDamageAPscale * 100
                 + "%AP (" + (EarthDamage + EarthDamageAPscale * GetAbilityPower() +
-                M.UnitPositions[this].GetPointsInDistance(0, EarthRangeReq)
+                M.UnitPositions[this].GetPointsInDistance(0, EarthRangeReq).Keys
                 .Where(a => PlacedRocks.Select(f=>f.Item1).Contains(a)).Count()
                 *(EarthRockDamage+EarthRockDamageAPscale*GetAbilityPower()))
                 + ")spell damage.\n CD " + EarthCooldown + ". Cost " + EarthEnergyCost,
                 Job = (h) =>
                 {
-                    var targets = GetEnemiesInRange(h.P, h.M, EarthRange);
+                    var targets = GetEnemiesInRange(h, EarthRange);
                     if (targets.Count == 0)
                         return false;
-                    Targets.Add(ChooseTarget(targets, h.P)); 
+                    var target = ChooseTarget(targets, h.P);
+                    if (target == null) return false;
+                    h.Targets.Add(target);
                     var rocks = PlacedRocks.Where(p => p.Item1.GetStepsTo(h.M.UnitPositions[h]) <= EarthRangeReq);
                     var rocksNumber = rocks.Count();
                     Effect maxLifeRock = null;
@@ -126,9 +131,9 @@ namespace MiniXauonre.Core.Heroes
                         h.M.Effects.Remove(r.Item2);
                         r.Item2.Disactivate(h);
                     }
-                    var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * GetAbilityPower() +
-                        rocks.Count() * (EarthRockDamage + EarthRockDamageAPscale * GetAbilityPower()));
-                    Targets[0].GetDamage(damage);
+                    var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * h.GetAbilityPower() +
+                        rocks.Count() * (EarthRockDamage + EarthRockDamageAPscale * h.GetAbilityPower()));
+                    h.Targets[0].GetDamage(damage);
                     if (rocksNumber > 0)
                     {
                         var point = h.M.UnitPositions[Targets[0]] + new Point(0,0);
