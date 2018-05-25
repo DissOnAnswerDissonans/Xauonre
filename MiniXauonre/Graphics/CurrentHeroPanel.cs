@@ -19,12 +19,14 @@ namespace MiniXauonre.Graphics
     {
         private Hero Hero { get; set; }
         
+        private ScreenForm ParentForm { get; set; }
+        
         private TableLayoutPanel ItemsPanel { get; set; }
 
         public CurrentHeroPanel(Hero h, ScreenForm f)
         {
             Hero = h;
-
+            ParentForm = f;
             AutoSize = true;
             
             Padding = new Padding(2);
@@ -44,9 +46,9 @@ namespace MiniXauonre.Graphics
             b.Click += (sender, args) =>
             {
                 h.P.Game.ChosenHero = h;
-                f.CenterOnPoint(h.M.UnitPositions[h]);
-                f.ControlPanelUpdate();
-                f.StatPanelUpdate();
+                ParentForm.CenterOnPoint(h.M.UnitPositions[h]);
+                ParentForm.ControlPanelUpdate();
+                ParentForm.StatPanelUpdate();
             };
 
             Controls.Add(b);
@@ -71,19 +73,39 @@ namespace MiniXauonre.Graphics
         {
             ItemsPanel.Controls.Clear();
 
+            ItemsPanel.RowCount = Hero.Items.Count;
+
             foreach (var item in Hero.Items)
             {
-                ItemsPanel.Controls.Add(new Label
+                var loabel = new Label
                 {
-                    Margin = new Padding(0,0,0,2),
+                    Margin = new Padding(0, 0, 0, 2),
                     Size = new Size(128, 24),
                     BackColor = Color.Black,
                     ForeColor = Color.Beige,
                     Text = item.Name,
                     Font = new Font(FontFamily.GenericSansSerif, 12),
                     TextAlign = ContentAlignment.MiddleCenter,
-                    
-                });
+                };
+
+                loabel.DoubleClick += (sender, args) =>
+                {
+                    var dialogResult = MessageBox.Show(
+                        "Are you sure you want to throw away a " + item.Name + "?",
+                        "Delete item?",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation
+                    );
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        item.Remove(Hero);
+                        ParentForm.ControlPanelUpdate();
+                        ParentForm.StatPanelUpdate();
+                        UpdateItems();
+                    }
+                };
+                
+                ItemsPanel.Controls.Add(loabel);
             }
         }
     }

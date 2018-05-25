@@ -39,6 +39,8 @@ namespace MiniXauonre.Controller
 
         public GameRules Rules { get; private set; }
         
+        public Player Winner { get; set; }
+        
         public Game(GameRules rules)
         {
             Rules = rules;
@@ -156,7 +158,8 @@ namespace MiniXauonre.Controller
 
             if(Players.Count <= 1)
             {
-                MainForm.Close();
+                Winner = Players.FirstOrDefault();
+                MainForm.GameFinish();
             }
         }
 

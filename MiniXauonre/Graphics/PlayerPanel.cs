@@ -155,7 +155,14 @@ namespace MiniXauonre.Graphics
         public void HeroUpdate(Hero hero)
         {
             var panel = HeroesPanels[hero];
-            if(panel.Controls.Count != 0)
+            if (panel.Controls.Count == 0) return;
+            if (hero.GetHp() <= 0)
+            {
+                panel.BackColor = Color.Red;
+                panel.Controls[0].Text = "DEAD";
+                panel.Controls[0].ForeColor = Color.Black;
+            }
+            else 
                 panel.Controls[0].Text = hero.GetMoney() + "$";
         }
 

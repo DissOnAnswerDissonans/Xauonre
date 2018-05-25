@@ -117,7 +117,7 @@ namespace MiniXauonre.Core
             AddStats(h);
         }
 
-        protected void Remove(Hero h)
+        public void Remove(Hero h)
         {
             if(h.Items.Contains(this))
             {

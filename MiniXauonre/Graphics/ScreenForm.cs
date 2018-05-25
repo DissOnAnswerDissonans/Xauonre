@@ -172,7 +172,7 @@ namespace MiniXauonre.Graphics
                 ForeColor = Game.ChosenHero != null ?
                     Colors.PlayerLightColors[Game.Players.IndexOf(Game.ChosenHero.P) % Colors.count]
                     : Colors.PlayerLightColors[Game.Players.IndexOf(Game.CurrentPlayer) % Colors.count],
-                BackColor = Game.ChosenHero == Game.CurrentHero ? Color.Black : Color.DarkSlateGray,
+                BackColor = Game.ChosenHero == Game.CurrentHero || Game.ChosenHero == null ? Color.Black : Color.DarkSlateGray,
                 Text = Game.ChosenHero != null ? Game.ChosenHero.Name : Game.CurrentHero.Name,
                 Font = new Font(FontFamily.GenericSansSerif, 20),
                 Dock = DockStyle.Fill,
@@ -206,37 +206,43 @@ namespace MiniXauonre.Graphics
             var button = new Button()
             {
                 Width = 256 + 28,
-                Height = 32,
+                Height = 64,
                 Text = "END TURN",
-                Font = new Font(FontFamily.GenericSerif, 16),
+                Font = new Font(FontFamily.GenericSerif, 32),
                 ForeColor = Color.White,
                 BackColor = Colors.PlayerDarkColors
                     [Game.Players.IndexOf(Game.CurrentPlayer) % Colors.count]
             };
-            button.Click += (sender, args) =>
-            {
-                EveryUpdate();
-                Controls.Remove(ShopPanel);
-                Game.EndTurn();
-                PlayerPanelUpdate();
-                StatPanelUpdate(); 
-                Controls.Remove(HeroPanel);
-                HeroPanel = new CurrentHeroPanel(Game.CurrentHero, this)
+            if (Game.Winner == null)
+                button.Click += (sender, args) =>
                 {
-                    Size = new Size(128, 128),
-                    Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
-                    Location = new System.Drawing.Point(32, ClientSize.Height - 160)
+                    EveryUpdate();
+                    Controls.Remove(ShopPanel);
+                    Game.EndTurn();
+                    PlayerPanelUpdate();
+                    StatPanelUpdate(); 
+                    Controls.Remove(HeroPanel);
+                    HeroPanel = new CurrentHeroPanel(Game.CurrentHero, this)
+                    {
+                        Size = new Size(128, 128),
+                        Anchor = AnchorStyles.Bottom | AnchorStyles.Left,
+                        Location = new System.Drawing.Point(32, ClientSize.Height - 160)
+                    };
+                    Controls.Add(HeroPanel);
+                    HeroPanel.BringToFront();
+                    ShopPanel = new ShopPanel(Game.CurrentHero, this,
+                        new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
+                    
+                    SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);  
+                    CenterOnPoint(Game.Maze.UnitPositions[Game.CurrentHero]);
+                    ControlPanelUpdate();
+                    MapUpdate();
                 };
-                Controls.Add(HeroPanel);
-                HeroPanel.BringToFront();
-                ShopPanel = new ShopPanel(Game.CurrentHero, this,
-                    new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
-                
-                SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);  
-                CenterOnPoint(Game.Maze.UnitPositions[Game.CurrentHero]);
-                ControlPanelUpdate();
-                MapUpdate();
-            };
+            else
+            {
+                button.Text = "END GAME";
+                button.Click += (sender, args) => this.Close();
+            }
             StatPanel.Controls.Add(button);
             
             if (Game.ChosenHero != null)
@@ -324,7 +330,25 @@ namespace MiniXauonre.Graphics
 
         public void GameFinish()
         {
-
+            if (Game.Winner == null)
+            {
+                MessageBox.Show(
+                    "Похоже, что на карте произошел какой-то капец и все умудрились сдохнуть, из-за этого турнир накрылся медным тазом, а директор стадиона обанкротился",
+                    "ЖОПА!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                Close();
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Итак, остался только один игрок, и это — " + Game.Winner.Name + "!\nПоздравляем победителя!",
+                    "Победа!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Asterisk
+                );
+            }
         }
 
     }
