@@ -123,7 +123,7 @@ namespace MiniXauonre.Core.Heroes
                 + (StormMaxEnergyScale * GetMaxEnergy() + StormAPScale * GetAbilityPower()) +
                 ") magic damage. Cost " + StormCost + "%Energy. CD " +
                 StormCD,
-                CoolDown = 6,
+                CoolDown = StormCD,
                 Job = (h) =>
                 {
                     var ef = new Effect(h, StormDuration)

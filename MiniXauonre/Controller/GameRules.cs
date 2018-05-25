@@ -33,8 +33,8 @@ namespace MiniXauonre.Controller
             HeroesPerPlayer = 3;
             PlayersNumber = 2;
             GameMap = MapLoader.FromText(Graphics.resources.Res.SimpleMap);
-            //GameMap = new Map(5, 6);
-            StartMoney = 100;
+            GameMap = new Map(5, 6);
+            StartMoney = 10000;
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
             DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);

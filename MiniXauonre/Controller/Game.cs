@@ -140,6 +140,12 @@ namespace MiniXauonre.Controller
                     {
                         Maze.UnitPositions.Remove(h);
                         list.Remove(h);
+                        var effects = Maze.Effects.Where(e => e.Creator == h).ToList();
+                        foreach (var e in effects)
+                        {
+                            e.Disactivate(h);
+                            Maze.Effects.Remove(e);
+                        }
                     }
                 }
                 p.Heroes = list;

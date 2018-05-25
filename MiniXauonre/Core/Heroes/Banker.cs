@@ -32,8 +32,8 @@ MS = 10*/
         public const double InterestRateHpBuffAPScale = 0.5;
         public Perk InterestRate { get; set; }
 
-        public const double InvestmentMoney = 5;
-        public const double InvestmentAPScale = 0.1;
+        public const double InvestmentMoney = 10;
+        public const double InvestmentAPScale = 0.3;
         public const double InvestmentCD = 6;
         public const double InvestmentCost = 100;
         public Skill Investment { get; set; }
