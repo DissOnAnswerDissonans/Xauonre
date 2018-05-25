@@ -27,10 +27,10 @@ namespace MiniXauonre.Core.Heroes
     class Geneva : HeroWithBaseSkills
     {
         public const double BeamHeal = 100;
-        public const double BeamHealApScale = 0.5;
+        public const double BeamHealApScale = 0.8;
         public const double BeamRadius = 20;
         public const double BeamRegen = 20;
-        public const double BeamRegenApScale = 0.2;
+        public const double BeamRegenApScale = 0.4;
         public const double BeamCD = 10;
         public const double BeamCost = 200;
         public Skill Beam { get; protected set; }
@@ -40,7 +40,7 @@ namespace MiniXauonre.Core.Heroes
         public const double ImpulseApScale = 0.3;
         public const double ImpulseSlow = 0.3;
         public const double ImpulseSlowTime = 2;
-        public const double ImpulseRadius = 7;
+        public const double ImpulseRadius = 5;
         public const double ImpulseRange = 20;
         public const double ImpulseCD = 6;
         public const double ImpulseCost = 60;
@@ -81,7 +81,10 @@ namespace MiniXauonre.Core.Heroes
                     var center = ChoosePoint(points, h.P);
                     if (center == null)
                         return false;
-                    var targets = M.UnitPositions.Where(u => u.Value.GetDistanceTo(center) <= ImpulseRadius).Select(p => p.Key).ToList();
+                    var targets = h.M.UnitPositions.Where(u => u.Value.GetStepsTo(center) <= ImpulseRadius)
+                        .Select(p => p.Key)
+                        .Where(u => h.P != u.P)
+                        .ToList();
                     var damage = new Damage(h, h.P, magic: ImpulseDamage + ImpulseApScale * GetAbilityPower());
 
                     foreach (var t in targets)
@@ -96,12 +99,13 @@ namespace MiniXauonre.Core.Heroes
                         SetMovementSpeed = (g) => (v) => g(v / (1 - ImpulseSlow)),
                     };
 
+                    foreach (var t in targets)
+                        t.Perks.Add(slowPerk);
                     var slowEffect = new Effect(h)
                     {
                         Activate = (he) =>
                         {                
-                            foreach (var t in targets)
-                                t.Perks.Add(slowPerk);
+                           
                         },
                         Disactivate = (he) =>
                         {
@@ -112,6 +116,7 @@ namespace MiniXauonre.Core.Heroes
                     };
                     h.M.Effects.Add(slowEffect);
                     slowEffect.Activate(h);
+                    (h as Geneva).Keeping = false;
                     return true;
                 },
             };
@@ -140,7 +145,7 @@ namespace MiniXauonre.Core.Heroes
                 SkillFix = (s) =>
                 {
                     var prev = s.Job;
-                    if (s.Name == "Beam")
+                    if (s.Name == "Beam" || s.Name == "Impulse")
                         return s;
                     var newSkill = new Skill
                     {
@@ -156,7 +161,7 @@ namespace MiniXauonre.Core.Heroes
                                 (h as Geneva).Keeping = false;
                             return res;
                         },
-                        Timer = s.Timer,
+                        Timer = s.CoolDown,
                     };
                     return newSkill;
                 }

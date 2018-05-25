@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Heroes
     {
         public const double WallMinDist = 11;
         public const double WallMaxDist = 13;
-        public const double WallManaPerTurnCost = 30;
+        public const double WallManaPerTurnCost = 80;
         public const double RageArmorBuff = 2;
         public const double RageADBuff = 3;
         public const double RageDuration = 2;
@@ -31,7 +31,7 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "Fe11";
             Image = Graphics.resources.Res.Fe11;
-            SetMaxHp(1300);
+            SetMaxHp(900);
             SetAttackDamage(30);
             SetResist(5);
             SetMovementSpeed(11);

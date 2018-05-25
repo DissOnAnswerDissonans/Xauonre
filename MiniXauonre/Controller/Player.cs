@@ -47,7 +47,6 @@ namespace MiniXauonre.Controller
             AllDamage = 0;
             Name = name;
             Heroes = new List<Hero>();
-            LevelUpMoney = 100;
         }
 
         public void InitPlayer()
@@ -68,7 +67,7 @@ namespace MiniXauonre.Controller
             Level++;
             foreach(var hero in Heroes)
             {
-                hero.AddMoney(Level * LevelUpMoney);
+                hero.AddMoney(Level * Game.Rules.LevelUpMoney);
                 hero.LevelUp();
             }
         }
