@@ -41,7 +41,9 @@ namespace MiniXauonre.Core.Heroes
                 GetDamage = (a) => (d) =>
                 {
                     var h = d.HeroValue;
+                    
                     var damage = d.DamageValue;
+
                     var arm = h.GetArmor();
                     var res = h.GetResist();
                     var armored = damage.Phys > arm ? arm : damage.Phys;
@@ -83,6 +85,8 @@ namespace MiniXauonre.Core.Heroes
                 GetDamage = (a) => (d) =>
                 {
                     var h = d.HeroValue;
+                    if (h.P.Heroes.Contains(d.DamageValue.Creator))
+                        return a(d);
                     var maxEnergy = h.GetMaxEnergy();
                     var ap = h.GetAbilityPower();
                     d.DamageValue.Creator

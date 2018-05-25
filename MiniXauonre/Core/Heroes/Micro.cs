@@ -44,11 +44,11 @@ namespace MiniXauonre.Core.Heroes
             Defence = new Perk
             {
                 GetArmor = (g) => () => 
-                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
+                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count,
                 SetArmor = (s) => (v) => 
                     s(v - GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
                 GetResist = (g) => () =>
-                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count(),
+                    g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count,
                 SetResist = (s) => (v) =>
                     s(v - GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
             };
