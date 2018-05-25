@@ -20,6 +20,9 @@ namespace MiniXauonre.Graphics
         
         private Panel LevelDisp { get; set; }
         private Panel DamageDisp { get; set; }
+        
+        private ProgressBar Bar { get; set; }
+        
         private Dictionary<Hero, Panel> HeroesPanels { get; set; }
 
         
@@ -59,11 +62,13 @@ namespace MiniXauonre.Graphics
             {
                 Dock = dockS,
                 Height = h * 7 / 8,
-                Width = h * 2,
+                Width = h * 4,
                 Padding = new Padding(h / 16),
                 BackColor = Colors.PlayerDarkColors[num % Colors.count],
             };
 
+            /*
+            
             DamageDisp.Controls.Add(new Label
             {
                 Text = (player.Level == Player.Levels.Length - 1) ? (int)player.AllDamage + " DMG" :
@@ -72,16 +77,48 @@ namespace MiniXauonre.Graphics
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, h / 6),
                 AutoSize = true,
                 ForeColor = Color.White,
-            });  
+            }); 
+            
+            */
+
+            Bar = new ProgressBar()
+            {
+                Dock = DockStyle.Bottom,
+                AutoSize = true,
+                ForeColor = Color.White,
+                Minimum = (int) Player.Levels[player.Level],
+                Maximum = (int) Player.Levels[Math.Min(player.Level + 1, Player.Levels.Length - 1)],
+                Value = (int) player.AllDamage,
+                Style = ProgressBarStyle.Continuous,
+                Height = 24
+            };
+            
+            DamageDisp.Controls.Add(new Label
+            {
+                Text = (player.Level == Player.Levels.Length - 1)
+                    ? (int) player.AllDamage + " DMG"
+                    : (int) player.AllDamage + " / " +
+                      Player.Levels[Math.Min(player.Level + 1, Player.Levels.Count() - 1)] + " DMG",
+                //Dock = DockStyle.Right,
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, h / 6),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Top,
+                Location = new Point(0, 6),
+                ForeColor = Color.White,
+                BackColor = Color.Transparent,
+            });
+            
+            DamageDisp.Controls.Add(Bar); 
 
             DamageDisp.Controls.Add(new Label
             {
                 Text = player.Name,
-                Dock = DockStyle.Top,
                 Font = new Font(SystemFonts.DefaultFont.FontFamily, h / 4),
                 AutoSize = true,
                 ForeColor = Color.White,
             });
+            
+            DamageDisp.Controls[2].Location = new Point(h*4 - DamageDisp.Controls[2].Width, 0);
 
             Controls.Add(DamageDisp);
 
@@ -91,7 +128,7 @@ namespace MiniXauonre.Graphics
             {
                 var panel = new Panel
                 {
-                    Size = new Size(h * 3 / 2, h * 7 / 8),
+                    Size = new Size(h * 5 / 4, h * 7 / 8),
                     Padding = new Padding(h / 16),
                     BackColor = hero.Chosen ? Color.LawnGreen : Color.Black,
                     //AutoSize = true,
@@ -142,6 +179,9 @@ namespace MiniXauonre.Graphics
                 ? (int) Player.AllDamage + " DMG"
                 : (int) Player.AllDamage + " / " +
                   Player.Levels[Math.Min(Player.Level + 1, Player.Levels.Count() - 1)] + " DMG";
+            Bar.Minimum = (int) Player.Levels[Player.Level];
+            Bar.Maximum = (int) Player.Levels[Math.Min(Player.Level + 1, Player.Levels.Length - 1)];
+            Bar.Value = (int) Player.AllDamage;
 
 
             if (Player == game.CurrentPlayer)

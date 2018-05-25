@@ -25,7 +25,7 @@ namespace MiniXauonre.Graphics
         private const int fontSize = 8;
         private const int debugFontSize = 16;
 
-        private const int levelPanelSize = 64;
+        private const int levelPanelSize = 66;
 
         private FlowLayoutPanel StatPanel { get; set; }
    
@@ -60,7 +60,7 @@ namespace MiniXauonre.Graphics
                 Anchor = (AnchorStyles.Right | AnchorStyles.Bottom),
                 Size = new Size(256, 32),
                 BackColor = Color.OrangeRed,   
-                FlowDirection = FlowDirection.BottomUp
+                FlowDirection = FlowDirection.BottomUp,
             };       
 
             ControlPanel = new FlowLayoutPanel
@@ -121,7 +121,7 @@ namespace MiniXauonre.Graphics
                 SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);
                 ShopPanel = new ShopPanel(Game.CurrentHero, this,
                     //new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
-                    new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
+                    new Rectangle(ClientSize.Width / 2 - 520, ClientSize.Height / 2 - 300, 1040, 600));
             }; 
         }
 

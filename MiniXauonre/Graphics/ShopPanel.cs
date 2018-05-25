@@ -27,7 +27,7 @@ namespace MiniXauonre.Graphics
         private Hero Customer { get; set; }
         private Item ChosenItem { get; set; }
 
-        private const double CritHeight = 36;
+        private const double CritHeight = 48;
 
         public ShopPanel(Hero hero, ScreenForm form, Rectangle borders)
         {
@@ -44,12 +44,13 @@ namespace MiniXauonre.Graphics
                 RowCount = (TotalItems + cc - 1) / cc,
                 ColumnCount = cc,
             };
-            ItemChoosingPanel.Size = new Size(Width / 2, Height);
+            ItemChoosingPanel.Size = new Size(Width * 2 / 3, Height);
             for (int i = 0; i < ItemChoosingPanel.RowCount; i++)
                 ItemChoosingPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / (ItemChoosingPanel.RowCount)));
             for (int i = 0; i < ItemChoosingPanel.ColumnCount; i++)
                 ItemChoosingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / ItemChoosingPanel.ColumnCount));
                        
+            
             for (int i = 0; i < Shop.Items.Count; ++i)
             {
                 var shopItem = Shop.Items[i];
@@ -58,6 +59,8 @@ namespace MiniXauonre.Graphics
                     Dock = DockStyle.Fill,
                     Text = shopItem.Name,
                     Font = new Font(FontFamily.GenericSansSerif, 24),
+                    Margin = new Padding(0),
+                    Padding = new Padding(0)
                 };
                 button.Click += (sender, args) =>
                 {
@@ -78,7 +81,7 @@ namespace MiniXauonre.Graphics
                 Dock = DockStyle.Bottom,
                 Font = new Font(FontFamily.GenericSansSerif, 32),
             };
-            BuyButton.Size = new Size(Width / 2, 64);
+            BuyButton.Size = new Size(Width * 1 / 3, 128);
             BuyButton.Click += (sender, args) =>
             {
                 Customer.BuyItem(ChosenItem);
@@ -88,10 +91,11 @@ namespace MiniXauonre.Graphics
 
             ExplanationPanel = new FlowLayoutPanel();
             ExplanationPanel.BackColor = Color.Black;
-            ExplanationPanel.Size = new Size(Width/2, 36);
+            ExplanationPanel.MinimumSize = new Size(Width * 1 / 3, 36);
+            ExplanationPanel.AutoSize = true;
             
             RecipePanel = new TableLayoutPanel(){RowStyles = { new RowStyle(SizeType.AutoSize)}};
-            RecipePanel.Size = new Size(Width/2, 64);
+            RecipePanel.Size = new Size(Width * 1 / 3, 64);
             
             Controls.Add(InfoPanel);
             Controls.Add(BuyButton);
@@ -100,14 +104,16 @@ namespace MiniXauonre.Graphics
             
             UpdateInfo();
 
+            /*
             SizeChanged += (sender, args) =>
             {
-                RecipePanel.Size = new Size(Width/2, 64);
-                ExplanationPanel.Size = new Size(Width/2, 36);
-                ItemChoosingPanel.Size = new Size(Width / 2, Height);
-                BuyButton.Size = new Size(Width / 2, 64);
+                RecipePanel.Size = new Size(Width * 3 / 10, 64);
+                ExplanationPanel.Size = new Size(Width * 3 / 10, 36);
+                ItemChoosingPanel.Size = new Size(Width * 7 / 10, Height);
+                BuyButton.Size = new Size(Width * 3 / 10, 128);
                 UpdateInfo();
             };
+            */
         }
 
         private void UpdateInfo()
@@ -138,7 +144,7 @@ namespace MiniXauonre.Graphics
             InfoPanel.Controls.Add(RecipePanel);               
             InfoPanel.Refresh();
             
-            BuyButton.Text = "Buy " + ChosenItem.Name + " (" + (int)ChosenItem.GetFinalCost(Customer) + ")";
+            BuyButton.Text =  ChosenItem.Name + ":\n Buy for (" + (int)ChosenItem.GetFinalCost(Customer) + ")";
 
             var itemExp = ChosenItem.GetExplanation();  
             ExplanationPanel.Controls.Clear();
@@ -161,7 +167,7 @@ namespace MiniXauonre.Graphics
             
             RecipePanel.Controls.Clear();
             RecipePanel.RowCount = ChosenItem.Parts.Count;
-            RecipePanel.Width = Width / 2;
+            RecipePanel.Width = Width * 1 / 3;
             RecipePanel.Height = ChosenItem.Parts.Count * 64;
             var kik = new List<Item>(Customer.Items);
             foreach (var part in ChosenItem.Parts)
