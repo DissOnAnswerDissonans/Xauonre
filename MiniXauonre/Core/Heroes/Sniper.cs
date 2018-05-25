@@ -14,7 +14,7 @@ namespace MiniXauonre.Core.Heroes
         public const double SnipeApScale = 1;
         public const double SnipeCooldown = 5;
         public const double SnipeEnergyCost = 100;
-        public const int SnipeRootTime = 1;
+        public const int SnipeRootTime = 2;
         public Perk RootPerk { get; protected set; }
 
         public Sniper()

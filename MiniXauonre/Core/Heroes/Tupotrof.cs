@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Heroes
         public Skill Cutter { get; set; }
         public Perk Growth { get; set; }
 
-        public const double GrowthADPercentBuff = 0.1;
+        public const double GrowthADPercentBuff = 0.11;
         public const double GrowthMSBuff = 1;
         public const double CutterDamage = 50;
         public const double CutterADScale = 1.2;
