@@ -13,12 +13,12 @@ namespace MiniXauonre.Core.Heroes
         public const double ShieldEnergyExpCoeff = 0.5;
         public Perk Shield { get; set; }
 
-        public const int StormDuration = 3;
+        public const int StormDuration = 2;
         public const double StormRange = 7;
         public const double StormMaxEnergyScale = 0.1;
         public const double StormAPScale = 0.25;
-        public const double StormCost = 0.4;
-        public const double StormCD = 8;
+        public const double StormCost = 0.2;
+        public const double StormCD = 6;
         public Skill Storm { get; set; }
         public Perk Reflection { get; set; }
 
@@ -28,7 +28,7 @@ namespace MiniXauonre.Core.Heroes
             Image = Graphics.resources.Res.Immortal;
             SetMaxHp(500);
             SetEnergyRegen(5);
-            SetMaxEnergy(1000);
+            SetMaxEnergy(500);
             SetArmor(10);
             SetResist(10);
             SetMovementSpeed(10);
@@ -126,7 +126,7 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = StormCD,
                 Job = (h) =>
                 {
-                    var ef = new Effect(h, StormDuration)
+                    var ef = new Effect(h, StormDuration - 1)
                     {
                         Activate = (eh) => eh.Perks.Add(Reflection),
                         Disactivate = (eh) => eh.Perks.Remove(Reflection),

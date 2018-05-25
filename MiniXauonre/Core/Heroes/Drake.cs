@@ -23,10 +23,10 @@ namespace MiniXauonre.Core.Heroes
             
             SetMaxHp(1600);
             SetAttackDamage(30);
-            SetArmor(10);
+            SetArmor(5);
             SetResist(15);
             SetMovementSpeed(10);
-            SetRegen(20);
+            SetRegen(15);
 
             Burning = false;
 

@@ -15,7 +15,7 @@ namespace MiniXauonre.Core
         public string Name { get; set; }
         public double CoolDown { get; set; }
         public double EnergyCost { get; set; }
-        public double Timer { get; private set; }
+        public double Timer { get; set; }
         public Func<Hero, bool> Job  { get; set; }
         
         public Func<Hero, bool> Availiable { get; set; }
@@ -33,9 +33,9 @@ namespace MiniXauonre.Core
 
         public void Work(Hero hero)
         {
+            hero.Targets = new List<Hero>();
             if (Availiable(hero) && Job(hero))
             {
-                hero.Targets = new List<Hero>();
                 if(CoolDown != 0)
                     Timer = Math.Max(CoolDown - hero.GetCDReduction(), 1);
                 hero.AddEnergy(-EnergyCost);

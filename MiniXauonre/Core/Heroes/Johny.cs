@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Heroes
         public const double BoomJumpRange = 9;
         public const double BoomBombRange = 5;
         public const double BoomCooldown = 6;
-        public const double BoomEnergyCost = 100;
+        public const double BoomEnergyCost = 150;
         public const double BoomDamage = 100;
         public const double BoomDamageAPScale = 1.5;
 
@@ -23,9 +23,9 @@ namespace MiniXauonre.Core.Heroes
             Image = Graphics.resources.Res.Johny;
             
             SetMaxHp(1200);
-            SetMaxEnergy(150);
+            SetMaxEnergy(300);
             SetRegen(15);
-            SetEnergyRegen(5);
+            SetEnergyRegen(8);
 
             Boom = new Skill
             {
