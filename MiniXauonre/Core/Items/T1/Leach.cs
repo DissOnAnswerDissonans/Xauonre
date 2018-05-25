@@ -36,7 +36,7 @@ namespace MiniXauonre.Core.Items
                             var res = s.Job(h);
                             if (res)
                             {
-                                h.GetHeal(h.GetAttackDamage() * 0.5 * h.Targets.Count);
+                                h.GetHeal(h.GetAttackDamage() * 0.3 * h.Targets.Count);
                                 return true;
                             }
                             return false;

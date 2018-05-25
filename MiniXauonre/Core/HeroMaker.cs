@@ -23,6 +23,7 @@ namespace MiniXauonre.Core
                 new Immortal(),
                 new Cyprys(),
                 new Banker(),
+                new Geneva(),
             };
         }
 
@@ -40,6 +41,7 @@ namespace MiniXauonre.Core
                     case "Immortal": return new Immortal();
                     case "Cyprys": return new Cyprys();
                     case "Banker": return new Banker();
+                    case "Geneva": return new Geneva();
                     default: return new Hero();
             }
         }

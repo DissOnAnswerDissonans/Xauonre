@@ -62,6 +62,7 @@
     <Compile Include="Core\Heroes\Drake.cs" />
     <Compile Include="Core\Heroes\Fe11.cs" />
     <Compile Include="Core\Heroes\HeroWithBaseSkills.cs" />
+    <Compile Include="Core\Heroes\Geneva.cs" />
     <Compile Include="Core\Heroes\Micro.cs" />
     <Compile Include="Core\Heroes\Sniper.cs" />
     <Compile Include="Core\Heroes\Thief.cs" />
