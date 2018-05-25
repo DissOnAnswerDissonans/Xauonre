@@ -28,7 +28,7 @@ namespace MiniXauonre.Core.Heroes
     {
         public const double BeamHeal = 100;
         public const double BeamHealApScale = 0.5;
-        public const double BeamRadius = 5;
+        public const double BeamRadius = 20;
         public const double BeamRegen = 20;
         public const double BeamRegenApScale = 0.2;
         public const double BeamCD = 10;
@@ -127,10 +127,12 @@ namespace MiniXauonre.Core.Heroes
                     var me = d.HeroValue as Geneva;
                     if (me.Keeping)
                     {
-                        if (me.BeamTarget==null || me.M.UnitPositions[me.BeamTarget].GetStepsTo(me.M.UnitPositions[me]) > BeamRadius)
-                            me.Keeping = false;
-                        else
+                        if (me.BeamTarget!=null 
+                            && me.M.UnitPositions.ContainsKey(me.BeamTarget)
+                            && me.M.UnitPositions[me.BeamTarget].GetStepsTo(me.M.UnitPositions[me]) <= BeamRadius)
                             me.BeamTarget.GetHeal(BeamRegen + BeamRegenApScale * me.GetAbilityPower());
+                        else
+                            me.Keeping = false;
                     }
                     return f(d);
                 },
@@ -185,9 +187,10 @@ namespace MiniXauonre.Core.Heroes
                         return false;
                     h.Targets.Add(target);
 
+
                     target.GetHeal(BeamHeal + BeamHealApScale * h.GetAbilityPower());
                     (h as Geneva).Keeping = true;
-                    
+                    (h as Geneva).BeamTarget = target;
                     return true;
                 }
             };
