@@ -11,7 +11,7 @@ namespace MiniXauonre.Core
     {
         public Perk Effect { get; protected set; }
         public string Name { get; protected set; }
-        public Func<string> Explanation { get; protected set; }
+        public Func<Hero, string> Explanation { get; protected set; }
         public double Cost { get; protected set; }
         public List<Item> Parts { get; protected set; }
         public int Tier { get; protected set; }
@@ -36,7 +36,7 @@ namespace MiniXauonre.Core
         public Item()
         {
             Name = "None";
-            Explanation = () => "";
+            Explanation = (h) => "";
             Effect = new Perk() { };
             Cost = 0;
             Tier = 0;
