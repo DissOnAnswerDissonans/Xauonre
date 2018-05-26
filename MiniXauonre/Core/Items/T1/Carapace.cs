@@ -15,7 +15,7 @@ namespace MiniXauonre.Core.Items
             Cost = 260;
             A = 8;
             R = 8;
-            HP = 8;
+            HR = 8;
             //255
             Parts = new List<Item>
             {
