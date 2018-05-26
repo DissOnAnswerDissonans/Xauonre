@@ -19,6 +19,7 @@ namespace MiniXauonre.Core.Shops
             new Steel(),
             new FlameCoast(),       
             new Battery(),
+            new Yeast(),
 
             new Shield(),
             new MagicRelic(),
@@ -33,6 +34,7 @@ namespace MiniXauonre.Core.Shops
             new Accumulator(),
             new Booster(),
             new Boots(),
+            new OldYeast(),
             
             new MagicBoots(),
             new FlashBoots(),
@@ -45,12 +47,14 @@ namespace MiniXauonre.Core.Shops
             new DeathScythe(),
             new NanoArmor(),
             new Leach(),
+            new AgedYeast(),
             
             new TimeMachine(),
             new Items.Buffer(),
             new GiantArmor(),
             new Minigun(),
             new InfinityEdge(),
+            new EntientYeast(),
         };
 
 
