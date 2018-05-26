@@ -24,7 +24,6 @@ namespace MiniXauonre.Graphics
         
         private const int fontSize = 8;
         private const int debugFontSize = 16;
-
         private const int levelPanelSize = 66;
 
         private FlowLayoutPanel StatPanel { get; set; }
@@ -232,7 +231,7 @@ namespace MiniXauonre.Graphics
                     Controls.Add(HeroPanel);
                     HeroPanel.BringToFront();
                     ShopPanel = new ShopPanel(Game.CurrentHero, this,
-                        new Rectangle(ClientSize.Width / 2 - 640, ClientSize.Height / 2 - 360, 1280, 720));
+                        new Rectangle(ClientSize.Width / 2 - 480, ClientSize.Height / 2 - 300, 960, 600));
                     
                     SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);  
                     CenterOnPoint(Game.Maze.UnitPositions[Game.CurrentHero]);

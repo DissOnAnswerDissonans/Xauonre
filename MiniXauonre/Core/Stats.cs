@@ -25,6 +25,7 @@ namespace MiniXauonre.Core
         AttackSpeed,
         MovementSpeed,
         AttackRange,
+        STOP
     }
 
 }

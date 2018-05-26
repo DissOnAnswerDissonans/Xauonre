@@ -27,15 +27,23 @@ namespace MiniXauonre.Graphics
         private Shop Shop { get; set; } 
         private Hero Customer { get; set; }
         private Item ChosenItem { get; set; }
+        
+        private List<Item> Items { get; set; }
 
         private const double CritHeight = 48;
         
-        private int OptionsWidth { get; set; }
-        private int ChoosingWidth { get; set; }
-        private int InfoWidth { get; set; }
+        private Func<int> GetOptionsWidth { get; set; }
+        private Func<int> GetChoosingWidth{ get; set; }
+        private Func<int> GetInfoWidth    { get; set; }
 
         public ShopPanel(Hero hero, ScreenForm form, Rectangle borders)
         {
+            GetOptionsWidth  = () => Width * 2/10;
+            GetChoosingWidth = () => Width * 3/10;
+            GetInfoWidth     = () => Width * 5/10;
+               
+            Items = new List<Item>();
+            
             Customer = hero;
             Shop = hero.S;
             ChosenItem = Shop.Items[0];
@@ -43,45 +51,71 @@ namespace MiniXauonre.Graphics
             var TotalItems = Shop.Items.Count;
             var cc = (int)(TotalItems / (Height / CritHeight)) + 1;
 
-            ItemChoosingPanel = new TableLayoutPanel()
+            OptionsPanel = new TableLayoutPanel()
             {
-                Dock = DockStyle.Left,
-                RowCount = (TotalItems + cc - 1) / cc,
-                ColumnCount = cc,
+                Location = new Point(0, 0),
+                BackColor = Color.Aqua,
             };
-            ItemChoosingPanel.Size = new Size(Width * 1 / 3, Height);                      
-            
-            for (int i = 0; i < Shop.Items.Count; ++i)
-            {
-                var shopItem = Shop.Items[i];
-                var button = new Button()
-                {
-                    Dock = DockStyle.Fill,
-                    Text = shopItem.Name,
-                    Font = new Font(FontFamily.GenericSansSerif, 24),
-                    Margin = new Padding(0),
-                    Padding = new Padding(0)
-                };
-                button.Click += (sender, args) =>
-                {
-                    ChosenItem = shopItem;
-                    UpdateInfo();
-                };
-                ItemChoosingPanel.Controls.Add(button);      
-            }
+            OptionsPanel.Size = new Size(GetOptionsWidth(), Height);
+            OptionsPanel.RowCount = 8;
+            OptionsPanel.ColumnCount = 2;
 
+            for (int t = 0; t <= 3; ++t)
+            {
+                var tier = t;
+                var b = new Button()
+                {
+                    Size = new Size(GetOptionsWidth() / OptionsPanel.ColumnCount, Height / OptionsPanel.RowCount),
+                    Margin = new Padding(0),
+                    Padding = new Padding(0),
+                    Text = "T" + (tier).ToString()
+                };
+                b.Click += (sender, args) =>
+                {
+                    Items = Shop.GetItemsWithTier(tier);
+                    UpdateItems();
+                };
+                OptionsPanel.Controls.Add(b);
+            }
+            
+            for (var r = (int)StatType.MaxHP; r < (int)StatType.STOP; ++r)
+            {
+                var stat = r;
+                var b = new Button()
+                {
+                    Size = new Size(GetOptionsWidth() / OptionsPanel.ColumnCount, Height / OptionsPanel.RowCount),
+                    Margin = new Padding(0),
+                    Padding = new Padding(0),
+                    Text = "+" + ((StatType)stat).ToString()
+                };
+                b.Click += (sender, args) =>
+                {
+                    Items = Shop.GetItemsWithStat((StatType)stat);
+                    UpdateItems();
+                };
+                OptionsPanel.Controls.Add(b);
+            }
+   
+            ItemChoosingPanel = new FlowLayoutPanel()
+            {
+                Location = new Point(GetOptionsWidth(), 0),
+                FlowDirection = FlowDirection.TopDown,
+            };
+            ItemChoosingPanel.Size = new Size(GetChoosingWidth(), Height);                      
+            
             InfoPanel = new FlowLayoutPanel()
             {
-                Dock = DockStyle.Fill,
+                Location = new Point(GetOptionsWidth() + GetChoosingWidth(), 0),
                 BackColor = Color.Black,
             }; 
+            InfoPanel.Size = new Size(GetInfoWidth(), Height - 128);  
 
             BuyButton = new Button()
             {
-                Dock = DockStyle.Bottom,
                 Font = new Font(FontFamily.GenericSansSerif, 32),
             };
-            BuyButton.Size = new Size(Width * 1 / 3, 128);
+            BuyButton.Size = new Size(GetInfoWidth(), 128);
+            BuyButton.Location = new Point(GetOptionsWidth() + GetChoosingWidth(), Height - 128);
             BuyButton.Click += (sender, args) =>
             {
                 Customer.BuyItem(ChosenItem);
@@ -91,15 +125,16 @@ namespace MiniXauonre.Graphics
 
             ExplanationPanel = new FlowLayoutPanel();
             ExplanationPanel.BackColor = Color.Black;
-            ExplanationPanel.MinimumSize = new Size(Width * 1 / 3, 36);
+            ExplanationPanel.MinimumSize = new Size(GetInfoWidth(), 36);
             ExplanationPanel.AutoSize = true;
             
             RecipePanel = new TableLayoutPanel(){RowStyles = { new RowStyle(SizeType.AutoSize)}};
-            RecipePanel.Size = new Size(Width * 1 / 3, 64);
-            
+            RecipePanel.Size = new Size(GetInfoWidth(), 64);
+
+            Controls.Add(OptionsPanel);
+            Controls.Add(ItemChoosingPanel);
             Controls.Add(InfoPanel);
             Controls.Add(BuyButton);
-            Controls.Add(ItemChoosingPanel);
             Controls.Add(RecipePanel);
             
             UpdateInfo();
@@ -116,8 +151,29 @@ namespace MiniXauonre.Graphics
             */
         }
 
+        private void UpdateItems()
+        {
+            foreach (var shopItem in Items)
+            {
+                var button = new Button()
+                {
+                    Text = shopItem.Name,
+                    Font = new Font(FontFamily.GenericSansSerif, 24),
+                    Margin = new Padding(0),
+                    Padding = new Padding(0)
+                };
+                button.Click += (sender, args) =>
+                {
+                    ChosenItem = shopItem;
+                    UpdateInfo();
+                };
+                ItemChoosingPanel.Controls.Add(button);      
+            } 
+        }
+
         private void UpdateInfo()
         {
+              
             InfoPanel.Controls.Clear();
             /*
             InfoPanel.Controls.Add(new Label());
@@ -167,7 +223,7 @@ namespace MiniXauonre.Graphics
             
             RecipePanel.Controls.Clear();
             RecipePanel.RowCount = ChosenItem.Parts.Count;
-            RecipePanel.Width = Width * 1 / 3;
+            RecipePanel.Width = GetInfoWidth();
             RecipePanel.Height = ChosenItem.Parts.Count * 64;
             var kik = new List<Item>(Customer.Items);
             foreach (var part in ChosenItem.Parts)
