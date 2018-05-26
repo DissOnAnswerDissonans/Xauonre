@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Blade()
         {
             Name = "Blade";
+            Tier = 1;
             Cost = 240;
             AD = 25;
         }

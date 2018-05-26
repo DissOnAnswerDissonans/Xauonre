@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public MagicRelic()
         {
             Name = "Magic Relic";
+            Tier = 1;
             Cost = 240;
             AP = 50;
             HP = 100;

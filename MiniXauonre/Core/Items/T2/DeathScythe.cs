@@ -28,7 +28,7 @@ namespace MiniXauonre.Core.Items
             AD = 45;
             HR = 8;
 
-            Explanation = (h) => "Every attack deales bonus " + APScale + "% AP magic damage after " + DamageDelay + " turns.";
+            Explanation = (h) => "Every attack deales bonus " + APScale*100 + "% AP("+h.GetAbilityPower()*APScale+") magic damage after " + DamageDelay + " turns.";
 
             Effect = new Perk()
             {

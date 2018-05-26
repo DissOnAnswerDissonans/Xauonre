@@ -12,6 +12,7 @@ namespace MiniXauonre.Core.Items
         public SpellBook()
         {
             Name = "Spell Book";
+            Tier = 0;
             Cost = 60;
             E = 50;
             ER = 2;

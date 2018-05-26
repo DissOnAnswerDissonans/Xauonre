@@ -21,7 +21,7 @@ namespace MiniXauonre.Core.Items
 
 
 
-            Explanation = (h) => "At the end of turn gives " + ExpAPScale * 100 + "% AP as EXP";
+            Explanation = (h) => "At the end of turn gives " + ExpAPScale * 100 + "% AP("+ h.GetAbilityPower()*ExpAPScale+") as EXP";
 
             Effect = new Perk
             {

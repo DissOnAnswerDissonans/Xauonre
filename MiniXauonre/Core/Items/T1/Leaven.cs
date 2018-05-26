@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Leaven()
         {
             Name = "Leaven";
+            Tier = 1;
             Cost = 210;
             HP = 450;
         }

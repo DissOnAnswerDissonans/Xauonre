@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public Accumulator()
         {
             Name = "Accumulator";
-
+            Tier = 1;
             Cost = 260;
             E = 300;
             AP = 20;
