@@ -15,17 +15,21 @@ namespace MiniXauonre.Core.Items
     class DeathScythe : Item
     {
         private Skill FixedAttack { get; set; }
-        public const double APScale = 0.2;
+        public const double APScale = 0.5;
+        public const int DamageDelay = 2;
 
         public DeathScythe()
         {
             Name = "Death Scythe";
             Cost = 777;
-
+            Tier = 2;
             HP = 100;
             A = 5;
             AD = 45;
             HR = 8;
+
+            Explanation = () => "Every attack deales bonus " + APScale + "% AP magic damage after " + DamageDelay + " turns.";
+
             Effect = new Perk()
             {
                 SkillFix = (s) =>
@@ -53,7 +57,7 @@ namespace MiniXauonre.Core.Items
                                         var damage = new Damage(he, he.P, magic: h.GetAbilityPower() * APScale);
                                         foreach (var t in tgts) t.GetDamage(damage);
                                     },
-                                    Timer = 2,
+                                    Timer = DamageDelay,
                                 };
                                 h.M.Effects.Add(effect);
                                 effect.Activate(h);

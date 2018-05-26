@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public TimeMachine()
         {
             Name = "Time Machine";
-
+            Tier = 3;
             Cost = 2000;
 
             HP = 200;

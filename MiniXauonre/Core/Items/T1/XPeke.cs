@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public XPeke()
         {
             Name = "X Peke";
+            Tier = 1;
             Cost = 230;
             Parts = new List<Item>
             {

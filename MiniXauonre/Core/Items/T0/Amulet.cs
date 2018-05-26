@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Amulet()
         {
             Name = "Amulet";
+            Tier = 0;
             Cost = 100;
             R = 8;
         }

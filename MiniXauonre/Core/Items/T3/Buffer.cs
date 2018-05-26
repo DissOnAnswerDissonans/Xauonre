@@ -12,7 +12,7 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Buffer";
             Cost = 1750;
-
+            Tier = 3;
             E = 750;
             HP = 550;
             HR = 17;
