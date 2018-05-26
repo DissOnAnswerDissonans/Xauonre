@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public KingSword()
         {
             Name = "King Sword";
-
+            Tier = 2;
             Cost = 600;
 
             HP = 150;

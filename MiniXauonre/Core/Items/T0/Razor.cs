@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Razor()
         {
             Name = "Razor";
+            Tier = 0;
             Cost = 70;
             AD = 7;
 

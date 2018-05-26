@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Knife()
         {
             Name = "Knife";
+            Tier = 1;
             Cost = 280;
             Parts = new List<Item>
             {

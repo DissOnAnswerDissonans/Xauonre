@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public Booster()
         {
             Name = "Booster";
-
+            Tier = 1;
             Cost = 400;
             AS = 1;
         }

@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public MagicStone()
         {
             Name = "Magic Stone";
+            Tier = 0;
             Cost = 80;
             AP = 20;
         }

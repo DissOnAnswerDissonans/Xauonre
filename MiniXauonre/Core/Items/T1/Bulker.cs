@@ -12,7 +12,7 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Bulker";
             Cost = 270;
-
+            Tier = 1;
             HP = 300;
             HR = 9;
             A = 5;

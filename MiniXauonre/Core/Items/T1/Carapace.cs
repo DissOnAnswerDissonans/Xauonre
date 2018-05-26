@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Carapace()
         {
             Name = "Carapace";
+            Tier = 1;
             Cost = 260;
             A = 8;
             R = 8;

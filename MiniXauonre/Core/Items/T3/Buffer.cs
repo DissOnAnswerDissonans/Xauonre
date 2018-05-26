@@ -8,6 +8,9 @@ namespace MiniXauonre.Core.Items
 {
     class Buffer : Item
     {
+        public const double EnergyRestore = 0.1;
+        public const double HealScale = 0.3;
+        public const double HealRange = 9;
         public Buffer()
         {
             Name = "Buffer";
@@ -20,12 +23,14 @@ namespace MiniXauonre.Core.Items
             AP = 100;
             ER = 20;
 
-
+            Explanation = (h) => "When attacked restores " + EnergyRestore * 100 + "% of damage. At the end of turn Heales all" +
+            " allies in "+HealRange+" range by " + HealScale * 100 + "%(Armor + Resist + AP) ("
+            + ((h.GetArmor() + h.GetResist() + h.GetAbilityPower()) * HealScale) + ").";
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>
                 {
-                    var gotten = d.DamageValue.Sum() * 0.1;
+                    var gotten = d.DamageValue.Sum() * EnergyRestore;
                     d.HeroValue.AddEnergy(gotten);
                     return f(d);
                 },
@@ -37,9 +42,9 @@ namespace MiniXauonre.Core.Items
                     var player = me.P;
                     foreach(var ally in player.Heroes)
                     {
-                        if(map.UnitPositions[ally].GetStepsTo(map.UnitPositions[me]) <= 9)
+                        if(map.UnitPositions[ally].GetStepsTo(map.UnitPositions[me]) <= HealRange)
                         {
-                            ally.GetHeal((me.GetArmor() + me.GetResist() + me.GetAbilityPower()) * 0.3);
+                            ally.GetHeal((me.GetArmor() + me.GetResist() + me.GetAbilityPower()) * HealScale);
                         }
                     }
                     return f(d);

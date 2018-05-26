@@ -8,16 +8,19 @@ namespace MiniXauonre.Core.Items
 {
     class Leach : Item
     {
+
+        public const double ADScale = 0.3;
         public Leach()
         {
             Name = "Leach";
-
+            Tier = 2;
             Cost = 750;
             AD = 50;
             A = 5;
             HP = 200;
 
-
+            Explanation = (h) => "Each attack heales you by " + ADScale*100 + "% AD("
+            + h.GetAttackDamage() * ADScale + ").";
             Effect = new Perk()
             {
                 SkillFix = (s) =>

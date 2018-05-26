@@ -11,6 +11,7 @@ namespace MiniXauonre.Core.Items
         public Accelerator()
         {
             Name = "Accelerator";
+            Tier = 1;
             Cost = 300;
             CDR = 1;
         }
