@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core.Items
 {
-    class Steel : Item
+    class Boots : Item
     {
-        public Steel()
+        public Boots()
         {
-            Name = "Steel";
-            Cost = 75;
-            A = 6;
+            Name = "Boots";
+            Tier = 1;
+            Cost = 200;
+            MS = 1;
         }
     }
 }

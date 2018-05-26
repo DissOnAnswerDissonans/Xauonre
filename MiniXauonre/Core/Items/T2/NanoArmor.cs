@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public NanoArmor()
         {
             Name = "Nano Armor";
-
+            Tier = 2;
             Cost = 620;
 
             E = 150;

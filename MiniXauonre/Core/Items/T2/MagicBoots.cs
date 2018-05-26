@@ -11,14 +11,17 @@ namespace MiniXauonre.Core.Items
         public MagicBoots()
         {
             Name = "Magic Boots";
+            Tier = 2;
             Explanation = () => "";
-            Cost = 700;
+            Cost = 680;
             AP = 100;
             HP = 200;
             MS = 1;
 
+            //520
             Parts = new List<Item>
             {
+                new Boots(),
                 new MagicRelic(),
                 new MagicStone(),
             };

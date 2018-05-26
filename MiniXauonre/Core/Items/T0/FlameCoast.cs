@@ -11,13 +11,14 @@ namespace MiniXauonre.Core.Items
         public FlameCoast()
         {
             Name = "Flame Coast";
+            Tier = 0;
             Cost = 90;
             HP = 200;
 
 
             //Conterspell
 
-            Explanation = () => "При получении магического урона ответно наносит до 10 чистого урона.";
+            Explanation = () => "";
 
 
             /*

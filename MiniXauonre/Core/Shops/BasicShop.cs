@@ -32,8 +32,10 @@ namespace MiniXauonre.Core.Shops
             new Leaven(),
             new Accumulator(),
             new Booster(),
+            new Boots(),
             
             new MagicBoots(),
+            new FlashBoots(),
             new MagicCrystal(),
             new MagicWand(),
             new KingSword(),
@@ -46,6 +48,7 @@ namespace MiniXauonre.Core.Shops
             new Items.Buffer(),
             new GiantArmor(),
             new Minigun(),
+            new InfinityEdge(),
         };
 
 

@@ -14,9 +14,14 @@ namespace MiniXauonre.Core.Items
         public Bablonomicon()
         {
             Name = "Bablonomicon";
+            Tier = 1;
             Explanation = () => "";
             Cost = 250;
             AP = 50;
+
+
+
+            Explanation = () => "At the end of turn gives " + ExpAPScale * 100 + "% AP as EXP";
 
             Effect = new Perk
             {

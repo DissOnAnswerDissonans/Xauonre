@@ -36,7 +36,7 @@ namespace MiniXauonre.Core
         public Item()
         {
             Name = "None";
-            Explanation = () => "None";
+            Explanation = () => "";
             Effect = new Perk() { };
             Cost = 0;
             Tier = 0;
