@@ -8,7 +8,7 @@ namespace MiniXauonre.Core.Items
 {
     class GiantArmor : Item
     {
-        public const double CDR = 0.5;
+        public const double CDRed = 0.5;
         public GiantArmor()
         {
             Name = "Giant Armor";
@@ -20,12 +20,12 @@ namespace MiniXauonre.Core.Items
             R = 40;
             HR = 50;
 
-            Explanation = (h) => "Each time you get damage - Reduce CD of your skills by " + CDR;
+            Explanation = (h) => "Each time you get damage - Reduce CD of your skills by " + CDRed;
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>
                 {
-                    foreach (var skill in d.HeroValue.Skills) skill.Tick(CDR);
+                    foreach (var skill in d.HeroValue.Skills) skill.Tick(CDRed);
                     return f(d);
                 },
             };

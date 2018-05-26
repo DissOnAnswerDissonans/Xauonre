@@ -36,6 +36,8 @@ namespace MiniXauonre.Core.Shops
             
             new MagicBoots(),
             new FlashBoots(),
+            new KillerBoots(),
+            new UsefulBoots(),
             new MagicCrystal(),
             new MagicWand(),
             new KingSword(),
@@ -52,6 +54,13 @@ namespace MiniXauonre.Core.Shops
         };
 
 
-        public BasicShop() => Items = set;
+        public BasicShop()
+        {
+            Items = set;
+            foreach (var item in Items)
+            {
+                item.BindStats();
+            }
+        }
     }
 }

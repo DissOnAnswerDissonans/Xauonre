@@ -22,5 +22,13 @@ namespace MiniXauonre.Graphics
             Color.Fuchsia,
             Color.LimeGreen,
         };
+        
+        public static readonly List<Color> ItemTierColors = new List<Color>
+        {
+            Color.White,
+            Color.LimeGreen,
+            Color.DeepSkyBlue,
+            Color.DarkOrange,
+        };
     }
 }

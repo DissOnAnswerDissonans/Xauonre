@@ -54,7 +54,10 @@ namespace MiniXauonre.Core
             MS  = 0;
             AS  = 0;
             CDR = 0;
+        }
 
+        public void BindStats()
+        {
             if (HP  != 0) Stats.Add(StatType.MaxHP, HP );
             if (E   != 0) Stats.Add(StatType.MaxEnergy, E  );
             if (AD  != 0) Stats.Add(StatType.AttackDamage, AD );

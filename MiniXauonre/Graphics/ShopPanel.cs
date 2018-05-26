@@ -22,6 +22,7 @@ namespace MiniXauonre.Graphics
         private FlowLayoutPanel InfoPanel { get; set; }   
         private FlowLayoutPanel ExplanationPanel { get; set; }
         private TableLayoutPanel RecipePanel { get; set; }
+        private TableLayoutPanel UpgradePanel { get; set; }
         private Button BuyButton { get; set; }
         
         private Shop Shop { get; set; } 
@@ -30,7 +31,7 @@ namespace MiniXauonre.Graphics
         
         private List<Item> Items { get; set; }
 
-        private const int CritHeight = 48;
+        private const int CritHeight = 46;
         
         private Func<int> GetOptionsWidth { get; set; }
         private Func<int> GetChoosingWidth{ get; set; }
@@ -129,13 +130,15 @@ namespace MiniXauonre.Graphics
             ExplanationPanel.AutoSize = true;
             
             RecipePanel = new TableLayoutPanel(){RowStyles = { new RowStyle(SizeType.AutoSize)}};
-            RecipePanel.Size = new Size(GetInfoWidth(), 64);
+            RecipePanel.Size = new Size(GetInfoWidth() / 2, 64);
+            
+            UpgradePanel = new TableLayoutPanel(){RowStyles = { new RowStyle(SizeType.AutoSize)}};
+            UpgradePanel.Size = new Size(GetInfoWidth() / 3, 64);
 
             Controls.Add(OptionsPanel);
             Controls.Add(ItemChoosingPanel);
             Controls.Add(InfoPanel);
             Controls.Add(BuyButton);
-            Controls.Add(RecipePanel);
             
             UpdateInfo();
 
@@ -191,7 +194,7 @@ namespace MiniXauonre.Graphics
             
             InfoPanel.Controls.Add(new Label
             {
-                ForeColor = Color.AliceBlue,
+                ForeColor = Colors.ItemTierColors[ChosenItem.Tier],
                 Font = new Font(FontFamily.GenericSerif, 36),
                 Text = ChosenItem.Name,
                 Dock = DockStyle.Top,
@@ -200,8 +203,25 @@ namespace MiniXauonre.Graphics
                 TextAlign = ContentAlignment.MiddleCenter,
             }); 
             
-            InfoPanel.Controls.Add(ExplanationPanel);            
-            InfoPanel.Controls.Add(RecipePanel);               
+            InfoPanel.Controls.Add(ExplanationPanel);
+
+            var shit = new Panel { AutoSize = true };
+             
+            InfoPanel.Controls.Add(shit);
+                       
+            shit.Controls.Add(RecipePanel);
+            shit.Controls.Add(UpgradePanel);
+            
+            InfoPanel.Controls.Add(new Label
+            {
+                AutoSize = true,
+                MinimumSize = new Size(GetInfoWidth(), 0),
+                MaximumSize = new Size(GetInfoWidth(), 1000),
+                Text = ChosenItem.Explanation(Customer),
+                ForeColor = Color.Red,
+                Font = new Font(FontFamily.GenericSansSerif, 20),
+            });
+            
             InfoPanel.Refresh();
             
             BuyButton.Text =  ChosenItem.Name + ":\n Buy for (" + (int)ChosenItem.GetFinalCost(Customer) + ")";
@@ -227,26 +247,61 @@ namespace MiniXauonre.Graphics
             
             RecipePanel.Controls.Clear();
             RecipePanel.RowCount = ChosenItem.Parts.Count;
-            RecipePanel.Width = GetInfoWidth();
-            RecipePanel.Height = ChosenItem.Parts.Count * 64;
+            RecipePanel.Width = GetInfoWidth() / 2;
+            RecipePanel.Height = ChosenItem.Parts.Count * 48;
             var kik = new List<Item>(Customer.Items);
             foreach (var part in ChosenItem.Parts)
             {
-                RecipePanel.Controls.Add(new Label()
+                var b = new Label()
                 {
-                    Font = new Font(FontFamily.GenericSerif, 32),
-                    Text = part.Name,
+                    Font = new Font(FontFamily.GenericSerif, 24),
+                    Text = "+ " + part.Name,
                     BackColor = Color.Azure,
                     ForeColor = Color.Black,
-                    Size = new Size(RecipePanel.Width, 60),
-                    TextAlign = ContentAlignment.MiddleCenter,
-                    Margin = new Padding(0, 2, 0, 2)
-                });
+                    Size = new Size(RecipePanel.Width, 44),
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Margin = new Padding(2, 2, 2, 2)
+                };
+                
+                b.Click += (sender, args) =>
+                {
+                    ChosenItem = part;
+                    UpdateInfo();
+                };
+                
+                RecipePanel.Controls.Add(b);
                 if (kik.Contains(part))
                 {
                     kik.Remove(part);
                     RecipePanel.Controls[RecipePanel.Controls.Count - 1].BackColor = Color.Chartreuse;
                 }              
+            }
+            
+            UpgradePanel.Controls.Clear();
+            var upgrades = Shop.GetUpgrades(ChosenItem);
+            UpgradePanel.Location = new Point(GetInfoWidth() / 2, 0);
+            UpgradePanel.Width = GetInfoWidth() / 2;
+            UpgradePanel.Height = upgrades.Count * 48;
+            foreach (var part in upgrades)
+            {
+                var b = new Label()
+                {
+                    Font = new Font(FontFamily.GenericSerif, 24),
+                    Text = "> " + part.Name,
+                    BackColor = Color.Azure,
+                    ForeColor = Color.Black,
+                    Size = new Size(UpgradePanel.Width, 44),
+                    TextAlign = ContentAlignment.MiddleRight,
+                    Margin = new Padding(2, 2, 2, 2)
+                };
+
+                b.Click += (sender, args) =>
+                {
+                    ChosenItem = part;
+                    UpdateInfo();
+                };
+                
+                UpgradePanel.Controls.Add(b);             
             }
         }
     }

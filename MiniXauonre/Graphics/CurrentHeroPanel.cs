@@ -82,7 +82,7 @@ namespace MiniXauonre.Graphics
                     Margin = new Padding(0, 0, 0, 2),
                     Size = new Size(128, 24),
                     BackColor = Color.Black,
-                    ForeColor = Color.Beige,
+                    ForeColor = Colors.ItemTierColors[item.Tier],
                     Text = item.Name,
                     Font = new Font(FontFamily.GenericSansSerif, 12),
                     TextAlign = ContentAlignment.MiddleCenter,

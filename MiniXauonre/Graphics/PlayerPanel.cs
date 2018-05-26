@@ -62,7 +62,7 @@ namespace MiniXauonre.Graphics
             {
                 Dock = dockS,
                 Height = h * 7 / 8,
-                Width = h * 4,
+                Width = h * 4 - 5,
                 Padding = new Padding(h / 16),
                 BackColor = Colors.PlayerDarkColors[num % Colors.count],
             };
@@ -128,7 +128,7 @@ namespace MiniXauonre.Graphics
             {
                 var panel = new Panel
                 {
-                    Size = new Size(h * 5 / 4, h * 7 / 8),
+                    Size = new Size(h * 5 / 4 + 2, h * 7 / 8),
                     Padding = new Padding(h / 16),
                     BackColor = hero.Chosen ? Color.LawnGreen : Color.Black,
                     //AutoSize = true,
