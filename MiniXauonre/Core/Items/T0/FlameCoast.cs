@@ -18,7 +18,7 @@ namespace MiniXauonre.Core.Items
 
             //Conterspell
 
-            Explanation = () => "";
+            Explanation = (h) => "";
 
 
             /*

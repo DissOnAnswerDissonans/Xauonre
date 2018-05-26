@@ -12,7 +12,7 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Magic Boots";
             Tier = 2;
-            Explanation = () => "";
+            Explanation = (h) => "";
             Cost = 680;
             AP = 100;
             HP = 200;
