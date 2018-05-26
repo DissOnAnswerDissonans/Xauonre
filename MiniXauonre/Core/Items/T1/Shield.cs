@@ -19,7 +19,7 @@ namespace MiniXauonre.Core.Items
             HR = 8;
 
 
-            Explanation = () => "Reduce incoming phys damage by " + PhysDamageReduction + "%."; 
+            Explanation = (h) => "Reduce incoming phys damage by " + PhysDamageReduction + "%."; 
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>

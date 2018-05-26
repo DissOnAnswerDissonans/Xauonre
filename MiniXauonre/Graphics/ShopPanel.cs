@@ -30,7 +30,7 @@ namespace MiniXauonre.Graphics
         
         private List<Item> Items { get; set; }
 
-        private const double CritHeight = 48;
+        private const int CritHeight = 48;
         
         private Func<int> GetOptionsWidth { get; set; }
         private Func<int> GetChoosingWidth{ get; set; }
@@ -48,8 +48,6 @@ namespace MiniXauonre.Graphics
             Shop = hero.S;
             ChosenItem = Shop.Items[0];
             Bounds = borders;
-            var TotalItems = Shop.Items.Count;
-            var cc = (int)(TotalItems / (Height / CritHeight)) + 1;
 
             OptionsPanel = new TableLayoutPanel()
             {
@@ -99,7 +97,9 @@ namespace MiniXauonre.Graphics
             ItemChoosingPanel = new FlowLayoutPanel()
             {
                 Location = new Point(GetOptionsWidth(), 0),
-                FlowDirection = FlowDirection.TopDown,
+                FlowDirection = FlowDirection.LeftToRight,
+                AutoScroll = true,
+                AutoScrollOffset = new Point(-128,0)
             };
             ItemChoosingPanel.Size = new Size(GetChoosingWidth(), Height);                      
             
@@ -153,6 +153,8 @@ namespace MiniXauonre.Graphics
 
         private void UpdateItems()
         {
+            ItemChoosingPanel.Controls.Clear();
+            var heightExceeded = (Height / CritHeight < Items.Count);
             foreach (var shopItem in Items)
             {
                 var button = new Button()
@@ -160,7 +162,9 @@ namespace MiniXauonre.Graphics
                     Text = shopItem.Name,
                     Font = new Font(FontFamily.GenericSansSerif, 24),
                     Margin = new Padding(0),
-                    Padding = new Padding(0)
+                    Padding = new Padding(0),
+                    Size = heightExceeded ? 
+                        new Size(GetChoosingWidth() - 17, CritHeight) : new Size(GetChoosingWidth(), CritHeight),
                 };
                 button.Click += (sender, args) =>
                 {
