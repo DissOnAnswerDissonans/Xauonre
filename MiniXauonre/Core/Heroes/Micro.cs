@@ -34,6 +34,7 @@ namespace MiniXauonre.Core.Heroes
         public Micro()
         {
             Name = "Micro";
+            Image = Graphics.resources.Res.Micro;
             SetAttackDamage(75);
             SetMaxHp(1300);
             SetMaxEnergy(200);

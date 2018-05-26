@@ -28,8 +28,8 @@ namespace MiniXauonre.Core.Items
             {
                 GetDamage = (f) => (d) =>
                 {
-                    var k = d.DamageValue.Phys * (1 - PhysDamageReduction);
-                    d.DamageValue.Phys *= k;
+                    var k = d.DamageValue.Phys * PhysDamageReduction;
+                    d.DamageValue.Phys -= k;
                     var at = new Damage(d.HeroValue, d.HeroValue.P, pure: k);
                     var target = new Hero();
                     target.GetDamage(at);

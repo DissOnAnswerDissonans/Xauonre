@@ -12,7 +12,7 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Entient Yeast";
             Cost = 1960;//2450
-            Tier = 1;
+            Tier = 3;
             HP = 612.5;
             E = 328.125;
             AD = 30.625;

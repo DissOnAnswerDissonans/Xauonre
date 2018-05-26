@@ -8,6 +8,8 @@ namespace MiniXauonre.Core.Items
 {
     class NanoArmor : Item
     {
+        public const double EnergyRestore = 0.1;
+
         public NanoArmor()
         {
             Name = "Nano Armor";
@@ -19,11 +21,14 @@ namespace MiniXauonre.Core.Items
             HR = 17;
             R = 8;
 
+            Explanation = (h) =>
+                "Each time you get damage restore your energy by " + EnergyRestore * 100 + "% of damage.";
+
             Effect = new Perk
             {
                 GetDamage = (f) => (d) =>
                 {
-                    var gotten = d.DamageValue.Sum() * 0.1;
+                    var gotten = d.DamageValue.Sum() * EnergyRestore;
                     d.HeroValue.AddEnergy(gotten);
                     return f(d);
                 },

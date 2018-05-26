@@ -28,20 +28,20 @@ namespace MiniXauonre.Core.Heroes
         public Skill Rock { get; set; }
         public const double RockRange = 12;
         public const double RockDamage = 50;
-        public const double RockDamageAPscale = .5;
+        public const double RockDamageAPscale = .4;
         public const double RockDamageRadius = 3;
-        public const double RockEnergyCost = 20;
+        public const double RockEnergyCost = 40;
         public const double RockCooldown = 2;
-        public const double RockSustain = 10;
+        public const double RockSustain = 6;
         public Skill EarthPower { get; set; }
         public const double EarthRange = 12;
         public const double EarthRangeReq = 35;
         public const double EarthDamage = 100;
         public const double EarthDamageAPscale = .5;
         public const double EarthRockDamage = 50;
-        public const double EarthRockDamageAPscale = .5;
+        public const double EarthRockDamageAPscale = .4;
         public const double EarthEnergyCost = 150;
-        public const double EarthCooldown = 10;
+        public const double EarthCooldown = 8;
 
         private List<Tuple<Point, Effect>> PlacedRocks { get; set; }
 

@@ -48,6 +48,7 @@ namespace MiniXauonre.Core.Shops
             new NanoArmor(),
             new Leach(),
             new AgedYeast(),
+            new Simplex(),
             
             new TimeMachine(),
             new Items.Buffer(),
@@ -55,6 +56,7 @@ namespace MiniXauonre.Core.Shops
             new Minigun(),
             new InfinityEdge(),
             new EntientYeast(),
+            new Tesseract(),
         };
 
 

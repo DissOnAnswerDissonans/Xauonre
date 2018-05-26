@@ -27,22 +27,22 @@ namespace MiniXauonre.Core.Heroes
     class Geneva : HeroWithBaseSkills
     {
         public const double BeamHeal = 100;
-        public const double BeamHealApScale = 0.8;
+        public const double BeamHealApScale = 1;
         public const double BeamRadius = 20;
         public const double BeamRegen = 20;
-        public const double BeamRegenApScale = 0.4;
-        public const double BeamCD = 10;
+        public const double BeamRegenApScale = 0.6;
+        public const double BeamCD = 7;
         public const double BeamCost = 200;
         public Skill Beam { get; protected set; }
         public Perk BeamPerk { get; protected set; }
 
-        public const double ImpulseDamage = 50;
+        public const double ImpulseDamage = 75;
         public const double ImpulseApScale = 0.3;
         public const double ImpulseSlow = 0.3;
-        public const double ImpulseSlowTime = 2;
+        public const double ImpulseSlowTime = 1;
         public const double ImpulseRadius = 5;
         public const double ImpulseRange = 20;
-        public const double ImpulseCD = 6;
+        public const double ImpulseCD = 5;
         public const double ImpulseCost = 60;
         public Skill Impulse { get; protected set; }
 
@@ -52,6 +52,7 @@ namespace MiniXauonre.Core.Heroes
         public Geneva()
         {
             Name = "Geneva";
+            Image = Graphics.resources.Res.Geneva;
             SetMaxHp(1100);
             SetMaxEnergy(300);
             SetMovementSpeed(8);

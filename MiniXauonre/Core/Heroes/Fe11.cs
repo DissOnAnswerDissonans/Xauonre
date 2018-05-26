@@ -20,6 +20,7 @@ namespace MiniXauonre.Core.Heroes
 
         public Skill Wall { get; set; }
         public Perk Rage { get; set; }
+        public Effect WallControl { get; set; }
 
         private int Stacks { get; set; }
         private int Calm { get; set; }
@@ -90,7 +91,10 @@ namespace MiniXauonre.Core.Heroes
                     if (WallOn)
                     {
                         if (h.GetEnergy() < WallManaPerTurnCost)
-                            DestroyWall(h.M);
+                        {
+                            WallControl.Disactivate(h);
+                            h.M.Effects.Remove(WallControl);
+                        }
                         else
                             h.AddEnergy(-WallManaPerTurnCost);
                     }
@@ -110,6 +114,17 @@ namespace MiniXauonre.Core.Heroes
             BuffedAttack.SkillTypes.Add(SkillType.Attack);
             Skills.Add(BuffedAttack);
 
+            WallControl = new Effect(this, int.MaxValue)
+            {
+                Activate = (h) =>
+                {
+                    (h as Fe11).BuildWall(h.M); 
+                },
+                Disactivate = (h) =>
+                {
+                    (h as Fe11).DestroyWall(h.M);
+                },
+            };
 
             Wall = new Skill
             {
@@ -120,16 +135,23 @@ namespace MiniXauonre.Core.Heroes
                 Job = (h) =>
                 {
                     if (WallOn)
-                        DestroyWall(M);
+                    {
+                        WallControl.Disactivate(h);
+                        h.M.Effects.Remove(WallControl);
+                    }
                     else
-                        BuildWall(M);
+                    {
+                        h.M.Effects.Add(WallControl);
+                        WallControl.Activate(h);
+                    }
+
                     return WallOn;
                 },
             };
             Wall.SkillTypes.Add(SkillType.Special);
             Skills.Add(Wall);
+            
         }
-
 
         public void BuildWall(Map m)
         {
@@ -143,10 +165,11 @@ namespace MiniXauonre.Core.Heroes
 
         public void DestroyWall(Map m)
         {
-            WallOn = false;
+            if (!WallOn) return;
             foreach (var wall in PlacedWalls)
                 m.MapTiles[wall.X, wall.Y].Type = TileType.Empty;
             PlacedWalls = new List<Point>();
+            WallOn = false;
         }
 
 

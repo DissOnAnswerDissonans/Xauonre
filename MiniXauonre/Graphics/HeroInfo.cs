@@ -25,7 +25,7 @@ namespace MiniXauonre.Graphics
 
         private readonly Size panelSize = new Size(iconSize.Width*4, iconSize.Height);
         
-        private readonly Font textFont = new Font(FontFamily.GenericSansSerif, 20);
+        private readonly Font textFont = new Font(FontFamily.GenericSansSerif, 24);
  
         public HeroInfo(Hero h)
         {

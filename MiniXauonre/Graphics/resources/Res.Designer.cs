@@ -213,6 +213,16 @@ namespace MiniXauonre.Graphics.resources {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Geneva {
+            get {
+                object obj = ResourceManager.GetObject("Geneva", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Health {
             get {
                 object obj = ResourceManager.GetObject("Health", resourceCulture);
@@ -256,6 +266,16 @@ namespace MiniXauonre.Graphics.resources {
         internal static System.Drawing.Bitmap Kerri {
             get {
                 object obj = ResourceManager.GetObject("Kerri", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Micro {
+            get {
+                object obj = ResourceManager.GetObject("Micro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

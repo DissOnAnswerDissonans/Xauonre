@@ -9,7 +9,7 @@ namespace MiniXauonre.Core.Items
     class MagicWand : Item
     {
 
-        public const double SpellResist = 0.05;
+        public const double SpellResist = 0.1;
         public MagicWand()
         {
             Name = "Magic Wand";

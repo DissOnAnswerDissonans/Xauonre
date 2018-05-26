@@ -9,12 +9,12 @@ namespace MiniXauonre.Core.Heroes
     class Sniper : HeroWithBaseSkills
     {
         public Skill Snipe { get; set; }
-        public const double SnipeRange = 30;
+        public const double SnipeRange = 25;
         public const double SnipeDamage = 50;
-        public const double SnipeApScale = 1;
+        public const double SnipeApScale = 1.25;
         public const double SnipeCooldown = 5;
         public const double SnipeEnergyCost = 100;
-        public const int SnipeRootTime = 2;
+        public const int SnipeRootTime = 1;
         public Perk RootPerk { get; protected set; }
 
         public Sniper()
@@ -25,10 +25,11 @@ namespace MiniXauonre.Core.Heroes
             SetMaxHp(800);
             SetAttackDamage(60);
             SetAbilityPower(20);
-            SetAttackRange(14);
+            SetAttackRange(13);
             SetRegen(7);
             SetMaxEnergy(200);
             SetEnergyRegen(10);
+            SetMovementSpeed(9);
 
             Snipe = new Skill
             {
