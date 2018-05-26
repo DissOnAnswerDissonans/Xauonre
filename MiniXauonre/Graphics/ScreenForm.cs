@@ -42,12 +42,13 @@ namespace MiniXauonre.Graphics
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            
             DoubleBuffered = true;
-            WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Maximized;      
         }
 
         public ScreenForm(Game game)
-        {
+        {         
             MPainter = new MapPainter(game.Maze, this);
             Game = game;
 
@@ -121,7 +122,7 @@ namespace MiniXauonre.Graphics
                 SkillPanel = new HeroSkillPanel(Game, Game.CurrentHero, this, ControlPanel.Width);
                 ShopPanel = new ShopPanel(Game.CurrentHero, this,
                     //new Rectangle(ClientSize.Width / 4, ClientSize.Height / 4, ClientSize.Width / 2, ClientSize.Height / 2));
-                    new Rectangle(ClientSize.Width / 2 - 520, ClientSize.Height / 2 - 300, 1040, 600));
+                    new Rectangle(ClientSize.Width / 2 - 480, ClientSize.Height / 2 - 300, 960, 600));
             }; 
         }
 
@@ -205,7 +206,7 @@ namespace MiniXauonre.Graphics
             StatPanel.Controls.Clear();
             var button = new Button()
             {
-                Width = 256 + 28,
+                Width = 256,
                 Height = 64,
                 Text = "END TURN",
                 Font = new Font(FontFamily.GenericSerif, 32),
@@ -246,10 +247,13 @@ namespace MiniXauonre.Graphics
             StatPanel.Controls.Add(button);
             
             if (Game.ChosenHero != null)
-            { 
-                var h = new HeroInfo(Game.ChosenHero);
-                
+            {
+                var h = new HeroInfo(Game.ChosenHero)
+                {
+                    Width = StatPanel.Width - 6,
+                };
                 StatPanel.Controls.Add(h);
+
                 StatPanel.Controls.Add(new Label
                 {
                     BackColor = Color.Black,

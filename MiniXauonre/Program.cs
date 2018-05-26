@@ -16,7 +16,8 @@ namespace MiniXauonre
     {
         static void Main(string[] args)
         {
-            
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             var game = new Game(new GameRules());
        

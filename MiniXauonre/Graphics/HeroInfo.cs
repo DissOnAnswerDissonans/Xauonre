@@ -25,7 +25,7 @@ namespace MiniXauonre.Graphics
 
         private readonly Size panelSize = new Size(iconSize.Width*4, iconSize.Height);
         
-        private readonly Font textFont = new Font(FontFamily.GenericSansSerif, 24);
+        private readonly Font textFont = new Font(FontFamily.GenericSansSerif, 20);
  
         public HeroInfo(Hero h)
         {
@@ -35,6 +35,8 @@ namespace MiniXauonre.Graphics
             ColumnCount = 2;
             Hero = h;
             AutoSize = true;
+            MinimumSize = new Size(256, 0);
+            MaximumSize = new Size(256, 1000);
             var counter = 0;
             foreach (var stat in h.GetAllStats())
             {
@@ -46,7 +48,7 @@ namespace MiniXauonre.Graphics
                     Dock = DockStyle.Fill,
                     Text = (((int)(stat.Value * 10)) / 10f).ToString(),
                     Font = textFont,
-                    TextAlign = (stat.Key == "HP" || stat.Key == "E") ? 
+                    TextAlign = (stat.Key == "HP" || stat.Key == "E") ?
                         ContentAlignment.MiddleRight : ContentAlignment.MiddleCenter,
                 });
                 panel.Controls.Add(new PictureBox

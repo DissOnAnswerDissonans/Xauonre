@@ -17,7 +17,8 @@ namespace MiniXauonre.Graphics
 {
     class ShopPanel : Panel
     {
-        private TableLayoutPanel ItemChoosingPanel { get; set; }    
+        private TableLayoutPanel OptionsPanel { get; set; }
+        private FlowLayoutPanel ItemChoosingPanel { get; set; }    
         private FlowLayoutPanel InfoPanel { get; set; }   
         private FlowLayoutPanel ExplanationPanel { get; set; }
         private TableLayoutPanel RecipePanel { get; set; }
@@ -28,6 +29,10 @@ namespace MiniXauonre.Graphics
         private Item ChosenItem { get; set; }
 
         private const double CritHeight = 48;
+        
+        private int OptionsWidth { get; set; }
+        private int ChoosingWidth { get; set; }
+        private int InfoWidth { get; set; }
 
         public ShopPanel(Hero hero, ScreenForm form, Rectangle borders)
         {
@@ -44,12 +49,7 @@ namespace MiniXauonre.Graphics
                 RowCount = (TotalItems + cc - 1) / cc,
                 ColumnCount = cc,
             };
-            ItemChoosingPanel.Size = new Size(Width * 2 / 3, Height);
-            for (int i = 0; i < ItemChoosingPanel.RowCount; i++)
-                ItemChoosingPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / (ItemChoosingPanel.RowCount)));
-            for (int i = 0; i < ItemChoosingPanel.ColumnCount; i++)
-                ItemChoosingPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / ItemChoosingPanel.ColumnCount));
-                       
+            ItemChoosingPanel.Size = new Size(Width * 1 / 3, Height);                      
             
             for (int i = 0; i < Shop.Items.Count; ++i)
             {

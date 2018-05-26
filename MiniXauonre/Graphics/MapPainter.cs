@@ -96,7 +96,7 @@ namespace MiniXauonre.Graphics
                         default:
                             tileImage = Loader.NullTile[0]; break;
                     }
-                    g.DrawImageUnscaled(tileImage, new System.Drawing.Point(x * ModifiedTS.Width, y * ModifiedTS.Height));           
+                    g.DrawImage(tileImage, new Rectangle(x * ModifiedTS.Width, y * ModifiedTS.Height, ModifiedTS.Width, ModifiedTS.Height));      
                 }
             }
         }

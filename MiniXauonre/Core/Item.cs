@@ -14,6 +14,7 @@ namespace MiniXauonre.Core
         public Func<string> Explanation { get; protected set; }
         public double Cost { get; protected set; }
         public List<Item> Parts { get; protected set; }
+        public int Tier { get; protected set; }
 
 
         public double HP { get; protected set; }
@@ -29,25 +30,42 @@ namespace MiniXauonre.Core
         public double CDR { get; protected set; }
 
 
+        public Dictionary<StatType, double> Stats { get; private set; }
+
+
         public Item()
         {
             Name = "None";
             Explanation = () => "None";
             Effect = new Perk() { };
             Cost = 0;
+            Tier = 0;
             Parts = new List<Item>();
+            Stats = new Dictionary<StatType, double>();
 
-            HP = 0;
-            E = 0;
-            AD = 0;
-            AP = 0;
-            R = 0;
-            A = 0;
-            HR = 0;
-            ER = 0;
-            MS = 0;
-            AS = 0;
+            HP  = 0;
+            E   = 0;
+            AD  = 0;
+            AP  = 0;
+            R   = 0;
+            A   = 0;
+            HR  = 0;
+            ER  = 0;
+            MS  = 0;
+            AS  = 0;
             CDR = 0;
+
+            if (HP  != 0) Stats.Add(StatType.MaxHP, HP );
+            if (E   != 0) Stats.Add(StatType.MaxEnergy, E  );
+            if (AD  != 0) Stats.Add(StatType.AttackDamage, AD );
+            if (AP  != 0) Stats.Add(StatType.AbilityPower, AP );
+            if (R   != 0) Stats.Add(StatType.Resist, R  );           
+            if (A   != 0) Stats.Add(StatType.Armor, A  );
+            if (HR  != 0) Stats.Add(StatType.Regen, HR );
+            if (ER  != 0) Stats.Add(StatType.EnergyRegen, ER );
+            if (MS  != 0) Stats.Add(StatType.MovementSpeed, MS );
+            if (AS  != 0) Stats.Add(StatType.AttackSpeed, AS );
+            if (CDR != 0) Stats.Add(StatType.CooldownReduction, CDR);
         }
 
 

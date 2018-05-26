@@ -35,7 +35,7 @@ namespace MiniXauonre.Controller
             HeroesPerPlayer = 5;
             PlayersNumber = 2;
             GameMap = MapLoader.FromText(Graphics.resources.Res.SimpleMap);
-            //GameMap = new Map(5, 6);
+            GameMap = new Map(5, 6);
             StartMoney = 100;
             LevelUpMoney = 200;
             GameShop = new BasicShop();
