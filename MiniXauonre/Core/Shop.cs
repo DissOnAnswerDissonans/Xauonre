@@ -30,6 +30,9 @@ namespace MiniXauonre.Core
 
         public List<Item> GetItemsWithStat(StatType stat) => Items.Where(i => i.Stats.ContainsKey(stat))
             .OrderBy(i => Tuple.Create(i.Tier, i.Cost)).ToList();
+        
+        public List<Item> GetItemsWithSortedStat(StatType stat) => Items.Where(i => i.Stats.ContainsKey(stat))
+            .OrderBy(i => Tuple.Create(i.Tier, -i.Stats[stat])).ToList();
 
         public List<Item> GetItemsWithTier(int tier) => Items.Where(i => i.Tier == tier).OrderBy(i => i.Cost).ToList();
     }

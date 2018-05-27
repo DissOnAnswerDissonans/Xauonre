@@ -22,6 +22,8 @@ namespace MiniXauonre.Core
         //public Func<Func<int>, HeroStats, Func<int>> OverGet;
         //public Func<Func<int>, HeroStats, Func<int>> OverSet;
 
+        public string Name { get; set; }
+        public Func<Hero, string> Explanation { get; set; }
 
         //Stats
         public Getter GetMaxHp { get; set; }
@@ -79,7 +81,10 @@ namespace MiniXauonre.Core
 
         public UseSkill SkillFix { get;  set; }
 
-        public Perk() {
+        public Perk()
+        {
+            Name = "Perk";
+            Explanation = (h) => ""; 
             baseGetter = (g) => g;
             baseSetter = (s) => s;
             //Stats

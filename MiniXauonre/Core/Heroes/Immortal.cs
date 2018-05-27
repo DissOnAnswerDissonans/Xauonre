@@ -38,6 +38,9 @@ namespace MiniXauonre.Core.Heroes
 
             Shield = new Perk
             {
+                Name = "Shield",
+                Explanation = (h) => "When taking damage up to " + ShieldMaxDamage + " of it goes in to HP, others goes energy;" + 
+                " And in end of turn restore " + ShieldEnergyRegen*100 + "% of lost energy",
                 GetDamage = (a) => (d) =>
                 {
                     var h = d.HeroValue;
@@ -82,6 +85,10 @@ namespace MiniXauonre.Core.Heroes
 
             Reflection = new Perk
             {
+                Name = "Reflection",
+                Explanation = (h) => "Everybody who attacks you or stay within " + StormRange + 
+                   " radius at the end of your turn gets" + 
+                      (StormMaxEnergyScale * h.GetMaxEnergy() + StormAPScale * h.GetAbilityPower()) + " spell damage",
                 GetDamage = (a) => (d) =>
                 {
                     var h = d.HeroValue;

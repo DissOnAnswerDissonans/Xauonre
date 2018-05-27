@@ -88,6 +88,11 @@ namespace MiniXauonre.Graphics
                     TextAlign = ContentAlignment.MiddleCenter,
                 };
 
+                loabel.Click += (sender, args) =>
+                {
+                    ParentForm.OpenShop(item);
+                };
+
                 loabel.DoubleClick += (sender, args) =>
                 {
                     var dialogResult = MessageBox.Show(

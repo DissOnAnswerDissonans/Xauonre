@@ -38,6 +38,8 @@ namespace MiniXauonre.Graphics
         
         private CurrentHeroPanel HeroPanel { get; set; }
         
+        private FlowLayoutPanel EffectsPanel { get; set; }
+        
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -72,6 +74,14 @@ namespace MiniXauonre.Graphics
                 BackColor = Color.MidnightBlue,
                 FlowDirection = FlowDirection.TopDown,
             };
+            
+            EffectsPanel = new FlowLayoutPanel()
+            {
+                Location = new System.Drawing.Point(256 + 16, ClientSize.Height - (32 + 16)),
+                AutoSize = true,
+                FlowDirection = FlowDirection.BottomUp,
+            };
+            
 
             var topPanel = new TableLayoutPanel
             {
@@ -163,6 +173,7 @@ namespace MiniXauonre.Graphics
             {
                 Game.ChosenHero = Game.CurrentHero;
                 StatPanelUpdate();
+                ControlPanelUpdate();
                 Controls.Add(ShopPanel);
                 ShopPanel.BringToFront();
             };
@@ -180,7 +191,7 @@ namespace MiniXauonre.Graphics
             });
   
             ControlPanel.Controls.Add(panel);
-            panel.Controls.Add(b);
+            if (Game.ChosenHero == Game.CurrentHero || Game.ChosenHero == null) panel.Controls.Add(b);
 
             if (Game.ChosenHero != null)
             {
@@ -286,6 +297,15 @@ namespace MiniXauonre.Graphics
             Game.ChosenHero = Game.CurrentHero;
             Application.DoEvents();           
             return point;
+        }
+
+        public void OpenShop(Item i)
+        {
+            ShopPanel.ChosenItem = i;
+            Controls.Add(ShopPanel);
+            ShopPanel.BringToFront();
+            ShopPanel.UpdateInfo();
+            Invalidate();
         }
         
         /*

@@ -32,6 +32,12 @@ namespace MiniXauonre.Core.Heroes
 
             Burn = new Perk
             {
+                Name = "Martyr",
+                Explanation = (h) => 
+                    "Dealing " + HpScale * 100 + "% you current Hp + " + APScale + "%AP ("+
+                    + (h.GetHp() * HpScale + h.GetAbilityPower() * APScale)
+                    + ") magic damage to you and your enemies within " + AoeRange
+                    + " units around you at the end of every your turn. (You can die)",
                 EndTurn = (v) => (d) =>
                 {
                     var h = d.HeroValue;
@@ -48,7 +54,6 @@ namespace MiniXauonre.Core.Heroes
                     return d;
                 } 
             };
-            Perks.Add(Burn);
 
             Martyr = new Skill
             {
@@ -62,6 +67,10 @@ namespace MiniXauonre.Core.Heroes
                 Job = (h) =>
                 {
                     Burning = !Burning;
+                    if (Burning)
+                        h.Perks.Add(Burn);
+                    else
+                        h.Perks.Remove(Burn);
                     return true;
                 }
             };

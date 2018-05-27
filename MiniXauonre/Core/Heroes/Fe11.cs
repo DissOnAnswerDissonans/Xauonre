@@ -45,6 +45,10 @@ namespace MiniXauonre.Core.Heroes
 
             Rage = new Perk
             {
+                Name = "Rage",
+                Explanation = (h) => "AD increased by " + RageADBuff*Stacks + " and armor by " 
+                     + RageArmorBuff*Stacks + " for " + Calm + " turns.",
+                
                 GetArmor = (g) => () => g() + Stacks * RageArmorBuff,
                 SetArmor = (s) => (v) => s(v - Stacks * RageArmorBuff),
                 GetAttackDamage = (g) => () => g() + Stacks * RageADBuff,

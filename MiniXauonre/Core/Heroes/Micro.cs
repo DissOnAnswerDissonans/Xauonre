@@ -44,6 +44,12 @@ namespace MiniXauonre.Core.Heroes
 
             Defence = new Perk
             {
+                Name = "Defence",
+                Explanation = (h) => "Gets " + (DefenceADScale * 100) + "% AD (" + DefenceADScale * h.GetAttackDamage() 
+                   +") armor and resist from every enemy in " + DefenceRadius + "units (" 
+                        + (h as Micro).GetEnemiesInRange(h, DefenceRadius).Count + " enemies), total " 
+                           + (h.GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count),
+  
                 GetArmor = (g) => () => 
                     g() + GetAttackDamage() * DefenceADScale * GetEnemiesInRange(this, DefenceRadius).Count,
                 SetArmor = (s) => (v) => 

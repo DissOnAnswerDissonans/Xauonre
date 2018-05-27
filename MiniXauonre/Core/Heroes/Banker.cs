@@ -59,6 +59,11 @@ MS = 10*/
 
             InterestRate = new Perk
             {
+                Name = "Interest Rate",
+                Explanation = (h) => "When level up, gives all allies " + InterestRateHpBuffAPScale*100 + "% AP (" + 
+                h.GetAbilityPower()*InterestRateHpBuffAPScale + ") HP; At the end of turn, heals allies in " +
+                InterestRateHealRange + " range for " + InteresRateHeal*100 + " + " + InterestRateHealAPScale*100 +
+                "% AP (" + (InteresRateHeal + InterestRateHealAPScale * h.GetAbilityPower()) + ")% target's lost HP",
                 LevelUp = (a) => (d) =>
                 {
                     var h = d.HeroValue;

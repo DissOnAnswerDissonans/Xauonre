@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MiniXauonre.Controller;
 using MiniXauonre.Core;
 using MiniXauonre.Core.Heroes;
+using MiniXauonre.Graphics.resources;
 
 namespace MiniXauonre.Graphics
 {
@@ -27,7 +28,7 @@ namespace MiniXauonre.Graphics
         
         private Shop Shop { get; set; } 
         private Hero Customer { get; set; }
-        private Item ChosenItem { get; set; }
+        public Item ChosenItem { get; set; }
         
         private List<Item> Items { get; set; }
 
@@ -53,7 +54,7 @@ namespace MiniXauonre.Graphics
             OptionsPanel = new TableLayoutPanel()
             {
                 Location = new Point(0, 0),
-                BackColor = Color.Aqua,
+                BackColor = Color.Black,
             };
             OptionsPanel.Size = new Size(GetOptionsWidth(), Height);
             OptionsPanel.RowCount = 8;
@@ -67,7 +68,9 @@ namespace MiniXauonre.Graphics
                     Size = new Size(GetOptionsWidth() / OptionsPanel.ColumnCount, Height / OptionsPanel.RowCount),
                     Margin = new Padding(0),
                     Padding = new Padding(0),
-                    Text = "T" + (tier).ToString()
+                    Text = "T" + (tier).ToString(),
+                    Font = new Font(FontFamily.GenericSansSerif, 36),
+                    ForeColor = Colors.ItemTierColors[tier]
                 };
                 b.Click += (sender, args) =>
                 {
@@ -85,11 +88,12 @@ namespace MiniXauonre.Graphics
                     Size = new Size(GetOptionsWidth() / OptionsPanel.ColumnCount, Height / OptionsPanel.RowCount),
                     Margin = new Padding(0),
                     Padding = new Padding(0),
-                    Text = "+" + ((StatType)stat).ToString()
+                    //Text = "+" + ((StatType)stat).ToString(),
+                    Image = IconLoader.GetIcon((StatType)r, new Size(64, 64)),
                 };
                 b.Click += (sender, args) =>
                 {
-                    Items = Shop.GetItemsWithStat((StatType)stat);
+                    Items = Shop.GetItemsWithSortedStat((StatType)stat);
                     UpdateItems();
                 };
                 OptionsPanel.Controls.Add(b);
@@ -100,14 +104,13 @@ namespace MiniXauonre.Graphics
                 Location = new Point(GetOptionsWidth(), 0),
                 FlowDirection = FlowDirection.LeftToRight,
                 AutoScroll = true,
-                AutoScrollOffset = new Point(-128,0)
             };
             ItemChoosingPanel.Size = new Size(GetChoosingWidth(), Height);                      
             
             InfoPanel = new FlowLayoutPanel()
             {
                 Location = new Point(GetOptionsWidth() + GetChoosingWidth(), 0),
-                BackColor = Color.Black,
+                BackColor = Color.Black
             }; 
             InfoPanel.Size = new Size(GetInfoWidth(), Height - 128);  
 
@@ -133,7 +136,7 @@ namespace MiniXauonre.Graphics
             RecipePanel.Size = new Size(GetInfoWidth() / 2, 64);
             
             UpgradePanel = new TableLayoutPanel(){RowStyles = { new RowStyle(SizeType.AutoSize)}};
-            UpgradePanel.Size = new Size(GetInfoWidth() / 3, 64);
+            UpgradePanel.Size = new Size(GetInfoWidth() / 2, 64);
 
             Controls.Add(OptionsPanel);
             Controls.Add(ItemChoosingPanel);
@@ -154,7 +157,7 @@ namespace MiniXauonre.Graphics
             */
         }
 
-        private void UpdateItems()
+        public void UpdateItems()
         {
             ItemChoosingPanel.Controls.Clear();
             var heightExceeded = (Height / CritHeight < Items.Count);
@@ -164,6 +167,7 @@ namespace MiniXauonre.Graphics
                 {
                     Text = shopItem.Name,
                     Font = new Font(FontFamily.GenericSansSerif, 24),
+                    BackColor = Colors.ItemTierColors[shopItem.Tier],
                     Margin = new Padding(0),
                     Padding = new Padding(0),
                     Size = heightExceeded ? 
@@ -178,7 +182,7 @@ namespace MiniXauonre.Graphics
             } 
         }
 
-        private void UpdateInfo()
+        public void UpdateInfo()
         {
               
             InfoPanel.Controls.Clear();
@@ -229,20 +233,27 @@ namespace MiniXauonre.Graphics
             var itemExp = ChosenItem.GetExplanation();  
             ExplanationPanel.Controls.Clear();
             var icons = resources.IconLoader.GetIcons(new Size(32, 32));
-            foreach (var item in itemExp)
+            foreach (var item in itemExp)   
             {
-                ExplanationPanel.Controls.Add(new PictureBox()
+                var micropanel = new Panel()
+                {
+                    AutoSize = true,
+                };
+                
+                micropanel.Controls.Add(new PictureBox()
                 {
                     Image = icons[item.Key],
                     Size = new Size(32, 32)
                 });
-                ExplanationPanel.Controls.Add(new Label()
+                micropanel.Controls.Add(new Label()
                 {
+                    Location = new Point(32,0),
                     Text = item.Value.ToString(),
                     ForeColor = Color.White,
                     Font = new Font(FontFamily.GenericSansSerif, 24),
                     AutoSize = true,
                 });
+                ExplanationPanel.Controls.Add(micropanel);
             }
             
             RecipePanel.Controls.Clear();
@@ -258,9 +269,9 @@ namespace MiniXauonre.Graphics
                     Text = "+ " + part.Name,
                     BackColor = Color.Azure,
                     ForeColor = Color.Black,
-                    Size = new Size(RecipePanel.Width, 44),
+                    Size = new Size(RecipePanel.Width - 6, 44),
                     TextAlign = ContentAlignment.MiddleLeft,
-                    Margin = new Padding(2, 2, 2, 2)
+                    Margin = new Padding(0, 2, 6, 2)
                 };
                 
                 b.Click += (sender, args) =>
@@ -290,9 +301,9 @@ namespace MiniXauonre.Graphics
                     Text = "> " + part.Name,
                     BackColor = Color.Azure,
                     ForeColor = Color.Black,
-                    Size = new Size(UpgradePanel.Width, 44),
+                    Size = new Size(UpgradePanel.Width - 6, 44),
                     TextAlign = ContentAlignment.MiddleRight,
-                    Margin = new Padding(2, 2, 2, 2)
+                    Margin = new Padding(0, 2, 6, 2)
                 };
 
                 b.Click += (sender, args) =>
