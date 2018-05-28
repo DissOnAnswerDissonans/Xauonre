@@ -9,12 +9,12 @@ namespace MiniXauonre.Core.Items
     class Buffer : Item
     {
         public const double EnergyRestore = 0.1;
-        public const double HealScale = 0.3;
+        public const double HealScale = 0.4;
         public const double HealRange = 9;
         public Buffer()
         {
             Name = "Buffer";
-            Cost = 1750;
+            Cost = 1700;
             Tier = 3;
             E = 750;
             HP = 550;

@@ -9,7 +9,7 @@ namespace MiniXauonre.Core.Items
 {
     class Bablonomicon : Item
     {
-        public const double ExpAPScale = 0.2;
+        public const double ExpAPScale = 0.4;
 
         public Bablonomicon()
         {

@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Heroes
         public Skill Cutter { get; set; }
         public Perk Growth { get; set; }
 
-        public const double GrowthADPercentBuff = 0.12;
+        public const double GrowthADPercentBuff = 0.06;
         public const double GrowthMSBuff = 0.4;
         public const double CutterDamage = 50;
         public const double CutterADScale = 1.2;
@@ -25,7 +25,7 @@ namespace MiniXauonre.Core.Heroes
             SetMaxHp(900);
             SetAttackDamage(40);
             SetAttackSpeed(2);
-            SetMovementSpeed(12);
+            SetMovementSpeed(11);
 
             Growth = new Perk
             {

@@ -33,13 +33,13 @@ MS = 10*/
         public Perk InterestRate { get; set; }
 
         public const double InvestmentMoney = 10;
-        public const double InvestmentAPScale = 0.3;
+        public const double InvestmentAPScale = 0.4;
         public const double InvestmentCD = 5;
         public const double InvestmentCost = 100;
         public Skill Investment { get; set; }
 
         public const double ExchangeHP = 0.1;
-        public const double ExchangeAPScale = 0.001;
+        public const double ExchangeAPScale = 0.002;
         public const double ExchangeCD = 7;
         public const double ExchangeCost = 200;
         public const double ExchangeExpCoeff = 1.5;

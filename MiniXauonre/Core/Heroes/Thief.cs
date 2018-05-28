@@ -9,9 +9,9 @@ namespace MiniXauonre.Core.Heroes
     class Thief : HeroWithBaseSkills
     {
         private Skill BuffedAttack { get; set; }
-        public const double Steal = 2;
-        public const double ADScale = 0.05;
-        public const double APScale = 0.05;
+        public const double Steal = 5;
+        public const double ADScale = 0.1;
+        public const double APScale = 0.2;
         public Thief()
         {
             Name = "Thief";

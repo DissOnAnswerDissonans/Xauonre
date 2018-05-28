@@ -16,8 +16,8 @@ namespace MiniXauonre.Core.Heroes
         public const int StormDuration = 2;
         public const double StormRange = 7;
         public const double StormMaxEnergyScale = 0.1;
-        public const double StormAPScale = 0.25;
-        public const double StormCost = 0.2;
+        public const double StormAPScale = 0.5;
+        public const double StormCost = 0.3;
         public const double StormCD = 6;
         public Skill Storm { get; set; }
         public Perk Reflection { get; set; }

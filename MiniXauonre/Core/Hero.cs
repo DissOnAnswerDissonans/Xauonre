@@ -226,7 +226,13 @@ namespace MiniXauonre.Core.Heroes
 
         public double GetMaxEnergy() => GetWithPerks(Chars.MaxEnergy);
         public void SetMaxEnergy(double v) => SetWithPerks(Chars.MaxEnergy, v);
-        public void AddMaxEnergy(double v) { SetMaxEnergy(GetMaxEnergy() + v); AddEnergy(Math.Max(0, v)); }
+        public void AddMaxEnergy(double v)
+        {
+            SetMaxEnergy(GetMaxEnergy() + v);
+            AddEnergy(Math.Max(0, v));
+            if(GetMaxEnergy() < GetEnergy())
+                SetEnergy(GetMaxEnergy());
+        }
 
         public double GetEnergyRegen() => GetWithPerks(Chars.EnergyRegen);
         public void SetEnergyRegen(double v) => SetWithPerks(Chars.EnergyRegen, v);

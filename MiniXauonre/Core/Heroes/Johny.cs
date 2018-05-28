@@ -11,8 +11,8 @@ namespace MiniXauonre.Core.Heroes
     {
         public Skill Boom { get; set; }
         public const double BoomJumpRange = 9;
-        public const double BoomBombRange = 5;
-        public const double BoomCooldown = 6;
+        public const double BoomBombRange = 6;
+        public const double BoomCooldown = 5;
         public const double BoomEnergyCost = 150;
         public const double BoomDamage = 100;
         public const double BoomDamageAPScale = 1.5;

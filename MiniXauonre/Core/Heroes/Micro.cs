@@ -39,7 +39,7 @@ namespace MiniXauonre.Core.Heroes
             SetMaxHp(1300);
             SetMaxEnergy(200);
             SetEnergyRegen(10);
-            SetMovementSpeed(13);
+            SetMovementSpeed(12);
             SetRegen(15);
 
             Defence = new Perk
