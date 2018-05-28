@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public Yeast()
         {
             Name = "Yeast";
-            Cost = 80;
+            Cost = 70;
             Tier = 0;
             HP = 25;
             E = 37.5;
