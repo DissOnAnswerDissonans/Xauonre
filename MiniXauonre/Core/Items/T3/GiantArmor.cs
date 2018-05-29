@@ -23,6 +23,8 @@ namespace MiniXauonre.Core.Items
             Explanation = (h) => "Each time you get damage - Reduce CD of your skills by " + CDRed;
             Effect = new Perk
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 GetDamage = (f) => (d) =>
                 {
                     foreach (var skill in d.HeroValue.Skills) skill.Tick(CDRed);

@@ -9,7 +9,7 @@ namespace MiniXauonre.Core.Items
     class MagicWand : Item
     {
 
-        public const double SpellResist = 0.1;
+        public const double SpellResist = 0.25;
         public MagicWand()
         {
             Name = "Magic Wand";
@@ -32,6 +32,8 @@ namespace MiniXauonre.Core.Items
             
             Effect = new Perk
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 GetDamage = (f) => (d) =>
                 {
                     d.DamageValue.Magic *= 0.95;

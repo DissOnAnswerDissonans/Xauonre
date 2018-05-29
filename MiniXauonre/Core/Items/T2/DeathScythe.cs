@@ -15,7 +15,7 @@ namespace MiniXauonre.Core.Items
     class DeathScythe : Item
     {
         private Skill FixedAttack { get; set; }
-        public const double APScale = 0.5;
+        public const double APScale = 1;
         public const int DamageDelay = 2;
 
         public DeathScythe()
@@ -32,6 +32,8 @@ namespace MiniXauonre.Core.Items
 
             Effect = new Perk()
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 SkillFix = (s) =>
                 {
                     if (!s.SkillTypes.Contains(SkillType.Attack))

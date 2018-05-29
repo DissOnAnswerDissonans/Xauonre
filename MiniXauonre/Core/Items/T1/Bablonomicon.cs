@@ -25,6 +25,8 @@ namespace MiniXauonre.Core.Items
 
             Effect = new Perk
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 EndTurn = (a) => (d) =>
                 {
                     var at = new Damage(d.HeroValue, d.HeroValue.P, pure: d.HeroValue.GetAbilityPower() * ExpAPScale);

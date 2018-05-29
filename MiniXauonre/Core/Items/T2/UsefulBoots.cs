@@ -26,11 +26,13 @@ namespace MiniXauonre.Core.Items
             + ExpDamageReductionScale*100+ "% of it as EXP";
             Effect = new Perk
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 GetDamage = (f) => (d) =>
                 {
                     var k = d.DamageValue.Phys * PhysDamageReduction;
                     d.DamageValue.Phys -= k;
-                    var at = new Damage(d.HeroValue, d.HeroValue.P, pure: k);
+                    var at = new Damage(d.HeroValue, d.HeroValue.P, pure: k*ExpDamageReductionScale);
                     var target = new Hero();
                     target.GetDamage(at);
                     return f(d);
