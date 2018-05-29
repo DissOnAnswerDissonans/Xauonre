@@ -38,7 +38,7 @@ namespace MiniXauonre.Graphics
         
         private CurrentHeroPanel HeroPanel { get; set; }
         
-        private FlowLayoutPanel EffectsPanel { get; set; }
+        private FlowLayoutPanel PerksPanel { get; set; }
         
         protected override void OnLoad(EventArgs e)
         {
@@ -75,14 +75,16 @@ namespace MiniXauonre.Graphics
                 FlowDirection = FlowDirection.TopDown,
             };
             
-            EffectsPanel = new FlowLayoutPanel()
+            PerksPanel = new FlowLayoutPanel()
             {
-                Location = new System.Drawing.Point(256 + 16, ClientSize.Height - (32 + 16)),
+                Location = new System.Drawing.Point(ClientSize.Width - (256 + 128), ClientSize.Height - (64 + 16)),
+                Anchor = (AnchorStyles.Right | AnchorStyles.Bottom),
+                Size = new Size(0, 64),
                 AutoSize = true,
-                FlowDirection = FlowDirection.BottomUp,
+                FlowDirection = FlowDirection.RightToLeft,
+                BackColor = Color.OrangeRed,
             };
             
-
             var topPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -106,6 +108,7 @@ namespace MiniXauonre.Graphics
             Controls.Add(HeroPanel);
             Controls.Add(ControlPanel);   
             Controls.Add(StatPanel);
+            Controls.Add(PerksPanel);
             Controls.Add(View);
             Controls.Add(topPanel);
             
@@ -214,6 +217,7 @@ namespace MiniXauonre.Graphics
         public void StatPanelUpdate()
         {
             StatPanel.Controls.Clear();
+            PerksPanel.Controls.Clear();
             var button = new Button()
             {
                 Width = 256,
@@ -275,8 +279,23 @@ namespace MiniXauonre.Graphics
                     Height = 32,
                     TextAlign = ContentAlignment.MiddleCenter
                 });
+
+                foreach (var perk in Game.ChosenHero.Perks)
+                {
+                    PerksPanel.Controls.Add(new Label
+                    {
+                        AutoSize = true,
+                        BackColor = Color.Black,
+                        Text = perk.Name,
+                        MinimumSize = new Size(0, 64),
+                        MaximumSize = new Size(192, 64),
+                        Font = new Font(FontFamily.GenericSansSerif, 16),
+                        ForeColor = Color.Aqua,
+                    });  
+                }
             }
             StatPanel.Refresh();
+            PerksPanel.Refresh();
         }
 
         private Point ClickedPoint { get; set; }

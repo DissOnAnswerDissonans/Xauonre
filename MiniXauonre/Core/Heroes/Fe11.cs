@@ -66,7 +66,7 @@ namespace MiniXauonre.Core.Heroes
                             {
                                 var prev = sf.Job(h);
                                 if (prev)
-                                    Stacks++;
+                                    (h as Fe11).Stacks++;
                                 return prev;
                             }
                         };
@@ -79,25 +79,29 @@ namespace MiniXauonre.Core.Heroes
                 //Stuff from Wall skill
                 EndTurn = (i) => (d) =>
                 {
-                    var h = d.HeroValue;
+                    var h = (d.HeroValue as Fe11) ;
                     var a = i(d);
-                    if (WallOn)
+                    if (h.WallOn)
                     {
-                        var wallCost = (WallBaseManaPerTurnCost * Math.Pow(WallTurnManaMultiplier, WallStacks));
+                        var wallCost = (WallBaseManaPerTurnCost * Math.Pow(WallTurnManaMultiplier, h.WallStacks));
                         if (h.GetEnergy() < wallCost)
                         {
                             WallControl.Disactivate(h);
                             h.M.Effects.Remove(WallControl);
-                            WallStacks--;
+                            h.WallStacks--;
                         }
                         else
                         {
                             h.AddEnergy(-wallCost);
-                            WallStacks++;
+                            h.WallStacks++;
                         }
                     }
                     else
-                        WallStacks--;
+                    {
+                        if (h.WallStacks > 0)
+                            h.WallStacks--;
+                    }
+
                     return a;
                 },
             };
@@ -128,8 +132,9 @@ namespace MiniXauonre.Core.Heroes
             Wall = new Skill
             {
                 Name = "YouShallNotPass",
-                Explanation = () => WallOn ? "Destroyes the wall builded by this skill." : "Builds a wall in " + WallMinDist + "-" + WallMaxDist +
-                    " range around you. On next use destroyes it. At the end of turn eats " + WallBaseManaPerTurnCost 
+                Explanation = () => WallOn ? "Destroyes the wall builded by this skill. (current cost " + WallBaseManaPerTurnCost * Math.Pow(WallTurnManaMultiplier, WallStacks) + ")"  
+                    : "Builds a wall in " + WallMinDist + "-" + WallMaxDist +
+                    " range around you. On next use destroyes it. At the end of turn eats " + WallBaseManaPerTurnCost * Math.Pow(WallTurnManaMultiplier, WallStacks)
                     + " energy and increase its next cost by " +
                     WallTurnManaMultiplier*100 + "% (when disactivated - decrease). energy at the end of turn (if not enough - turnes off).",
 
