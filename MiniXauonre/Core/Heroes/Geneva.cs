@@ -128,6 +128,7 @@ namespace MiniXauonre.Core.Heroes
 
             BeamPerk = new Perk
             {
+                Name = "Beam",
                 EndTurn = (f) => (d) =>
                 {
                     var me = d.HeroValue as Geneva;

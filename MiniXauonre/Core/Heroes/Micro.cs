@@ -45,6 +45,7 @@ namespace MiniXauonre.Core.Heroes
             Defence = new Perk
             {
                 Name = "Defence",
+                Number = (h) => (h as Micro).GetEnemiesInRange(h, DefenceRadius).Count,
                 Explanation = (h) => "Gets " + (DefenceADScale * 100) + "% AD (" + DefenceADScale * h.GetAttackDamage() 
                    +") armor and resist from every enemy in " + DefenceRadius + "units (" 
                         + (h as Micro).GetEnemiesInRange(h, DefenceRadius).Count + " enemies), total " 
@@ -91,6 +92,8 @@ namespace MiniXauonre.Core.Heroes
 
             RestoreRegenBuff = new Perk
             {
+                Name = "Restore",
+                Number = (h) => Math.Floor(RestoreRegen * h.GetMaxHp()),
                 GetRegen = (g) => () => g() + RestoreRegen * GetMaxHp(),
                 SetRegen = (s) => (v) => s(v - RestoreRegen * GetMaxHp()),
             };
@@ -120,7 +123,7 @@ namespace MiniXauonre.Core.Heroes
                     };
                     effect.Activate(h);
                     h.M.Effects.Add(effect);
-                    h.GetHeal(RestoreHeal * GetMaxHp());
+                    h.GetHeal(RestoreHeal * h.GetMaxHp());
                     return true;
                 }
             };

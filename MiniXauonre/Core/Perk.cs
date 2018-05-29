@@ -24,6 +24,7 @@ namespace MiniXauonre.Core
 
         public string Name { get; set; }
         public Func<Hero, string> Explanation { get; set; }
+        public Func<Hero, double> Number { get; set; }
 
         //Stats
         public Getter GetMaxHp { get; set; }
@@ -84,7 +85,8 @@ namespace MiniXauonre.Core
         public Perk()
         {
             Name = "Perk";
-            Explanation = (h) => ""; 
+            Explanation = (h) => "";
+            Number = (h) => Double.NaN;
             baseGetter = (g) => g;
             baseSetter = (s) => s;
             //Stats

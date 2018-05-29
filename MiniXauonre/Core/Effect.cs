@@ -17,12 +17,15 @@ namespace MiniXauonre.Core
         public Action<Hero> Activate { get; set; }
 
         public Action<Hero> Disactivate { get; set; }
+        
+        public Action<Hero> OnTick { get; set; }
 
         public Effect(Hero creator, int timer = 1)
         {
             Creator = creator;
 
             Activate = (h) => { };
+            OnTick = (h) => { };
             Disactivate = (h) => { };
             Timer = timer;
         }

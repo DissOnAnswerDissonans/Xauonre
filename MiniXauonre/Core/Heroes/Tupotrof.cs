@@ -29,6 +29,8 @@ namespace MiniXauonre.Core.Heroes
 
             Growth = new Perk
             {
+                Name = "Growth",
+                Number = (h) => h.Level,
                 LevelUp = (a) => (d) =>
                 {
                     AddAttackDamage(GetAttackDamage() * GrowthADPercentBuff);

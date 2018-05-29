@@ -1,7 +1,6 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace UnitTest
+namespace MiniXauonre.Tests
 {
     [TestFixture]
     public class ThreshTest

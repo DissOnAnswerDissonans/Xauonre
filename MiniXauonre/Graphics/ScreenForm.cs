@@ -39,6 +39,8 @@ namespace MiniXauonre.Graphics
         private CurrentHeroPanel HeroPanel { get; set; }
         
         private FlowLayoutPanel PerksPanel { get; set; }
+        private const int perksPanelSide = 64;
+        private const int perksPanelPadding = 4;
         
         protected override void OnLoad(EventArgs e)
         {
@@ -77,9 +79,9 @@ namespace MiniXauonre.Graphics
             
             PerksPanel = new FlowLayoutPanel()
             {
-                Location = new System.Drawing.Point(ClientSize.Width - (256 + 128), ClientSize.Height - (64 + 16)),
+                Location = new System.Drawing.Point(ClientSize.Width - (256 + perksPanelSide), ClientSize.Height - (perksPanelSide + 24)),
                 Anchor = (AnchorStyles.Right | AnchorStyles.Bottom),
-                Size = new Size(0, 64),
+                Size = new Size(0, perksPanelPadding*2 + perksPanelSide),
                 AutoSize = true,
                 FlowDirection = FlowDirection.RightToLeft,
                 BackColor = Color.OrangeRed,
@@ -218,6 +220,9 @@ namespace MiniXauonre.Graphics
         {
             StatPanel.Controls.Clear();
             PerksPanel.Controls.Clear();
+            PerksPanel.Size = new Size(0, perksPanelPadding * 2 + perksPanelSide);
+            PerksPanel.Location = new System.Drawing.Point(ClientSize.Width - (256 + perksPanelSide),
+                ClientSize.Height - (perksPanelSide + 24));
             var button = new Button()
             {
                 Width = 256,
@@ -280,17 +285,20 @@ namespace MiniXauonre.Graphics
                     TextAlign = ContentAlignment.MiddleCenter
                 });
 
-                foreach (var perk in Game.ChosenHero.Perks)
+                foreach (var perk in Game.ChosenHero.Perks.Where(p => p.Name != "Perk"))
                 {
                     PerksPanel.Controls.Add(new Label
                     {
                         AutoSize = true,
                         BackColor = Color.Black,
-                        Text = perk.Name,
-                        MinimumSize = new Size(0, 64),
-                        MaximumSize = new Size(192, 64),
+                        Text = double.IsNaN(perk.Number(Game.ChosenHero)) ?
+                            perk.Name : perk.Name + "\n" + perk.Number(Game.ChosenHero),
+                        MinimumSize = new Size(perksPanelSide, perksPanelSide),
+                        MaximumSize = new Size(1000, perksPanelSide),
                         Font = new Font(FontFamily.GenericSansSerif, 16),
                         ForeColor = Color.Aqua,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Margin = new Padding(perksPanelPadding)
                     });  
                 }
             }

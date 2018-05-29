@@ -15,7 +15,6 @@ namespace MiniXauonre.Core.Heroes
         public const double SnipeCooldown = 5;
         public const double SnipeEnergyCost = 100;
         public const int SnipeRootTime = 1;
-        public Perk RootPerk { get; protected set; }
 
         public Sniper()
         {
@@ -30,6 +29,7 @@ namespace MiniXauonre.Core.Heroes
             SetMaxEnergy(200);
             SetEnergyRegen(10);
             SetMovementSpeed(9);
+            
 
             Snipe = new Skill
             {
@@ -50,25 +50,33 @@ namespace MiniXauonre.Core.Heroes
                         var damage = new Damage(h, h.P, phys: SnipeDamage + SnipeApScale * h.GetAbilityPower());
                         foreach(var t in h.Targets)t.GetDamage(damage);
 
-                        var enemyMoveSkills = h.Targets.SelectMany(t => t.Skills.Where(s => s.SkillTypes.Contains(SkillType.Move))).ToList();
-                        var target = h.Targets;
-                        var root = new Effect(this)
+                        var enemyMoveSkills = h.Targets[0].Skills.Where(s => s.SkillTypes.Contains(SkillType.Move)).ToList();
+                        var target = h.Targets[0];
+
+                        var perk = new Perk();
+                        perk.Name = "Rooted";
+                        
+                        var root = new Effect(target)
                         {
-                            Timer = SnipeRootTime,
+                            Timer = SnipeRootTime - 1,
                             Activate = (eh) => 
                                 {
+                                    eh.Perks.Add(perk);    
                                     foreach (var sk in enemyMoveSkills)
                                         eh.Skills.Remove(sk);
                                 },
                             Disactivate = (eh) =>
                                 {
+                                    eh.Perks.Remove(perk);
                                     foreach(var sk in enemyMoveSkills)
-                                        foreach(var t in target)t.Skills.Add(sk);
+                                        eh.Skills.Add(sk);
                                 },
                         };
 
+                        perk.Number = (eh) => root.Timer + 1;                      
+
                         h.M.Effects.Add(root);
-                        foreach(var t in target) root.Activate(t);
+                        root.Activate(target);
                         return true;
                     }
                     return false;

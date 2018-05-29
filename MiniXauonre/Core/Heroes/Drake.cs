@@ -33,6 +33,7 @@ namespace MiniXauonre.Core.Heroes
             Burn = new Perk
             {
                 Name = "Martyr",
+                Number = (h) => Math.Floor(h.GetHp() * HpScale + h.GetAbilityPower() * APScale),
                 Explanation = (h) => 
                     "Dealing " + HpScale * 100 + "% you current Hp + " + APScale + "%AP ("+
                     + (h.GetHp() * HpScale + h.GetAbilityPower() * APScale)
