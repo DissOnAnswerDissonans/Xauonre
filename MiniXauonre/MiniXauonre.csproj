@@ -195,7 +195,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tests\Tests.cs" />
+    <Compile Include="Tests\CoreTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Skills\" />
