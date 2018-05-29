@@ -14,9 +14,9 @@ namespace MiniXauonre.Core.Heroes
         public const double WallMinDist = 11;
         public const double WallMaxDist = 13;
         public const double WallBaseManaPerTurnCost = 80;
-        public const double WallTurnManaMultiplier = 2;
-        public const double RageArmorBuff = 1.5;
-        public const double RageADBuff = 4;
+        public const double WallTurnManaMultiplier = 3;
+        public const double RageArmorBuff = 0.5;
+        public const double RageADBuff = 2;
         public const double RageDuration = 2;
         public int WallStacks { get; set; }
 

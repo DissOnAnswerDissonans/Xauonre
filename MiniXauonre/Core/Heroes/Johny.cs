@@ -24,6 +24,7 @@ namespace MiniXauonre.Core.Heroes
             
             SetMaxHp(1200);
             SetMaxEnergy(300);
+            SetAttackDamage(65);
             SetRegen(15);
             SetEnergyRegen(8);
 
@@ -39,14 +40,14 @@ namespace MiniXauonre.Core.Heroes
                     var enemiesInRange = GetEnemiesInRange(h, BoomJumpRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        var target = ChooseTarget(enemiesInRange, h.P);
-                        if (target == null) return false;
-                        h.Targets.Add(target);
+                        var point = ChoosePoint(h.M.UnitPositions[h].GetPointsInDistance(0, BoomJumpRange, (p) => h.M.CellIsFree(p)).Keys.ToList(), h.P);
+                        if (point == null) return false;
+                        var targets = h.M.UnitPositions.Keys.Where(eh => eh.P != h.P && h.M.UnitPositions[eh].GetStepsTo(point) <= BoomBombRange).ToList();
+                        h.Targets = targets;
                         if (h.Targets.Count == 0) return false;
                         var damage = new Damage(h, h.P, pure: BoomDamage + BoomDamageAPScale * h.GetAbilityPower());
-                        h.M.UnitPositions[h] = h.M.UnitPositions[h.Targets[0]] + new Point();
-                        var enemiesInBombRange = GetEnemiesInRange(h, BoomBombRange);
-                        foreach (var enemy in enemiesInBombRange)
+                        h.M.UnitPositions[h] = point;
+                        foreach (var enemy in h.Targets)
                             enemy.GetDamage(damage);
                         return true;
                     }

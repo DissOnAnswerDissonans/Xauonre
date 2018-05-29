@@ -31,7 +31,7 @@ namespace MiniXauonre.Core.Heroes
         public const double BeamRadius = 20;
         public const double BeamRegen = 20;
         public const double BeamRegenApScale = 0.6;
-        public const double BeamCD = 7;
+        public const double BeamCD = 4;
         public const double BeamCost = 200;
         public Skill Beam { get; protected set; }
         public Perk BeamPerk { get; protected set; }

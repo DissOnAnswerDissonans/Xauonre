@@ -1,10 +1,9 @@
-﻿using System;
-using MiniXauonre.Controller;
+﻿using MiniXauonre.Controller;
 using MiniXauonre.Core;
 using MiniXauonre.Core.Heroes;
 using NUnit.Framework;
 
-namespace UnitTest
+namespace MiniXauonre.Tests
 {
     [TestFixture]
     public class CoreTest
@@ -88,16 +87,6 @@ namespace UnitTest
             hero.GetHeal(heal);
             Assert.AreEqual(hero.GetHp(), hero.GetMaxHp());
         }
-
-
-
-        [TestCase(1)]
-        [TestCase(2)]
-        public void OnePxTest1(int value)
-        {
-
-        }
-
 
     }
 }
