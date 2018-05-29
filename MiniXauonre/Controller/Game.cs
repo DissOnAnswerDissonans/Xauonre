@@ -47,13 +47,6 @@ namespace MiniXauonre.Controller
             HeroesPerPlayer = rules.HeroesPerPlayer;
             Maze = rules.GameMap;
             Players = new List<Player>();
-            
-            for (int i = 0; i < rules.PlayersNumber; i++)
-            {
-                var nameForm = new PlayerNameForm(i + 1);
-                Application.Run(nameForm);
-                Players.Add(new Player(this, nameForm.PlayerName));
-            }
 
             Shop = rules.GameShop;
             AvailibleHeroes = rules.AllowedHeroes;
@@ -65,10 +58,21 @@ namespace MiniXauonre.Controller
 
         public void StartGame()
         {
+            GetHeroNames();
             HeroDraft();
             if (!GamePreparing()) return;
             GameProcess();
             GameFinish();
+        }
+        
+        private void GetHeroNames()
+        {
+            for (int i = 0; i < Rules.PlayersNumber; i++)
+            {
+                var nameForm = new PlayerNameForm(i + 1);
+                Application.Run(nameForm);
+                Players.Add(new Player(this, nameForm.PlayerName));
+            }
         }
 
         private void HeroDraft()
