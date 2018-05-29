@@ -23,6 +23,8 @@ namespace MiniXauonre.Core.Items
             + h.GetAttackDamage() * ADScale + ").";
             Effect = new Perk()
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 SkillFix = (s) =>
                 {
                     if (!s.SkillTypes.Contains(SkillType.Attack))

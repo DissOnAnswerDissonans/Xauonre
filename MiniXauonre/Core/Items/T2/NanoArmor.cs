@@ -26,6 +26,8 @@ namespace MiniXauonre.Core.Items
 
             Effect = new Perk
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 GetDamage = (f) => (d) =>
                 {
                     var gotten = d.DamageValue.Sum() * EnergyRestore;

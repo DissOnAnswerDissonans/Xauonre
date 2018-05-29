@@ -28,6 +28,8 @@ namespace MiniXauonre.Core.Items
             + ((h.GetArmor() + h.GetResist() + h.GetAbilityPower()) * HealScale) + ").";
             Effect = new Perk
             {
+                Name = this.Name,
+                Explanation = this.Explanation,
                 GetDamage = (f) => (d) =>
                 {
                     var gotten = d.DamageValue.Sum() * EnergyRestore;
