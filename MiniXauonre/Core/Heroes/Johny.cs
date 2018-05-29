@@ -40,7 +40,10 @@ namespace MiniXauonre.Core.Heroes
                     var enemiesInRange = GetEnemiesInRange(h, BoomJumpRange);
                     if (enemiesInRange.Count != 0)
                     {
-                        var point = ChoosePoint(h.M.UnitPositions[h].GetPointsInDistance(0, BoomJumpRange, (p) => h.M.CellIsFree(p)).Keys.ToList(), h.P);
+                        var point = ChoosePoint(h.M.UnitPositions[h].GetPointsInDistance(0, BoomJumpRange, (p) => h.M.IsInBounds(p))
+                            .Keys
+                            .Where(c => h.M.CellIsFree(c)).
+                            ToList(), h.P);
                         if (point == null) return false;
                         var targets = h.M.UnitPositions.Keys.Where(eh => eh.P != h.P && h.M.UnitPositions[eh].GetStepsTo(point) <= BoomBombRange).ToList();
                         h.Targets = targets;

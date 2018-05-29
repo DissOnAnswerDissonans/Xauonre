@@ -35,11 +35,13 @@ namespace MiniXauonre.Core.Shops
             new Booster(),
             new Boots(),
             new OldYeast(),
+            new Mantle(),
             
             new MagicBoots(),
             new FlashBoots(),
             new KillerBoots(),
             new UsefulBoots(),
+            new ForbiddenMask(),
             new MagicCrystal(),
             new MagicWand(),
             new KingSword(),

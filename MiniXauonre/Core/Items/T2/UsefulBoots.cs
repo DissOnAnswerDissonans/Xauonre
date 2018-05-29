@@ -18,7 +18,7 @@ namespace MiniXauonre.Core.Items
             Cost = 750;
 
             MS = 2;
-            HP = 200;
+            HP = 250;
             HR = 8;
             AP = 50;
 

@@ -32,7 +32,7 @@ namespace MiniXauonre.Controller
 
         public GameRules()
         {
-            HeroesPerPlayer = 3;
+            HeroesPerPlayer = 5;
             PlayersNumber = 2;
             GameMap = MapLoader.FromText(Graphics.resources.Res.SimpleMap);
             GameMap = new Map(5, 6);

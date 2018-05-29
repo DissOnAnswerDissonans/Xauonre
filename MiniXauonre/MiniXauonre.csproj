@@ -97,9 +97,11 @@
     <Compile Include="Core\Item.cs" />
     <Compile Include="Core\Items\T0\Yeast.cs" />
     <Compile Include="Core\Items\T1\Boots.cs" />
+    <Compile Include="Core\Items\T1\Mantle.cs" />
     <Compile Include="Core\Items\T1\OldYeast.cs" />
     <Compile Include="Core\Items\T2\AgedYeast.cs" />
     <Compile Include="Core\Items\T2\FlashBoots.cs" />
+    <Compile Include="Core\Items\T2\ForbiddenMask.cs" />
     <Compile Include="Core\Items\T2\KillerBoots.cs" />
     <Compile Include="Core\Items\T2\Simplex.cs" />
     <Compile Include="Core\Items\T2\UsefulBoots.cs" />

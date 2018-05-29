@@ -15,7 +15,7 @@ namespace MiniXauonre.Core.Items
             Name = "Shield";
             Cost = 220;
             Tier = 1;
-            HP = 200;
+            HP = 250;
             HR = 8;
 
 
