@@ -45,7 +45,7 @@ namespace MiniXauonre.Core.Heroes
                             .Where(c => h.M.CellIsFree(c)).
                             ToList(), h.P);
                         if (point == null) return false;
-                        var targets = h.M.UnitPositions.Keys.Where(eh => eh.P != h.P && h.M.UnitPositions[eh].GetStepsTo(point) <= BoomBombRange).ToList();
+                        var targets = h.M.GetHeroes().Where(eh => eh.P != h.P && h.M.UnitPositions[eh].GetStepsTo(point) <= BoomBombRange).ToList();
                         h.Targets = targets;
                         if (h.Targets.Count == 0) return false;
                         var damage = new Damage(h, h.P, pure: BoomDamage + BoomDamageAPScale * h.GetAbilityPower());

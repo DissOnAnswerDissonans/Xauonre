@@ -51,7 +51,7 @@ namespace MiniXauonre.Core.Items
                         var res = s.Job(h);
                         if (res)
                         {
-                            var targets = h.M.UnitPositions.Keys.Where(eh => 
+                            var targets =  h.M.GetHeroes().Where(eh => 
                                 eh.P != h.P && h.M.UnitPositions[eh].GetDistanceTo(h.M.UnitPositions[h]) <= Range);
                             var damage = new Damage(h, h.P, magic: (h.GetAbilityPower() * APScale));
                             foreach (var tg in targets)

@@ -114,7 +114,7 @@ namespace MiniXauonre.Controller
             switch (button)
             {
                 case MouseButtons.Left: // Если текущий герой НЕ активный просто выбор героя
-                    ChosenHero = Maze.UnitPositions.Where(p => p.Value.Equals(point)).Select(p => p.Key).FirstOrDefault();
+                    ChosenHero = Maze.GetHeroPositions().Where(p => p.Value.Equals(point)).Select(p => p.Key).FirstOrDefault();
                     //List<Effect> pointEffects = Maze.Effects. TODO: 
                     var tile = Maze.MapTiles[point.X, point.Y];
                     
@@ -191,7 +191,7 @@ namespace MiniXauonre.Controller
             PointTargets = targets.Select(x => Maze.UnitPositions[x]).ToList();
             var point = MainForm.ChoosePoint(PointTargets);
             if (point == null) return null;
-            return Maze.UnitPositions.Where(x => x.Value.Equals(point)).Select(x => x.Key).FirstOrDefault();
+            return Maze.GetHeroPositions().Where(x => x.Value.Equals(point)).Select(x => x.Key).FirstOrDefault();
         }
         
         public Point ChoosePoint(List<Point> points) => MainForm.ChoosePoint(points);    

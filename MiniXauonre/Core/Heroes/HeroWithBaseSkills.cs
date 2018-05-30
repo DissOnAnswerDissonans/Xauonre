@@ -71,23 +71,21 @@ namespace MiniXauonre.Core.Heroes
             Skills.Add(Move);
         }
 
-        protected List<Hero> GetEnemiesInRange(Hero h, double r) => h.M.UnitPositions
+        protected List<Hero> GetEnemiesInRange(Hero h, double r) => h.M.GetHeroPositions()
                             .Where(u => !h.P.Heroes.Contains(u.Key))
                             .Where(u => h.M.UnitPositions[h].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)
                             .ToList();
-
-        protected List<Hero> GetAlliesInRange(Hero h, double r) => h.M.UnitPositions
+        protected List<Hero> GetAlliesInRange(Hero h, double r) => h.M.GetHeroPositions()
                             .Where(u => h.P.Heroes.Contains(u.Key))
                             .Where(u => h.M.UnitPositions[this].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)
                             .ToList();
 
-        protected List<Hero> GetHeroesInRange(Hero h, double r) => h.M.UnitPositions
+        protected List<Hero> GetHeroesInRange(Hero h, double r) => h.M.GetHeroPositions()
                             .Where(u => h.M.UnitPositions[this].GetStepsTo(u.Value) <= r)
                             .Select(u => u.Key)
                             .ToList();
-
 
         protected Hero ChooseTarget(List<Hero> targets, Player player)
         {

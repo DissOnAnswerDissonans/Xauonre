@@ -84,6 +84,7 @@
     <Compile Include="Core\Heroes\Banker.cs" />
     <Compile Include="Core\Heroes\Cyprys.cs" />
     <Compile Include="Core\Heroes\Immortal.cs" />
+    <Compile Include="Core\Heroes\Gaina.cs" />
     <Compile Include="Core\Heroes\Johny.cs" />
     <Compile Include="Core\Heroes\Drake.cs" />
     <Compile Include="Core\Heroes\Fe11.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Core\Heroes\Geneva.cs" />
     <Compile Include="Core\Heroes\Micro.cs" />
     <Compile Include="Core\Heroes\Sniper.cs" />
+    <Compile Include="Core\Heroes\Specials\Pyroblast.cs" />
     <Compile Include="Core\Heroes\Thief.cs" />
     <Compile Include="Core\Heroes\Tupotrof.cs" />
     <Compile Include="Core\HeroMaker.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Core\Skill.cs" />
     <Compile Include="Core\Stats.cs" />
     <Compile Include="Core\Tile.cs" />
+    <Compile Include="Core\Unit.cs" />
     <Compile Include="Graphics\ChooseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <None Include="Graphics\resources\Units\Pyroblast.png" />
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
@@ -236,6 +240,7 @@
     <Content Include="Graphics\resources\Heroes\Drake.png" />
     <Content Include="Graphics\resources\Heroes\Fe11.png" />
     <None Include="Graphics\resources\Heroes\Geneva.png" />
+    <None Include="Graphics\resources\Heroes\Gaina.png" />
     <Content Include="Graphics\resources\Heroes\Immortal.png" />
     <Content Include="Graphics\resources\Heroes\Johny.png" />
     <Content Include="Graphics\resources\Heroes\Kerri.png" />

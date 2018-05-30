@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core.Heroes
 {
-    class Hero
+    class Hero : Unit
     {
         public List<Skill> Skills { get; protected set; }
         public List<Perk> Perks { get; protected set; }
         public List<Item> Items { get; protected set; }
         public string Name { get; protected set; }
-        protected Image Image { get; set; }
+        
 
         public double MaxNumberOfItems { get; protected set; }
 
@@ -145,6 +145,7 @@ namespace MiniXauonre.Core.Heroes
                 foreach (var perk in Perks)
                     skill = perk.SkillFix(skill);
                 skill.Work(this);
+                Skills[id].Timer = skill.Timer;
             }
         }
 
@@ -154,8 +155,6 @@ namespace MiniXauonre.Core.Heroes
             var itemsAreParts = item.Parts.Count(p => Items.Contains(p));
             return !(Items.Count - itemsAreParts >= MaxNumberOfItems) && S.Buy(this, item);
         }
-
-        public Image GetImage() => Image;
 
         public void Kill()
         {
@@ -570,6 +569,7 @@ namespace MiniXauonre.Core.Heroes
             {"M", GetMoney()},
         };
 
+        public Xauonre.Core.Point GetPosition() => M.UnitPositions[this];
         public string FastStats() =>
             Name
             + " : MaxHp-" + GetMaxHp()

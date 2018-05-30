@@ -112,34 +112,35 @@ namespace MiniXauonre.Graphics
                     (coords.Y - unitShift) * ModifiedTS.Height, ModifiedTS.Width, ModifiedTS.Height);
                 
                 g.DrawImage(heroImage, borders);
-                DrawUnitInfo(g, unit, borders);
+                if (unit as Hero != null)
+                    DrawHeroInfo(g, unit as Hero, borders);
             }
         }
 
         readonly Font kok = new Font(FontFamily.GenericSansSerif, 16);
 
-        private void DrawUnitInfo(System.Drawing.Graphics g, Hero unit, RectangleF borders)
+        private void DrawHeroInfo(System.Drawing.Graphics g, Hero hero, RectangleF borders)
         {
             var b = new RectangleF(borders.Location, borders.Size);
             b.Y += ModifiedTS.Height;
             b.Height -= ModifiedTS.Height * 0.7f;
-            var color = Colors.PlayerDarkColors[unit.P.Game.Players.IndexOf(unit.P) % Colors.count];
+            var color = Colors.PlayerDarkColors[hero.P.Game.Players.IndexOf(hero.P) % Colors.count];
             g.FillRectangle(new SolidBrush(Color.Black), b.X, b.Y, b.Width, b.Height);
-            g.FillRectangle(new SolidBrush(color), b.X, b.Y, b.Width * (float)(unit.GetHp() / unit.GetMaxHp()), b.Height);
+            g.FillRectangle(new SolidBrush(color), b.X, b.Y, b.Width * (float)(hero.GetHp() / hero.GetMaxHp()), b.Height);
             g.DrawRectangle(new Pen(Color.Black), b.X, b.Y, b.Width, b.Height);
             if (Scaler == 0)
             {
                 g.DrawRectangle(new Pen(Color.Black, 3.0f), b.X, b.Y, b.Width, b.Height);
                 b.Y += 6;
-                g.DrawString(((int) unit.GetHp()).ToString(CultureInfo.CurrentCulture) + "/"
-                 + ((int) unit.GetMaxHp()).ToString(CultureInfo.CurrentCulture),
+                g.DrawString(((int) hero.GetHp()).ToString(CultureInfo.CurrentCulture) + "/"
+                 + ((int) hero.GetMaxHp()).ToString(CultureInfo.CurrentCulture),
                     kok, new SolidBrush(Color.White), b);
             }
             else if (Scaler == 1)
             {
                 b.Y -= 3;
                 b.Height += 8;
-                g.DrawString(((int) unit.GetHp()).ToString(CultureInfo.CurrentCulture),
+                g.DrawString(((int) hero.GetHp()).ToString(CultureInfo.CurrentCulture),
                     kok, new SolidBrush(Color.White), b);
             }
         }

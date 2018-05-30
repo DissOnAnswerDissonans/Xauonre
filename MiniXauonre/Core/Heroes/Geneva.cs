@@ -82,7 +82,7 @@ namespace MiniXauonre.Core.Heroes
                     var center = ChoosePoint(points, h.P);
                     if (center == null)
                         return false;
-                    var targets = h.M.UnitPositions.Where(u => u.Value.GetStepsTo(center) <= ImpulseRadius)
+                    var targets = h.M.GetHeroPositions().Where(u => u.Value.GetStepsTo(center) <= ImpulseRadius)
                         .Select(p => p.Key)
                         .Where(u => h.P != u.P)
                         .ToList();
