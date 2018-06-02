@@ -34,11 +34,20 @@ namespace MiniXauonre.Core
         public void Work(Hero hero)
         {
             hero.Targets = new List<Hero>();
-            if (Availiable(hero) && Job(hero))
+            if (Availiable(hero))
             {
-                if(CoolDown != 0)
-                    Timer = Math.Max(CoolDown - hero.GetCDReduction(), 1);
-                hero.AddEnergy(-EnergyCost);
+                var justCdr = Math.Max(CoolDown - hero.GetCDReduction(), 1);
+                Timer = CoolDown;
+                if (Job(hero))
+                {
+                    if (CoolDown == 0)
+                        Timer = 0;
+                    else
+                        Timer = Math.Min(justCdr, Timer);
+                    hero.AddEnergy(-EnergyCost);
+                }
+                else
+                    Timer = 0;
             }
         }
 

@@ -10,11 +10,12 @@ namespace MiniXauonre.Core
     class Unit
     {
         protected Image Image { get; set; }
+        public bool Solid;
         public Unit()
         {
+            Solid = false;
             Image = Graphics.resources.Res.AbilityPower;
         }
-
         public Image GetImage() => Image;
     }
 }

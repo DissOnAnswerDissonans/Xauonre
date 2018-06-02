@@ -35,7 +35,7 @@ namespace MiniXauonre.Core
 
         public List<Unit> GetIn(Point p) => UnitPositions.Where(u => u.Value.X == p.X && u.Value.Y == p.Y).Select(u => u.Key).ToList();
 
-        public bool CellIsFree(Point p) => IsInBounds(p) && MapTiles[p.X, p.Y].Type == TileType.Empty && GetIn(p).Count() == 0;
+        public bool CellIsFree(Point p) => IsInBounds(p) && MapTiles[p.X, p.Y].Type == TileType.Empty && GetIn(p).Where(u => u.Solid).Count() == 0;
 
         public List<KeyValuePair<Hero, Point>> GetHeroPositions() => GetHeroes().Select(h => new KeyValuePair<Hero, Point>(h, UnitPositions[h])).ToList();
 

@@ -63,6 +63,7 @@ namespace MiniXauonre.Core.Heroes
             Image = Graphics.resources.Res.DefaultHero;
             Targets = new List<Hero>();
             StatsGetter = GetAllStats;
+            Solid = true;
             //Default Stats
             maxHp = 1000;
             hp = maxHp;

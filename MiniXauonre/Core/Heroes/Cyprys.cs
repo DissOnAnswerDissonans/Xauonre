@@ -91,11 +91,11 @@ namespace MiniXauonre.Core.Heroes
                     RockEffect.Activate(h);
                     h.M.Effects.Add(RockEffect);
                     var p = point.GetPointsInDistance(0, RockDamageRadius).Keys;
-                    var victims = new List<KeyValuePair<Unit, Point>>(h.M.UnitPositions.Where(t => p.Contains(t.Value)));
+                    var victims = new List<KeyValuePair<Hero, Point>>(h.M.GetHeroPositions().Where(s => p.Contains(s.Value)).ToList());
                     foreach (var victim in victims)
                     {
                         if (!h.P.Heroes.Contains(victim.Key))
-                            (victim.Key as Hero).GetDamage(damage);
+                            victim.Key.GetDamage(damage);
                     }
                     return true;
                 },

@@ -14,7 +14,8 @@ namespace MiniXauonre.Core.Heroes
         public const double PyroblastAPScale = 2;
         public const double PyroblastCost = 100;
         public const double PyroblastCd = 3;
-        public const double PyroblastRadius = 2;
+        public const double PyroblastRadius = 3;
+        public const double PyroblasTriggerRadius = 1;
         public List<Pyroblast> Blasts { get; protected set; }
         public Perk Collider { get; protected set; }
 
@@ -31,7 +32,6 @@ namespace MiniXauonre.Core.Heroes
             Blasts = new List<Specials.Pyroblast>();
             Collider = new Perk
             {
-                Name = "Collider",
                 StartTurn = (s) => (d) =>
                 {
                     var list = new List<Pyroblast>(Blasts);
@@ -106,12 +106,13 @@ namespace MiniXauonre.Core.Heroes
                     pyro.Boom = () =>
                         {
                             var place = h.M.UnitPositions[pyro];
-                            var targets = h.M.GetHeroPositions().Where(a => a.Key.P != h.P && place.GetStepsTo(a.Value) <= PyroblastRadius)
+                            var targets = h.M.GetHeroPositions().Where(a => a.Key.P != h.P && place.GetStepsTo(a.Value) <= PyroblasTriggerRadius)
                             .Select(a => a.Key);
                             if (targets.Count() == 0)
                                 return false;
                             var damage = new Damage(h, h.P, magic: GetAbilityPower() * PyroblastAPScale);
-                            foreach(var tg in targets)
+                            targets = h.M.GetHeroPositions().Where(a => a.Key.P != h.P && place.GetStepsTo(a.Value) <= PyroblastRadius).Select(a => a.Key);
+                            foreach (var tg in targets)
                                 tg.GetDamage(damage);
                             Blasts.Remove(pyro);
                             h.M.UnitPositions.Remove(pyro);
@@ -139,11 +140,27 @@ namespace MiniXauonre.Core.Heroes
                         }
                         if (oneCool)
                         {
-                            pyro.Direction = new Point(pyro.Direction.X, -pyro.Direction.Y);
-                            h.M.UnitPositions[pyro] = curretPoint + pyro.Direction;
-                            return;
+                            var newDirection = new Point(pyro.Direction.X, -pyro.Direction.Y);
+                            var newPosition = curretPoint + newDirection;
+                            if (h.M.IsInBounds(newPosition) && h.M.MapTiles[newPosition.X, newPosition.Y].Type == TileType.Empty)
+                            {
+                                pyro.Direction = newDirection;
+                                h.M.UnitPositions[pyro] = curretPoint + pyro.Direction;
+                                return;
+                            }
                         }
-                        pyro.Direction = new Point(-pyro.Direction.X, pyro.Direction.Y);
+                        if (anotherCool)
+                        {
+                            var newDirection = new Point(-pyro.Direction.X, pyro.Direction.Y);
+                            var newPosition = curretPoint + newDirection;
+                            if (h.M.IsInBounds(newPosition) && h.M.MapTiles[newPosition.X, newPosition.Y].Type == TileType.Empty)
+                            {
+                                pyro.Direction = new Point(-pyro.Direction.X, pyro.Direction.Y);
+                                h.M.UnitPositions[pyro] = curretPoint + pyro.Direction;
+                                return;
+                            }
+                        }
+                        pyro.Direction = new Point(-pyro.Direction.X, -pyro.Direction.Y);
                         h.M.UnitPositions[pyro] = curretPoint + pyro.Direction;
                     };
                     Blasts.Add(pyro);

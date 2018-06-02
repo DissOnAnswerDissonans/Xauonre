@@ -45,6 +45,7 @@ namespace MiniXauonre.Core.Items
                         CoolDown = s.CoolDown,
                         SkillTypes = s.SkillTypes,
                         Explanation = s.Explanation,
+                        Timer = s.Timer,
                     };
                     newSkill.Job = (h) =>
                     {
@@ -57,7 +58,9 @@ namespace MiniXauonre.Core.Items
                             foreach (var tg in targets)
                                 tg.GetDamage(damage);
                             var count = targets.Count();
-                            s.Timer = Math.Max(CDLeft, newSkill.CoolDown - h.GetCDReduction() - count * CDReduce);
+                            newSkill.Timer -= CDReduce * count;
+                            if (newSkill.Timer < CDLeft)
+                                newSkill.Timer = CDLeft;
                             return true;
                         }
                         return false;
