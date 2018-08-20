@@ -14,9 +14,9 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Forbidden Mask";
             Tier = 2;
-            HP = 400;
+            HP = 300;
             AP = 75;
-            HR = 12.5;
+            HR = 25;
             Cost = 920;//700
             //460
             Explanation = (h) => "When you use skill restore HP equal to " +ExpToHpCoeff*100+ "% of EXP gotten.";
