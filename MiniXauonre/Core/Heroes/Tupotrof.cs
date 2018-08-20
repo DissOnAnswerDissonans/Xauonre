@@ -22,7 +22,7 @@ namespace MiniXauonre.Core.Heroes
             Name = "Tupotrof";
             Image = Graphics.resources.Res.Tupotrof;
             
-            SetMaxHp(600);
+            SetMaxHp(765);
             SetAttackDamage(45);
             SetAttackSpeed(2);
             SetMovementSpeed(11);
