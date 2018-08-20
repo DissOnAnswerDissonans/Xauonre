@@ -12,10 +12,10 @@ namespace MiniXauonre.Core.Heroes
 
         недостающего запаса здоровья,
 	 а при повышении уровня получают(100%AP) MaxHp.
-- Investment: Передает выбранному союзнику(5 + 10%AP) Money.
-    CD 8. Cost 100.
-- Currency Exchange: Получает чистый урон равный(10 + 10%AP)%
-	 MaxHp всех противников и получает за это опыт.CD 6. Cost 150.
+- Investment: Передает выбранному союзнику(5 + 60%AP) Money.
+    CD 5. Cost 100.
+- Currency Exchange: Получает чистый урон равный(10 + 20%AP)%
+	 MaxHp всех противников и получает за это опыт.CD 7. Cost 200.
 
 Hp = 950
 Armor = 15
@@ -33,9 +33,9 @@ MS = 10*/
         public Perk InterestRate { get; set; }
 
         public const double InvestmentMoney = 10;
-        public const double InvestmentAPScale = 0.4;
+        public const double InvestmentAPScale = 0.6;
         public const double InvestmentCD = 5;
-        public const double InvestmentCost = 100;
+        public const double InvestmentCost = 150;
         public Skill Investment { get; set; }
 
         public const double ExchangeHP = 0.1;
@@ -136,6 +136,7 @@ MS = 10*/
                         hpCost = h.GetHp() - 1;
                     h.AddHp(-hpCost);
                     h.P.AllDamage += hpCost * ExchangeExpCoeff;
+		    //боря вызови тут функцию (проверить лвл ап) а  h.P
                     return true;
                 },
             };
