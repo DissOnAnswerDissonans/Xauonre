@@ -135,8 +135,7 @@ MS = 10*/
                     if (hpCost >= h.GetHp())
                         hpCost = h.GetHp() - 1;
                     h.AddHp(-hpCost);
-                    h.P.AllDamage += hpCost * ExchangeExpCoeff;
-		    //боря вызови тут функцию (проверить лвл ап) а  h.P
+                    h.P.NotifyAboutDamage(new Damage(h, h.P, 0, 0, hpCost * ExchangeExpCoeff));
                     return true;
                 },
             };
