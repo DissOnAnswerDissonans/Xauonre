@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Items
             Name = "Accumulator";
             Tier = 1;
             Cost = 260;
-            E = 300;
+            E = 200;
             AP = 20;
             ER = 10;
 
