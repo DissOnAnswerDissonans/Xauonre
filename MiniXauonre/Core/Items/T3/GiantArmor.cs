@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Giant Armor";
             Tier = 3;
-            Cost = 1850;
+            Cost = 2250;
 
             HP = 1500;
             A = 40;
