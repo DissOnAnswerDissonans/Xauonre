@@ -17,15 +17,15 @@ namespace MiniXauonre.Core.Heroes
 
         public const double DropCatchRadius = 5;
         public const double DropRaduis = 20;
-        public const double DropCD = 9;
-        public const double DropCost = 100;
+        public const double DropCD = 7;
+        public const double DropCost = 300;
         public Skill Drop { get; set; }
 
         public const double RestoreHeal = 0.1;
         public const double RestoreRegen = 0.03;
         public const int RestoreRegenDuration = 2;
         public const double RestoreCooldown = 6;
-        public const double RestoreCost = 50;
+        public const double RestoreCost = 250;
         public Skill Restore { get; set; }
         public Perk RestoreRegenBuff { get; set; }
         
@@ -36,10 +36,10 @@ namespace MiniXauonre.Core.Heroes
             Name = "Micro";
             Image = Graphics.resources.Res.Micro;
             SetAttackDamage(75);
-            SetMaxHp(1300);
-            SetMaxEnergy(200);
+            SetMaxHp(1100);
+            SetMaxEnergy(350);
             SetEnergyRegen(10);
-            SetMovementSpeed(12);
+            SetMovementSpeed(11);
             SetRegen(15);
 
             Defence = new Perk
