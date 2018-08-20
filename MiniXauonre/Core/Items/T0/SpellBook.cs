@@ -14,8 +14,8 @@ namespace MiniXauonre.Core.Items
             Name = "Spell Book";
             Tier = 0;
             Cost = 60;
-            E = 50;
-            ER = 2;
+            E = 30;
+            ER = 3;
             AP = 10;
         }
     }
