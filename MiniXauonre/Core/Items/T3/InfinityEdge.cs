@@ -12,9 +12,9 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Infinity Edge";
             Tier = 3;
-            Cost = 2100;
+            Cost = 2400;
 
-            AD = 200;
+            AD = 222;
             HP = 400;
             A = 10;
 
