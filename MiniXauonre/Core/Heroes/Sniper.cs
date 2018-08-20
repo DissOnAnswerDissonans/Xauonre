@@ -10,10 +10,10 @@ namespace MiniXauonre.Core.Heroes
     {
         public Skill Snipe { get; set; }
         public const double SnipeRange = 25;
-        public const double SnipeDamage = 50;
-        public const double SnipeApScale = 1.25;
+        public const double SnipeDamage = 10;
+        public const double SnipeApScale = 1.90;
         public const double SnipeCooldown = 5;
-        public const double SnipeEnergyCost = 100;
+        public const double SnipeEnergyCost = 300;
         public const int SnipeRootTime = 1;
 
         public Sniper()
@@ -21,12 +21,12 @@ namespace MiniXauonre.Core.Heroes
             Name = "Sniper";
             Image = Graphics.resources.Res.Sniper;
             
-            SetMaxHp(800);
-            SetAttackDamage(60);
-            SetAbilityPower(20);
+            SetMaxHp(550);
+            SetAttackDamage(66);
+            SetAbilityPower(100);
             SetAttackRange(13);
             SetRegen(7);
-            SetMaxEnergy(200);
+            SetMaxEnergy(400);
             SetEnergyRegen(10);
             SetMovementSpeed(9);
             
