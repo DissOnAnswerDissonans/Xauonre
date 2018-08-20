@@ -14,9 +14,9 @@ namespace MiniXauonre.Core.Items
             Tier = 2;
             Cost = 800;
 
-            E = 600;
+            E = 400;
             AP = 100;
-            ER = 20;
+            ER = 30;
 
             //420
 
