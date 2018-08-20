@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Items
             Name = "Leaven";
             Tier = 1;
             Cost = 210;
-            HP = 450;
+            HP = 250;
         }
     }
 }
