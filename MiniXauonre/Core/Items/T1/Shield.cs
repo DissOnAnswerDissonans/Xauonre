@@ -15,8 +15,8 @@ namespace MiniXauonre.Core.Items
             Name = "Shield";
             Cost = 220;
             Tier = 1;
-            HP = 250;
-            HR = 8;
+            HP = 180;
+            HR = 12;
 
 
             Explanation = (h) => "Reduce incoming phys damage by " + PhysDamageReduction*100 + "%.";
