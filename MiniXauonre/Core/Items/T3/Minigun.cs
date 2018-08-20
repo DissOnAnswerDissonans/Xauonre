@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public Minigun()
         {
             Name = "Minigun";
-            Cost = 2100;
+            Cost = 2300;
             Tier = 3;
 
             HP = 500;
