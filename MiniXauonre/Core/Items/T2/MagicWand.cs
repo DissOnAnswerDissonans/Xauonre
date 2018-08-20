@@ -26,7 +26,7 @@ namespace MiniXauonre.Core.Items
 
             AD = 50;
             AP = 50;
-            A = 5;
+            A = 15;
             HP = 150;
 
             
