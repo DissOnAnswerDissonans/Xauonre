@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Items
             Name = "Restore Ring";
             Tier = 0;
             Cost = 80;
-            HR = 8;
+            HR = 12;
         }
     }
 }
