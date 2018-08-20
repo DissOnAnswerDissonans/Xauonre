@@ -21,11 +21,11 @@ namespace MiniXauonre.Core.Heroes
             Name = "Drake";
             Image = Graphics.resources.Res.Drake;
             
-            SetMaxHp(1600);
+            SetMaxHp(1200);
             SetAttackDamage(30);
-            SetArmor(5);
-            SetResist(15);
-            SetMovementSpeed(10);
+            SetArmor(15);
+            SetResist(25);
+            SetMovementSpeed(9);
             SetRegen(15);
 
             Burning = false;
