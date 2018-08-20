@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Items
         public EntientYeast()
         {
             Name = "Entient Yeast";
-            Cost = 1715;//2450
+            Cost = 1999;//2450
             Tier = 3;
             HP = 612.5;
             E = 328.125;
