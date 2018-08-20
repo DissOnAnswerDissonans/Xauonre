@@ -19,8 +19,8 @@ namespace MiniXauonre.Core.Items
             AP = 3.125;
             A = 1;
             R = 1;
-            HR = 1.25;
-            ER = 2;
+            HR = 2.5;
+            ER = 4;
         }
     }
 }
