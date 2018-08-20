@@ -16,9 +16,9 @@ namespace MiniXauonre.Core.Items
             Tier = 2;
             Cost = 620;
 
-            E = 150;
-            HP = 550;
-            HR = 17;
+            E = 100;
+            HP = 300;
+            HR = 34;
             R = 8;
 
             Explanation = (h) =>
