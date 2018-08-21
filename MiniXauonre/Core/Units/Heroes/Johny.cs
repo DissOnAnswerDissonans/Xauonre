@@ -13,9 +13,9 @@ namespace MiniXauonre.Core.Heroes
         public const double BoomJumpRange = 9;
         public const double BoomBombRange = 6;
         public const double BoomCooldown = 5;
-        public const double BoomEnergyCost = 150;
-        public const double BoomDamage = 100;
-        public const double BoomDamageAPScale = 1.5;
+        public const double BoomEnergyCost = 300;
+        public const double BoomDamage = 50;
+        public const double BoomDamageAPScale = 2.1;
 
         public Johny()
         {

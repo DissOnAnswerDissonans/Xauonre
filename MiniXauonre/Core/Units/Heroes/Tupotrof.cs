@@ -11,7 +11,7 @@ namespace MiniXauonre.Core.Heroes
         public Skill Cutter { get; set; }
         public Perk Growth { get; set; }
 
-        public const double GrowthADPercentBuff = 0.06;
+        public const double GrowthADPercentBuff = 0.08;
         public const double GrowthMSBuff = 0.4;
         public const double CutterDamage = 50;
         public const double CutterADScale = 1.2;
@@ -22,8 +22,8 @@ namespace MiniXauonre.Core.Heroes
             Name = "Tupotrof";
             Image = Graphics.resources.Res.Tupotrof;
             
-            SetMaxHp(900);
-            SetAttackDamage(40);
+            SetMaxHp(765);
+            SetAttackDamage(45);
             SetAttackSpeed(2);
             SetMovementSpeed(11);
 

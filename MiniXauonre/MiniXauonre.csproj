@@ -57,6 +57,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'test|AnyCPU'">
+    <OutputPath>bin\test\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
@@ -82,6 +85,10 @@
     <Compile Include="Core\Geometry.cs" />
     <Compile Include="Core\Hero.cs" />
     <Compile Include="Core\HeroNEW.cs" />
+    <Compile Include="Core\Items\T1\Resister.cs" />
+    <Compile Include="Core\Items\T2\IdeaJenerator.cs" />
+    <Compile Include="Core\Items\T2\SaintMantle.cs" />
+    <Compile Include="Core\Items\T3\StarArmor.cs" />
     <Compile Include="Core\Units\Heroes\Banker.cs" />
     <Compile Include="Core\Units\Heroes\Cyprys.cs" />
     <Compile Include="Core\Units\Heroes\Immortal.cs" />

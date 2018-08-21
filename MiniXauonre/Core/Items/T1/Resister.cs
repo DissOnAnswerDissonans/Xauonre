@@ -6,21 +6,19 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core.Items
 {
-    class Bulker : Item
+    class Resister : Item
     {
-        public Bulker()
+        public Resister()
         {
-            Name = "Bulker";
-            Cost = 270;
+            Name = "Resister";
+            Cost = 300;
             Tier = 1;
-            HP = 150;
-            HR = 9;
-            A = 5;
+            R = 20;
+            HP = 100;
 
             Parts = new List<Item>
             {
-                new FlameCoast(),
-                new Steel(),
+                new Amulet(),
             };
         }
     }

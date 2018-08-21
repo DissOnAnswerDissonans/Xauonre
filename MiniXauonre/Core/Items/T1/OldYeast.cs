@@ -19,8 +19,8 @@ namespace MiniXauonre.Core.Items
             AP = 9.765625;
             A = 3.125;
             R = 3.125;
-            HR = 3.90625;
-            ER = 6.25;
+            HR = 7.8125;
+            ER = 12.5;
 
             Parts = new List<Item>
             {

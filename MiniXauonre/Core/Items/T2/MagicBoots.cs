@@ -15,7 +15,7 @@ namespace MiniXauonre.Core.Items
             Explanation = (h) => "";
             Cost = 680;
             AP = 100;
-            HP = 200;
+            HP = 100;
             MS = 1;
 
             //520

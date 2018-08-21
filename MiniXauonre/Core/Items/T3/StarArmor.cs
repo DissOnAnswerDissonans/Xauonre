@@ -6,30 +6,24 @@ using System.Threading.Tasks;
 
 namespace MiniXauonre.Core.Items
 {
-    class MagicWand : Item
+    class StarArmor : Item
     {
-
-        public const double SpellResist = 0.10;
-        public MagicWand()
+        public const double SpellResist = 0.30;
+        public StarArmor()
         {
-            Name = "Magic Wand";
-            Cost = 800;
-            Tier = 2;
-            Parts = new List<Item>
-            {
-                new MagicRelic(),
-                new XPeke(),
-            };
+            Name = "Star Armor";
+            Tier = 3;
+            Cost = 2600;
 
+            HR = 30;
+            A = 30;
+            R = 80;
+            HP = 700;
+            AD = 50;
+            AP = 50;
 
             Explanation = (h) => "Reduces incoming Spell damage by " + SpellResist * 100 + "%.";
 
-            AD = 50;
-            AP = 50;
-            A = 15;
-            HP = 150;
-
-            
             Effect = new Perk
             {
                 Name = this.Name,
@@ -40,8 +34,14 @@ namespace MiniXauonre.Core.Items
                     return f(d);
                 },
             };
-            
 
+            //1780
+            Parts = new List<Item>
+            {
+                new SaintMantle(),
+                new Resister(), 
+                new MagicWand(),
+            };
         }
     }
 }

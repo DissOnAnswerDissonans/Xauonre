@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Items
             Name = "Tesseract";
             Tier = 3;
             
-            AP = 34300;
+            AP = 343;
             E = 50 + 150;
             HP = 300 + 100;
             ER = 20 + 16;

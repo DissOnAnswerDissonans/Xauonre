@@ -13,10 +13,10 @@ namespace MiniXauonre.Core.Items
             Name = "Hyper Shell";
             Cost = 750;
             Tier = 2;
-            HP = 470;
+            HP = 270;
             A = 15;
             R = 15;
-            HR = 20;
+            HR = 30;
 
 
             //515

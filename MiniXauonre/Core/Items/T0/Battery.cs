@@ -21,7 +21,7 @@ namespace MiniXauonre.Core.Items
             Name = "Battery";
             Tier = 0;
             Cost = 50;
-            E = 150;
+            E = 90;
         }
 
 

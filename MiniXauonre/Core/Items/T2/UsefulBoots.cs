@@ -19,7 +19,7 @@ namespace MiniXauonre.Core.Items
 
             MS = 2;
             HP = 250;
-            HR = 8;
+            HR = 16;
             AP = 50;
 
             Explanation = (h) => "Reduce incoming phys damage by " + PhysDamageReduction * 100 + "% and gives " 

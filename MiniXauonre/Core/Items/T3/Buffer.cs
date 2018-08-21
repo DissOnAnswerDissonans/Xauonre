@@ -14,14 +14,14 @@ namespace MiniXauonre.Core.Items
         public Buffer()
         {
             Name = "Buffer";
-            Cost = 1700;
+            Cost = 2345;
             Tier = 3;
             E = 750;
             HP = 550;
-            HR = 17;
-            R = 8;
+            HR = 34;
+            R = 20;
             AP = 100;
-            ER = 20;
+            ER = 30;
 
             Explanation = (h) => "When attacked restores " + EnergyRestore * 100 + "% of damage. At the end of turn Heales all" +
             " allies in "+HealRange+" range by " + HealScale * 100 + "%(Armor + Resist + AP) ("

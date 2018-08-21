@@ -12,12 +12,12 @@ namespace MiniXauonre.Core.Items
         {
             Name = "Time Machine";
             Tier = 3;
-            Cost = 2000;
+            Cost = 2200;
 
             HP = 200;
             AP = 250;
             E = 200;
-            ER = 30;
+            ER = 45;
             MS = 2;
             CDR = 2;
 

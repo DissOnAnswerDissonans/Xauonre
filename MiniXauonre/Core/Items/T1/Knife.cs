@@ -20,7 +20,7 @@ namespace MiniXauonre.Core.Items
                 new Razor(),
             };
             AD = 22;
-            HP = 150;
+            HP = 100;
         }
     }
 }

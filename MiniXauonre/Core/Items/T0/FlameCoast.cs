@@ -13,7 +13,7 @@ namespace MiniXauonre.Core.Items
             Name = "Flame Coast";
             Tier = 0;
             Cost = 90;
-            HP = 200;
+            HP = 150;
 
 
             //Conterspell

@@ -14,7 +14,7 @@ namespace MiniXauonre.Core.Items
             Tier = 2;
             Cost = 700; //800
             MS = 3;
-            HR = 20;
+            HR = 30;
 
             //280
             Parts = new List<Item>

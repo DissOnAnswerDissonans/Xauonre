@@ -11,10 +11,10 @@ namespace MiniXauonre.Core.Heroes
     class Gaina : HeroWithBaseSkills
     {
         public Skill Pyroblast { get; protected set; }
-        public const double PyroblastAPScale = 2;
-        public const double PyroblastCost = 100;
+        public const double PyroblastAPScale = 2.5;
+        public const double PyroblastCost = 200;
         public const double PyroblastCd = 3;
-        public const double PyroblastRadius = 4;
+        public const double PyroblastRadius = 3;
         public const double PyroblasTriggerRadius = 2;
         public List<Pyroblast> Blasts { get; protected set; }
         public Perk Collider { get; protected set; }
