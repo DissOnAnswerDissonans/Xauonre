@@ -122,7 +122,7 @@ namespace MiniXauonre.Core.Heroes
             {
                 Activate = (h) =>
                 {
-                    (h as Fe11).BuildWall(h.M); 
+                    (h as Fe11).BuildWall(h); 
                 },
                 Disactivate = (h) =>
                 {
@@ -160,14 +160,14 @@ namespace MiniXauonre.Core.Heroes
             
         }
 
-        public void BuildWall(Map m)
+        public void BuildWall(Hero h)
         {
             WallOn = true;
-            PlacedWalls = m.UnitPositions[this].GetPointsInDistance(WallMinDist, WallMaxDist).Keys
-                .Where(po => m.IsInBounds(po) && m.MapTiles[po.X, po.Y].Type != TileType.Solid)
+            PlacedWalls = h.GetPosition().GetPointsInDistance(WallMinDist, WallMaxDist).Keys
+                .Where(po => h.M.IsInBounds(po) && h.M.MapTiles[po.X, po.Y].Type != TileType.Solid)
                 .ToList();
             foreach (var wall in PlacedWalls)
-                m.MapTiles[wall.X, wall.Y].Type = TileType.Solid;
+                h.M.MapTiles[wall.X, wall.Y].Type = TileType.Solid;
         }
 
         public void DestroyWall(Map m)

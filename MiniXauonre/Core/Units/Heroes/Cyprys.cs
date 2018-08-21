@@ -134,7 +134,7 @@ namespace MiniXauonre.Core.Heroes
                     }
                     var damage = new Damage(h, h.P, magic: EarthDamage + EarthDamageAPscale * h.GetAbilityPower() +
                         rocksNumber * (EarthRockDamage + EarthRockDamageAPscale * h.GetAbilityPower()));
-                    var tgPoint = h.M.UnitPositions[Targets[0]] + new Point(0, 0);
+                    var tgPoint = h.M.GetHeroPositions().FirstOrDefault(a => a.Key == Targets[0]).Value + new Point(0, 0);
                     h.Targets[0].GetDamage(damage);
                     if (rocksNumber > 0)
                     {

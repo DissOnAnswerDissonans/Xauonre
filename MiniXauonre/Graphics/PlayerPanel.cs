@@ -62,7 +62,7 @@ namespace MiniXauonre.Graphics
             {
                 Dock = dockS,
                 Height = h * 7 / 8,
-                Width = h * 4 - 5,
+                Width = h * 4 - 28,
                 Padding = new Padding(h / 16),
                 BackColor = Colors.PlayerDarkColors[num % Colors.count],
             };
@@ -118,7 +118,7 @@ namespace MiniXauonre.Graphics
                 ForeColor = Color.White,
             });
             
-            DamageDisp.Controls[2].Location = new Point(h*4 - DamageDisp.Controls[2].Width, 0);
+            DamageDisp.Controls[2].Location = new Point(h*4 - 24 - DamageDisp.Controls[2].Width, 0);
 
             Controls.Add(DamageDisp);
 

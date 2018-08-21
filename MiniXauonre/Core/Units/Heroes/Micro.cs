@@ -77,7 +77,7 @@ namespace MiniXauonre.Core.Heroes
                     var target = ChooseTarget(targets, h.P);
                         if (target == null) return false;
                     h.Targets.Add(target);
-                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, DropRaduis).Keys
+                    var points = h.GetPosition().GetPointsInDistance(0, DropRaduis).Keys
                         .Where(p => h.M.CellIsFree(p)).ToList();
                         if (points.Count == 0) return false;
                     var point = ChoosePoint(points, h.P);

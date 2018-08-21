@@ -183,6 +183,7 @@ namespace MiniXauonre.Graphics
                 ShopPanel.BringToFront();
             };
             
+            ///die while my turn
             panel.Controls.Add(new Label
             {
                 ForeColor = Game.ChosenHero != null ?

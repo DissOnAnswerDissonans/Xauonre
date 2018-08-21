@@ -570,7 +570,8 @@ namespace MiniXauonre.Core.Heroes
             {"M", GetMoney()},
         };
 
-        public Xauonre.Core.Point GetPosition() => M.UnitPositions[this];
+
+        public Xauonre.Core.Point GetPosition() => M.GetHeroPositions().FirstOrDefault(p => p.Key == this).Value;
         public string FastStats() =>
             Name
             + " : MaxHp-" + GetMaxHp()

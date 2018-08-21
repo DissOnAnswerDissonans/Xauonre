@@ -36,9 +36,7 @@ namespace MiniXauonre.Core.Items
                 SkillFix = (s) =>
                 {
                     if (s.CoolDown < 1)
-                    {
                         return s;
-                    }
                     var newSkill = new Skill()
                     {
                         Name = s.Name,

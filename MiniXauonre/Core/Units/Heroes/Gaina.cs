@@ -14,8 +14,8 @@ namespace MiniXauonre.Core.Heroes
         public const double PyroblastAPScale = 2;
         public const double PyroblastCost = 100;
         public const double PyroblastCd = 3;
-        public const double PyroblastRadius = 3;
-        public const double PyroblasTriggerRadius = 1;
+        public const double PyroblastRadius = 4;
+        public const double PyroblasTriggerRadius = 2;
         public List<Pyroblast> Blasts { get; protected set; }
         public Perk Collider { get; protected set; }
 
@@ -27,6 +27,7 @@ namespace MiniXauonre.Core.Heroes
             SetMaxEnergy(200);
             SetEnergyRegen(20);
             SetAbilityPower(50);
+            SetAttackRange(7);
 
 
             Blasts = new List<Specials.Pyroblast>();

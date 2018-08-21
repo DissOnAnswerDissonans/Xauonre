@@ -57,6 +57,7 @@ namespace MiniXauonre.Core.Heroes
             SetMaxEnergy(300);
             SetMovementSpeed(8);
             SetArmor(15);
+            SetAttackRange(5);
             SetEnergyRegen(15);
 
             Keeping = false;
@@ -76,7 +77,7 @@ namespace MiniXauonre.Core.Heroes
                 CoolDown = ImpulseCD,
                 Job = (h) =>
                 {
-                    var points = h.M.UnitPositions[h].GetPointsInDistance(0, ImpulseRange).Select(p => p.Key).ToList();
+                    var points = h.GetPosition().GetPointsInDistance(0, ImpulseRange).Select(p => p.Key).ToList();
                     if (points.Count == 0)
                         return false;
                     var center = ChoosePoint(points, h.P);
@@ -135,8 +136,8 @@ namespace MiniXauonre.Core.Heroes
                     if (me.Keeping)
                     {
                         if (me.BeamTarget!=null 
-                            && me.M.UnitPositions.ContainsKey(me.BeamTarget)
-                            && me.M.UnitPositions[me.BeamTarget].GetStepsTo(me.M.UnitPositions[me]) <= BeamRadius)
+                            && me.M.GetHeroes().Contains(me.BeamTarget)
+                            && me.BeamTarget.GetPosition().GetStepsTo(me.GetPosition()) <= BeamRadius)
                             me.BeamTarget.GetHeal(BeamRegen + BeamRegenApScale * me.GetAbilityPower());
                         else
                             me.Keeping = false;
