@@ -17,7 +17,7 @@ namespace MiniXauonre.Core.Heroes
             Name = "Thief";
             Image = Graphics.resources.Res.Thief;
             SetResist(10);
-            SetAttackDamage(105);
+            SetAttackDamage(80);
             SetMovementSpeed(12);
 
             Skills.Remove(Attack);

@@ -37,6 +37,7 @@ namespace MiniXauonre.Core.Shops
             new OldYeast(),
             new Mantle(),
             new Resister(),
+            new EnergeticClaws(),
             
             new MagicBoots(),
             new FlashBoots(),
@@ -54,6 +55,7 @@ namespace MiniXauonre.Core.Shops
             new Simplex(),
             new SaintMantle(),
             new IdeaGenerator(),
+            new LongSword(),
             
             new TimeMachine(),
             new Items.Buffer(),
@@ -63,6 +65,7 @@ namespace MiniXauonre.Core.Shops
             new EntientYeast(),
             new Tesseract(),
             new StarArmor(),
+            new EnergySaber(),
         };
 
 

@@ -26,9 +26,9 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "Immortal";
             Image = Graphics.resources.Res.Immortal;
-            SetMaxHp(500);
+            SetMaxHp(333);
             SetEnergyRegen(5);
-            SetMaxEnergy(200);
+            SetMaxEnergy(333);
             SetArmor(10);
             SetResist(10);
             SetMovementSpeed(9);

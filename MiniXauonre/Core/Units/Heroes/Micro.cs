@@ -35,11 +35,11 @@ namespace MiniXauonre.Core.Heroes
         {
             Name = "Micro";
             Image = Graphics.resources.Res.Micro;
-            SetAttackDamage(75);
+            SetAttackDamage(60);
             SetMaxHp(1100);
             SetMaxEnergy(350);
             SetEnergyRegen(10);
-            SetMovementSpeed(11);
+            SetMovementSpeed(10);
             SetRegen(15);
 
             Defence = new Perk

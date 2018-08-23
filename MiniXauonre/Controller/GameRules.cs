@@ -32,16 +32,29 @@ namespace MiniXauonre.Controller
 
         public GameRules()
         {
-            HeroesPerPlayer = 3;
+            /*HeroesPerPlayer = 3;
             PlayersNumber = 2;
             GameMap = MapLoader.FromText(Graphics.resources.Res.SimpleMap);
+            StartMoney = 200;
+            LevelUpMoney = 200;*/
+
+            HeroesPerPlayer = 4;
+            PlayersNumber = 2;
+            GameMap = MapLoader.FromText(Graphics.resources.Res.BigMap);
+            StartMoney = 200;
+            LevelUpMoney = 200;
+
+            /*HeroesPerPlayer = 3;
+            PlayersNumber = 2;
             GameMap = new Map(5, 6);
             StartMoney = 200000;
             LevelUpMoney = 200;
+            */
+
             GameShop = new BasicShop();
             AllowedHeroes = HeroMaker.GetAllHeroes();
-            DraftSequence = GenerateDraft(DraftType.Normal, PlayersNumber, HeroesPerPlayer);
-            TurnFunction = GenerateTurn;
+            DraftSequence = GenerateDraft(DraftType.PickBanPick, PlayersNumber, HeroesPerPlayer, 1);
+            TurnFunction = GenerateStandartTurn;
             GetSpawnPoints = (pl) =>
             {
                 Point p;
@@ -72,8 +85,39 @@ namespace MiniXauonre.Controller
                 };
             };
         }
-        
-        private static Hero GenerateTurn(Game game)
+
+        private Hero GenerateStandartTurn(Game game)
+        {
+            if (game.CurrentHero == null)
+                return game.Players.SelectMany(p => p.Heroes).First();
+            var currentHero = game.CurrentHero;
+            var currentPlayer = game.CurrentPlayer;
+            var indexOfCurrentPlayer = game.Players.IndexOf(currentPlayer);
+            var indexOfCurrentHero = currentPlayer.Heroes.IndexOf(currentHero);
+            var nextPlayers = game.Players.Skip(indexOfCurrentPlayer + 1);
+            foreach(var p in nextPlayers)
+            {
+                if (p.Heroes.Count > indexOfCurrentHero)
+                    if (p.Heroes[indexOfCurrentHero] != null)
+                        return p.Heroes[indexOfCurrentHero];
+            }
+            indexOfCurrentHero++;
+            foreach (var p in game.Players)
+            {
+                if (p.Heroes.Count > indexOfCurrentHero)
+                    if (p.Heroes[indexOfCurrentHero] != null)
+                        return p.Heroes[indexOfCurrentHero];
+            }
+            foreach (var p in game.Players)
+            {
+                if (p.Heroes.Count > 0)
+                    if (p.Heroes[0] != null)
+                        return p.Heroes[0];
+            }
+            return null;
+        }
+
+        /*private static Hero GenerateTurn(Game game)
         {
             if (game.CurrentHero == null)
                 return game.Players.SelectMany(p => p.Heroes).First();
@@ -87,10 +131,10 @@ namespace MiniXauonre.Controller
             var heronextIndex = (heroindex + 1) % heroes.Count;
             var nextHero = heroes[heronextIndex];
             return nextHero;
-        }
+        }*/
       
 
-        public static List<Tuple<int, PickType>> GenerateDraft(DraftType type, int pl, int h)
+        public static List<Tuple<int, PickType>> GenerateDraft(DraftType type, int pl, int h, int bans = 1)
         {
             List<Tuple<int, PickType>> seq = new List<Tuple<int, PickType>>();
             if (type == DraftType.Normal)
@@ -107,10 +151,22 @@ namespace MiniXauonre.Controller
             }
             else if (type == DraftType.SimpleBanPick)
             {
-                for (int i = 0; i < h; i++)
+                for (int i = 0; i < bans; i++)
                     for (int j = 0; j < pl; j++)
                         seq.Add(Tuple.Create(j, PickType.Ban));
                 for (int i = 0; i < h; i++)
+                    for (int j = 0; j < pl; j++)
+                        seq.Add(Tuple.Create(j, PickType.Pick));
+            }
+            else if (type == DraftType.PickBanPick)
+            {
+                for (int i = 0; i < h/2; i++)
+                    for (int j = 0; j < pl; j++)
+                        seq.Add(Tuple.Create(j, PickType.Pick));
+                for (int i = 0; i < bans; i++)
+                    for (int j = 0; j < pl; j++)
+                        seq.Add(Tuple.Create(j, PickType.Ban));
+                for (int i = h/2; i < h; i++)
                     for (int j = 0; j < pl; j++)
                         seq.Add(Tuple.Create(j, PickType.Pick));
             }
@@ -134,6 +190,7 @@ namespace MiniXauonre.Controller
             Choosing,
             OneTwo,
             SimpleBanPick,
+            PickBanPick,
         }
 
         public enum TurnType

@@ -85,9 +85,12 @@
     <Compile Include="Core\Geometry.cs" />
     <Compile Include="Core\Hero.cs" />
     <Compile Include="Core\HeroNEW.cs" />
+    <Compile Include="Core\Items\T1\EnergeticClaws.cs" />
     <Compile Include="Core\Items\T1\Resister.cs" />
     <Compile Include="Core\Items\T2\IdeaJenerator.cs" />
+    <Compile Include="Core\Items\T2\LongSword.cs" />
     <Compile Include="Core\Items\T2\SaintMantle.cs" />
+    <Compile Include="Core\Items\T3\EnergySaber.cs" />
     <Compile Include="Core\Items\T3\StarArmor.cs" />
     <Compile Include="Core\Units\Heroes\Banker.cs" />
     <Compile Include="Core\Units\Heroes\Cyprys.cs" />
@@ -215,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Core\MiniXauonreHEROES.txt" />
+    <Content Include="Resources\BigMap.txt" />
     <None Include="Graphics\resources\Units\Pyroblast.png" />
     <None Include="app.config" />
     <None Include="app.manifest" />

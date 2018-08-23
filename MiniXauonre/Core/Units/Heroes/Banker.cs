@@ -26,7 +26,7 @@ MS = 10*/
 
     class Banker : HeroWithBaseSkills
     {
-        public const double InteresRateHeal = 0.05;
+        public const double InteresRateHeal = 0.07;
         public const double InterestRateHealAPScale = 0.0002;
         public const double InterestRateHealRange = 10;
         public const double InterestRateHpBuffAPScale = 0.5;
